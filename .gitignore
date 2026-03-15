@@ -17,6 +17,11 @@
 # Mono auto generated files
 mono_crash.*
 
+# ASP.NET Core - Development Settings
+**/appsettings.Development.json
+**/appsettings.*.json
+!**/appsettings.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
