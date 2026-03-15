@@ -69,6 +69,12 @@ dlldata.c
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
+# Node
+node_modules/
+npm-debug.log*
+build/
+.env.local
+
 # .NET Core
 project.lock.json
 project.fragment.lock.json
