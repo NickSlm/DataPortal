@@ -1,7 +1,8 @@
-import { Button, Card, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 
-function Home() {
+
+
+function Snapshots() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -36,14 +37,12 @@ function Home() {
             <h1>My Data</h1>
             {data.map((item, index) => (
                 <div key={index}>
-                    <h3>{item.datePulled}</h3>
-                    <p>{item.id}</p>
+                    <h3>{item.DatePulled}</h3>
+                    <p>{item.Id}</p>
                 </div>
-            ))}
+            )) }
         </div>
     )
 }
 
-
-
-export default Home;
+export default Snapshots;
