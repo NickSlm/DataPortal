@@ -1,13 +1,14 @@
 import SnapshotDataGrid from "./SnapshotDataGrid";
+import EntriesCollection from "./EntriesCollection";
 import Box from '@mui/material/Box';
 
 function Home() {
 
-    return (
-        <Box>
-            <SnapshotDataGrid/>
-        </Box>
 
+    return (
+            <h1>
+            Home
+            </h1>
     );
 }
 

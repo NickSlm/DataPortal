@@ -1,4 +1,5 @@
 ﻿using BlizzardWebApp.Server.Data;
+using BlizzardWebApp.Server.Dto;
 using BlizzardWebApp.Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,5 +19,17 @@ namespace BlizzardWebApp.Server.Services
 
             return snapshots;
         }
+
+        public async Task<List<LeaderboardEntry>> GetEntriesByDate(DateTime dateTime)
+        {
+
+            var snapshot = await _dbContext.LeaderboardSnapshots
+                .Where(s => s.DatePulled.Date == dateTime.Date)
+                .FirstOrDefaultAsync();
+
+            var entries = await _dbContext.LeaderboardEntry.Where(e => snapshot.Id == e.SnapshotId).ToListAsync();
+            return entries;
+        }
+
     }
 }
