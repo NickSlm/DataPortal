@@ -1,21 +1,10 @@
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-
-
-const columns = [
-    {
-        field: 'id', headerName: "ID", width: 90
-    },
-    {
-        field: 'datePulled', headerName: "Snapshot Date", width: 150,
-        valueGetter: (value) => {
-            return new Date(value).toLocaleDateString();
-        }
-    }
-]
-
-
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function SnapshotDataGrid() {
 
@@ -51,31 +40,20 @@ export default function SnapshotDataGrid() {
 
     return (
 
-        <Box>
-            <DataGrid
-                rows={data}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 6,
-                        },
-                    },
-                }}
-                pageSizeOptions={[6]}
-                disableRowSelectionOnClick
-                autoHeight
-                sx={{
-                    '& .MuiDataGrid-virtualScroller': {
-                        scrollSnapType: 'y mandatory',
-                    },
-                    width: 'fit-content',
-                    midWidth: '100%',
-                    '& .MuiDataGrid-row': {
-                        scrollSnapAlign: 'start',
-                    },
-                }}
-            />
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+                <InputLabel id="select-label">Leaderboard</InputLabel>
+                <Select
+                    labelId="select-label"
+                    id="simple-select"
+                    label="Leaderboard">
+                    {
+                        data.map((item) => (<MenuItem key={item.datePulled} value={item.datePulled}>
+                            {item.datePulled.split('T')[0]}
+                        </MenuItem>))
+                    }
+                </Select>
+            </FormControl>
         </Box>
     );
 }

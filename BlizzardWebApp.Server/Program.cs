@@ -8,7 +8,6 @@ namespace BlizzardWebApp.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddAppServices();
             builder.Services.AddControllers();
             builder.Services.AddDatabaseServices();
@@ -28,7 +27,6 @@ namespace BlizzardWebApp.Server
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
 
