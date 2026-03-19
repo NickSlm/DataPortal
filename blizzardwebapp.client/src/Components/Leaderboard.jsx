@@ -1,7 +1,8 @@
-import SnapshotDataGrid from "./SnapshotDataGrid";
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import LeaderboardSelect from "./LeaderboardSelect";
+import EntriesCollection from "./EntriesCollection";
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 
 
@@ -9,21 +10,26 @@ import Grid from '@mui/material/Grid';
 
 export default function Leaderboard() {
 
-    //const [selectedDate, SetSelectedDate] = useState('');
+    const [selectedDate, SetSelectedDate] = useState('');
 
-    //const handleSelectedDate = (dateFromChild) => {
-    //    SetSelectedDate(dateFromChild);
-    //}
+
+    const handleSelectedDate = (dateFromChild) => {
+        SetSelectedDate(dateFromChild);
+    }
 
 
     return (
-        <box sx={{flexGrod:1}}>
-            <h1>
-                Leaderboard
-            </h1>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid>
+                <Grid>
+                    <LeaderboardSelect selectDate={handleSelectedDate} />
+                </Grid>
+                <Grid>
+                    <EntriesCollection date={selectedDate} />
+                </Grid>
 
-            {/*<SelectLeaderboard onDateSelect={handleSelectedDate} />*/}
-            <SnapshotDataGrid/>
-        </box>
+            </Grid>
+
+        </Box>
     );
 }

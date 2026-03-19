@@ -6,7 +6,42 @@ import { DataGrid } from '@mui/x-data-grid';
 
 
 
-
+const columns = [
+    {
+        field: 'id', headerName: 'ID'
+    },
+    { field: 'characterName', headerName: 'Name', width: 90 },
+    {
+        field: 'rank',
+        headerName: 'Rank',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'rating',
+        headerName: 'Rating',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'played',
+        headerName: 'Total Games',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'won',
+        headerName: 'Won',
+        width: 150,
+        editable: false,
+    },
+    {
+        field: 'lost',
+        headerName: 'Lost',
+        width: 150,
+        editable: false,
+    }
+];
 
 
 export default function EntriesCollection({ date }) {
@@ -53,18 +88,39 @@ export default function EntriesCollection({ date }) {
     }, [date]);
 
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div>Select Date</div>;
     if (error) return <div>Error: {error}</div>;
 
 
 
 
     return (
-        <div>
-            {data.map(entry => (
-                <div key={entry.id}>{entry.characterName}</div>
-            ))}
-        </div>
+        <Box sx={{ height: 400, width: '100%' }}>
+            <DataGrid
+                rows={data}
+                autoHeight
+                columns={columns}
+                initialState={{
+                    pagination: {
+                        paginationModel: {
+                            pageSize: 10,
+                        },
+                    },
+                }}
+                pageSizeOptions={[10]}
+                disableRowSelectionOnClick
+                sx={{
+                    '& .MuiDataGrid-virtualScroller': {
+                        scrollSnapType: 'y mandatory',
+                    },
+                    width: 'fit-content',
+                    midWidth: '100%',
+                    '& .MuiDataGrid-row': {
+                        scrollSnapAlign: 'start',
+                    },
+                }}
+            />
+        </Box>
     );
 
 

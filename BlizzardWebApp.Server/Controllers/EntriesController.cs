@@ -27,6 +27,7 @@ namespace BlizzardWebApp.Server.Controllers
 
             var dto = entries.Select(e => new LeaderboardEntryDto
             {
+                Id = e.Id,
                 CharacterName = e.CharacterName,
                 Lost = e.Lost,
                 Played = e.Played,

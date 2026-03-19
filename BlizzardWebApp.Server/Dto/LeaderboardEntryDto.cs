@@ -2,6 +2,7 @@
 {
     public class LeaderboardEntryDto
     {
+        public int Id { get; set; }
         public string CharacterName { get; set; }
         public int Rank { get; set; }
         public int Rating { get; set; }

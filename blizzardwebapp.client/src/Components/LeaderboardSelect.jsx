@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SnapshotDataGrid() {
+export default function LeaderboardSelect({selectDate}) {
 
+    const [date, setDate] = useState('');
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const handleSubmit = (e) => {
+        const selectedDate = e.target.value;
+        setDate(selectedDate);
+        selectDate(selectedDate);
+    };
 
     useEffect(() =>
     {
@@ -40,12 +45,14 @@ export default function SnapshotDataGrid() {
 
     return (
 
-        <Box sx={{ minWidth: 120 }}>
+        <Box component="form" sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
                 <InputLabel id="select-label">Leaderboard</InputLabel>
                 <Select
                     labelId="select-label"
                     id="simple-select"
+                    value={date}
+                    onChange={handleSubmit}
                     label="Leaderboard">
                     {
                         data.map((item) => (<MenuItem key={item.datePulled} value={item.datePulled}>
@@ -54,6 +61,7 @@ export default function SnapshotDataGrid() {
                     }
                 </Select>
             </FormControl>
+
         </Box>
     );
 }

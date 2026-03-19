@@ -1,4 +1,3 @@
-import SnapshotDataGrid from "./SnapshotDataGrid";
 import EntriesCollection from "./EntriesCollection";
 import Box from '@mui/material/Box';
 
