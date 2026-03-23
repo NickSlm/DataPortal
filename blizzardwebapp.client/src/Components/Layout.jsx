@@ -11,15 +11,12 @@ export default function layout() {
     return (
 
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            {/* Navigation - always on top */}
             <Navbar />
 
-            {/* Main content - this changes based on route */}
             <Box component="main" sx={{ flexGrow: 1 }}>
                 <Outlet />
             </Box>
 
-            {/* Footer - always at bottom */}
             <Footer />
         </Box>
     );
