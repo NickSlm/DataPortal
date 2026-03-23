@@ -12,7 +12,7 @@ namespace BlizzardWebApp.Server.Extensions
 
         public static void AddAppServices(this IServiceCollection Services)
         {
-            Services.AddHttpClient("BlizzardApi", client =>
+            Services.AddHttpClient("BlizzardApp", client =>
             {
                 client.BaseAddress = new Uri("https://eu.api.blizzard.com");
             });
