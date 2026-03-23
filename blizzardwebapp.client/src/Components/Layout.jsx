@@ -16,11 +16,10 @@ export default function layout() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            {/* Header/Navigation */}
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                        My App
+                        Mr.App
                     </Typography>
 
                     <Stack direction="row" spacing={2}>
@@ -28,21 +27,19 @@ export default function layout() {
                             Home
                         </Button>
                         <Button color="inherit" component={Link} to="/leaderboard">
-                            Leaderboard
+                            PVP
                         </Button>
                         <Button color="inherit" component={Link} to="/about">
-                            About
+                            PVE
                         </Button>
                     </Stack>
                 </Toolbar>
             </AppBar>
 
-            {/* Main Content - Outlet renders the current route */}
             <Container maxWidth="lg" sx={{ flex: 1, py: 4 }}>
                 <Outlet />
             </Container>
 
-            {/* Footer */}
             <Box component="footer" sx={{ py: 2, textAlign: 'center', bgcolor: 'grey.200' }}>
                 <Typography variant="body2">© 2026 My App</Typography>
             </Box>

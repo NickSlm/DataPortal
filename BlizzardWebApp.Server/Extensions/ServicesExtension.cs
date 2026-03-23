@@ -12,6 +12,7 @@ namespace BlizzardWebApp.Server.Extensions
         public static void AddAppServices(this IServiceCollection Services)
         {
             Services.AddScoped<IDbService, DbService>();
+            Services.AddSingleton<IBlizzardAuthService, BlizzardAuthService>();
         }
 
 
