@@ -24,7 +24,7 @@ namespace BlizzardWebApp.Server.Services
         }
 
 
-        private async Task RefreshAccessTokenAsync()
+        public async Task RefreshAccessTokenAsync()
         {
             // TODO: Encrypt using Windows Credentials Manager
             string clientId = "6eef8ac48dbc417197ed8a34c731e398";
