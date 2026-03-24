@@ -24,6 +24,9 @@ namespace BlizzardWebApp.Server.Services
 
         public async Task<Seasons> GetCurrentPvPSeason()
         {
+
+            //add Redis to store current seasons
+
             var token = await _authService.GetAccessToken();
 
             using var request = new HttpRequestMessage(HttpMethod.Get, "/data/wow/pvp-season/index?namespace=dynamic-eu&locale=en_US");

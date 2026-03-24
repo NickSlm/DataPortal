@@ -70,11 +70,11 @@ export default function EntriesCollection({ date }) {
                 const result = await response.json();
 
                 setData(result);
-                setLoading(false);
-
             } catch (err) {
                 setError(err);
+            }finally{
                 setLoading(false);
+
             }
 
 
