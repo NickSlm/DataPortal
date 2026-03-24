@@ -2,10 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import { darkGamingTheme } from './Theme/theme';
 
-import Home from './Components/Home'
-import Layout from './Components/Layout'
-import PvPRoute from './Components/PvPRoute';
-import PvERoute from './Components/PvERoute';
+
+
+import Home from './Components/Routes/Home';
+import Layout from './Components/Layout/Layout';
+import PvPRoute from './Components/Routes/PvPRoute';
+import PvERoute from './Components/Routes/PvERoute';
+
 import { ThemeProvider, CssBaseline } from '@mui/material';
 
 function App() {
