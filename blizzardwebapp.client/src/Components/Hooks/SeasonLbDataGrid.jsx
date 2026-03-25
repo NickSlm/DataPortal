@@ -98,7 +98,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
                     height: 600,
                     background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
                     border: '1px solid rgba(0, 255, 136, 0.2)',
-                    borderRadius: 2,
+                    borderRadius: 1,
                     '& .MuiDataGrid-root': {
                         border: 'none',
                         color: 'white',

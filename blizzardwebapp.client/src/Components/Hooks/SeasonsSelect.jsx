@@ -53,7 +53,6 @@ export default function SeasonsSelect({selectSeason}) {
 
     }, []);
 
-    if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
 
@@ -77,17 +76,23 @@ export default function SeasonsSelect({selectSeason}) {
         >
             <InputLabel sx={{ color: 'text.secondary' }}>Season</InputLabel>
             <Select
-                value={season}
-                label="Filter"
+                value={season ?? ''}
+                label="Season"
                 onChange={handleSelect}
-                MenuProps={{ PaperProps: { sx: {maxHeight: 266}}} }
+                disabled={loading}
+                MenuProps={{ PaperProps: { sx: { maxHeight: 266 } } }}
             >
-                {
-                    <MenuItem key={data.currentSeason.id} value={data.currentSeason.id}> Current Season</MenuItem>
-
-                },
-                {
-                   data?.seasons?.map((item) => (<MenuItem key={item.id} value={item.id}>Season {item.id}</MenuItem>))
+                {loading ? (
+                    <MenuItem disabled>Loading seasons</MenuItem>
+                ) :
+                    data?.seasons
+                        ?.slice()
+                        ?.reverse()
+                        ?.map((item) => (
+                            <MenuItem key={item.id} value={item.id}>
+                                {item.id === data.currentSeason.id ? 'Current Season' : `Season ${item.id}`}
+                            </MenuItem>
+                        )) || []
                 }
             </Select>
         </FormControl>
