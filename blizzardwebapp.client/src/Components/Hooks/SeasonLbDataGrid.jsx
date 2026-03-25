@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import CircularProgress from '@mui/material/CircularProgress';
+import Skeleton from '@mui/material/Skeleton';
 
 
 import {
@@ -23,7 +25,6 @@ export default function SeasonLbDataGrid({season, bracket}) {
 
     const columns = [
 
-        { field: 'id', headerName: 'Id' },
         { field: 'name', headerName: 'Name' },
         { field: 'rank', headerName: 'Rank'},
         { field: 'rating', headerName: 'Rating' },
@@ -34,21 +35,25 @@ export default function SeasonLbDataGrid({season, bracket}) {
 
     useEffect(() => {
         if (!season || !bracket) return;
+
+
+        const controller = new AbortController();
+
         const fetchData = async () => {
+            setLoading(true);   
+            setError(null);  
 
             try {
-
-                console.log(typeof season, season);
-                console.log(typeof bracket, bracket);
                 const s = Number(season);
 
-                const response = await fetch(`http://127.0.0.1:5201/pvp/seasons/leaderboard/${s}/${bracket}`);
+                const response = await fetch(`http://127.0.0.1:5201/pvp/seasons/leaderboard/${s}/${bracket}`, { signal: controller.signal });
 
                 if (!response.ok) {
-                    throw new Error(`Error fetching Season ${season} Leaderboard`)
+                    throw new Error(`Season ${season} Leaderboard not available`)
                 }
 
                 const result = await response.json();
+
 
                 const rows = result.entries.map(e => ({
                     id: e.character.id,
@@ -63,68 +68,80 @@ export default function SeasonLbDataGrid({season, bracket}) {
                 setData(rows);
 
             } catch (err) {
-                setError(err);
+                if (err.name !== 'AbortError') {
+                    setError(err);
+                }
             } finally {
-                setLoading(false);
+                if (!controller.signal.aborted) {
+                    setLoading(false);
+                }
             }
-
         };
 
-        if (season && bracket) {
         fetchData();
-        }
-
+        return () => {
+            controller.abort();
+        };
 
     }, [season, bracket]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (!season || !bracket) return <div>Please select season and bracket</div>;  
+    if (data.length === 0) return <div>No data found</div>; 
+    if (error) return <div>{error.message}</div>;
 
     return (
-        <Paper
-            elevation={0}
-            sx={{
-                height: 600,
-                background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                border: '1px solid rgba(0, 255, 136, 0.2)',
-                borderRadius: 2,
-                '& .MuiDataGrid-root': {
-                    border: 'none',
-                    color: 'white',
-                },
-                '& .MuiDataGrid-cell': {
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                },
-                '& .MuiDataGrid-columnHeaders': {
-                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
-                    borderBottom: '2px solid #00ff88',
-                    color: '#00ff88',
-                    fontWeight: 700,
-                },
-                '& .MuiDataGrid-footerContainer': {
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                },
-                '& .MuiDataGrid-row:hover': {
-                    backgroundColor: 'rgba(0, 255, 136, 0.05)',
-                },
-                '& .MuiCheckbox-root': {
-                    color: '#00ff88',
-                },
-                '& .MuiDataGrid-selectedRowCount': {
-                    color: 'white',
-                },
-            }}
-        >
-            <DataGrid
-                rows={data}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10, 25, 50]}
-                checkboxSelection
-                disableSelectionOnClick
-            />
-        </Paper>
+
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Paper
+                elevation={0}
+                sx={{
+                    height: 600,
+                    background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
+                    border: '1px solid rgba(0, 255, 136, 0.2)',
+                    borderRadius: 2,
+                    '& .MuiDataGrid-root': {
+                        border: 'none',
+                        color: 'white',
+                    },
+                    '& .MuiDataGrid-cell': {
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        borderBottom: '2px solid #00ff88',
+                        color: '#00ff88',
+                        fontWeight: 700,
+                    },
+                    '& .MuiDataGrid-footerContainer': {
+                        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    },
+                    '& .MuiDataGrid-row:hover': {
+                        backgroundColor: 'rgba(0, 255, 136, 0.05)',
+                    },
+                    '& .MuiCheckbox-root': {
+                        color: '#00ff88',
+                    },
+                    '& .MuiDataGrid-selectedRowCount': {
+                        color: 'white',
+                    },
+                }}
+            >
+               <DataGrid
+                    rows={data ?? []}
+                    columns={columns}
+                    pageSize={10}
+                    loading={loading}
+                    rowsPerPageOptions={[10, 25, 50]}
+                    disableSelectionOnClick
+                />
+
+            </Paper>
+
+        </Box>
+      
+
+
     );
 
 

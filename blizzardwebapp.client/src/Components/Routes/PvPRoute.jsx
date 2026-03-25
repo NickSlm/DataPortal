@@ -83,31 +83,11 @@ export default function PvPRoute() {
                     </FormControl>
                     {/* Season Select */}
                     <SeasonsSelect selectSeason={handleSelectSeason} />
-                    <Button
-                        variant="contained"
-                        startIcon={<SearchIcon />}
-                        onClick={handleSearch}
-                        sx={{
-                            background: 'linear-gradient(135deg, #00ff88 0%, #00cc70 100%)',
-                            color: '#0a0e27',
-                            fontWeight: 700,
-                            px: 4,
-                            py: 1.5,
-                            minWidth: 150,
-                            boxShadow: '0 0 20px rgba(0, 255, 136, 0.3)',
-                            '&:hover': {
-                                boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)',
-                                transform: 'translateY(-2px)',
-                            },
-                            transition: 'all 0.3s ease',
-                        }}
-                    >
-                        Search
-                    </Button>
                 </Box>
             </Paper>
 
             {/* DataGrid */}
+
             <SeasonLbDataGrid season={season} bracket={bracket} />
         </Container>
 
