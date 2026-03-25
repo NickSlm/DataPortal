@@ -24,8 +24,8 @@ export default function SeasonLbDataGrid({season, bracket}) {
 
 
     const columns = [
-
         { field: 'name', headerName: 'Name' },
+        { field: 'realm', headerName:'Realm' },
         { field: 'rank', headerName: 'Rank'},
         { field: 'rating', headerName: 'Rating' },
         { field: 'total', headerName: 'Total Games' },
@@ -60,6 +60,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
                     name: e.character.name,
                     rank: e.rank,
                     rating: e.rating,
+                    realm: e.character.realm.slug,
                     total: e.season_match_statistics.played,
                     wins: e.season_match_statistics.won,
                     losses: e.season_match_statistics.lost,
