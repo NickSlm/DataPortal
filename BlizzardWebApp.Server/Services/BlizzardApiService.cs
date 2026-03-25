@@ -8,24 +8,32 @@ namespace BlizzardWebApp.Server.Services
 {
     public class BlizzardApiService: IBlizzardApiService
     {
-
+        private readonly ICacheService _cacheService;
         private readonly IBlizzardAuthService _authService;
         private readonly IAsyncPolicy<HttpResponseMessage> _asyncPolicy;
         private readonly HttpClient _httpClient;
 
-        public BlizzardApiService(IBlizzardAuthService authService, IAsyncPolicy<HttpResponseMessage> asyncPolicy, IHttpClientFactory httpClientFactory)
+        public BlizzardApiService(IBlizzardAuthService authService, IAsyncPolicy<HttpResponseMessage> asyncPolicy, IHttpClientFactory httpClientFactory, ICacheService cacheService)
         {
             _authService = authService;
             _asyncPolicy = asyncPolicy;
             _httpClient = httpClientFactory.CreateClient("BlizzardApp");
+            _cacheService = cacheService;
         }
 
 
 
         public async Task<Seasons> GetCurrentPvPSeason()
         {
+            var cacheKey = "seasonList";
 
-            //add Redis to store current seasons
+            var cache = await _cacheService.GetStringAsync(cacheKey);
+            if (cache != null)
+            {
+                var cachedList = JsonSerializer.Deserialize<Seasons>(cache,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return cachedList;
+            }
 
             var token = await _authService.GetAccessToken();
 
@@ -35,6 +43,9 @@ namespace BlizzardWebApp.Server.Services
             var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
 
             var json = await response.Content.ReadAsStringAsync();
+
+            await _cacheService.SetAsync(cacheKey, json, TimeSpan.FromMinutes(30));
+
             var seasons = JsonSerializer.Deserialize<Seasons>(json,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 

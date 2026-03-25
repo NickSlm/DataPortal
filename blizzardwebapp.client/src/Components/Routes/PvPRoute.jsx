@@ -32,14 +32,16 @@ export default function PvPRoute() {
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
-            <Paper
-                elevation={0}
-                sx={{
-                    p: 3,
-                    mb: 3,
-                    background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                    border: '1px solid rgba(0, 255, 136, 0.2)',
-                    borderRadius: 2,
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto' }}>
+
+                 <Paper
+                    elevation={0}
+                    sx={{
+                        p: 3,
+                        mb: 3,
+                        background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
+                        border: '1px solid rgba(0, 255, 136, 0.2)',
+                        borderRadius: 2,
                 }}
             >
                 <Box
@@ -52,21 +54,11 @@ export default function PvPRoute() {
                 >
                     {/* Bracket Select */}
                     <FormControl
-                        sx={{
-                            minWidth: 200,
-                            flex: 1,
-                            '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                    borderColor: 'rgba(255, 255, 255, 0.23)',
+                            sx={{
+                                width: 200,
+                                '& .MuiOutlinedInput-root': {
                                 },
-                                '&:hover fieldset': {
-                                    borderColor: '#00ff88',
-                                },
-                                '&.Mui-focused fieldset': {
-                                    borderColor: '#00ff88',
-                                },
-                            },
-                        }}
+                            }}
                     >
                         <InputLabel sx={{ color: 'text.secondary' }}>Bracket</InputLabel>
                         <Select
@@ -86,9 +78,13 @@ export default function PvPRoute() {
                 </Box>
             </Paper>
 
-            {/* DataGrid */}
 
-            <SeasonLbDataGrid season={season} bracket={bracket} />
+                {/* DataGrid */}
+                <SeasonLbDataGrid season={season} bracket={bracket} />
+            </Box>
+
+
+
         </Container>
 
     );

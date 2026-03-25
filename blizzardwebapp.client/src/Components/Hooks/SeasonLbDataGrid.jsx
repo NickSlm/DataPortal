@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Skeleton from '@mui/material/Skeleton';
@@ -87,8 +87,26 @@ export default function SeasonLbDataGrid({season, bracket}) {
 
     if (!season || !bracket) return <div>Please select season and bracket</div>;  
     if (data.length === 0) return <div>No data found</div>; 
-    if (error) return <div>{error.message}</div>;
-
+    if (error) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Paper
+                    elevation={0}
+                    sx={{
+                        p: 4,
+                        background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
+                        border: '1px solid rgba(255, 68, 68, 0.3)',
+                        borderRadius: 2,
+                        textAlign: 'center',
+                    }}
+                >
+                    <Box sx={{ color: '#ff4444', fontSize: '1.1rem' }}>
+                        Error: {error.message}
+                    </Box>
+                </Paper>
+            </Box>
+        );
+    }
     return (
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>

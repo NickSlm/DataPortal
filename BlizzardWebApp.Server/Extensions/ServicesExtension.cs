@@ -3,6 +3,7 @@ using BlizzardWebApp.Server.Interfaces;
 using BlizzardWebApp.Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Polly;
+using StackExchange.Redis;
 
 namespace BlizzardWebApp.Server.Extensions
 {
@@ -18,6 +19,7 @@ namespace BlizzardWebApp.Server.Extensions
             });
             Services.AddScoped<IDbService, DbService>();
             Services.AddScoped<IBlizzardApiService, BlizzardApiService>();
+            Services.AddScoped<ICacheService, CacheService>();
             Services.AddSingleton<IBlizzardAuthService, BlizzardAuthService>();
             Services.AddSingleton<ILoggingService, LoggingService>();
             Services.AddSingleton<IAsyncPolicy<HttpResponseMessage>>(sp =>
@@ -41,6 +43,13 @@ namespace BlizzardWebApp.Server.Extensions
             {
                 var conf = sp.GetRequiredService<IConfiguration>();
                 options.UseSqlite(conf.GetConnectionString("DefaultConnection"));
+            });
+
+            Services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var conf = sp.GetRequiredService<IConfiguration>();
+                var connectionString = conf["Redis:ConnectionString"];
+                return ConnectionMultiplexer.Connect(connectionString);
             });
         }
 
