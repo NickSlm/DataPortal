@@ -59,18 +59,37 @@ export default function SeasonsSelect({selectSeason}) {
     return (
         <FormControl
             sx={{
-                minWidth: 200,
-                flex: 1,
+                width: 200,
                 '& .MuiOutlinedInput-root': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    borderRadius: 1.5,
+                    transition: 'all 0.2s ease',
                     '& fieldset': {
-                        borderColor: 'rgba(255, 255, 255, 0.23)',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        transition: 'all 0.2s ease',
                     },
-                    '&:hover fieldset': {
-                        borderColor: '#00ff88',
+                    '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        '& fieldset': {
+                            borderColor: '#00ff88',
+                        },
                     },
-                    '&.Mui-focused fieldset': {
-                        borderColor: '#00ff88',
+                    '&.Mui-focused': {
+                        backgroundColor: 'rgba(0, 255, 136, 0.05)',
+                        '& fieldset': {
+                            borderColor: '#00ff88',
+                            borderWidth: 2,
+                        },
                     },
+                },
+                '& .MuiInputLabel-root': {
+                    color: 'rgba(255, 255, 255, 0.5)',
+                    '&.Mui-focused': {
+                        color: '#00ff88',
+                    },
+                },
+                '& .MuiSelect-icon': {
+                    color: '#00ff88',
                 },
             }}
         >
