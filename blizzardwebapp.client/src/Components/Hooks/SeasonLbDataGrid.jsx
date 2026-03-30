@@ -215,59 +215,26 @@ export default function SeasonLbDataGrid({season, bracket}) {
 
     if (!season || !bracket) return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Paper
-                elevation={0}
-                sx={{
-                    p: 4,
-                    background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                    border: '1px solid rgba(0, 255, 136, 0.2)',
-                    borderRadius: 2,
-                    textAlign: 'center',
-                }}
-            >
-                <Box sx={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.1rem' }}>
-                    Please select season and bracket
-                </Box>
-            </Paper>
+            <Box sx={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.1rem' }}>
+                Please select season and bracket
+            </Box>
         </Box>
 
     );  
     if (data.length === 0) return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Paper
-                elevation={0}
-                sx={{
-                    p: 4,
-                    background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                    border: '1px solid rgba(255, 165, 0, 0.3)',
-                    borderRadius: 2,
-                    textAlign: 'center',
-                }}
-            >
-                <Box sx={{ color: '#ffa500', fontSize: '1.1rem' }}>
-                    Looking for data...
-                </Box>
-            </Paper>
+            <Box sx={{ color: '#ffa500', fontSize: '1.1rem' }}>
+                Looking for data...
+            </Box>
         </Box>
 
     ); 
     if (error) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Paper
-                    elevation={0}
-                    sx={{
-                        p: 4,
-                        background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                        border: '1px solid rgba(255, 68, 68, 0.3)',
-                        borderRadius: 2,
-                        textAlign: 'center',
-                    }}
-                >
-                    <Box sx={{ color: '#ff4444', fontSize: '1.1rem' }}>
-                        Error: {error.message}
-                    </Box>
-                </Paper>
+                <Box sx={{ color: '#ff4444', fontSize: '1.1rem' }}>
+                    Error: {error.message}
+                </Box>
             </Box>
         );
     }
@@ -623,15 +590,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
                         },
                     }}
                 />
-
             </Paper>
-
         </Box>
-      
-
-
     );
-
-
-
 }

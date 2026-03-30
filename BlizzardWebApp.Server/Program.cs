@@ -1,4 +1,6 @@
+using BlizzardWebApp.Server.Data;
 using BlizzardWebApp.Server.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlizzardWebApp.Server
 {
@@ -10,6 +12,7 @@ namespace BlizzardWebApp.Server
 
             builder.Services.AddAppServices();
             builder.Services.AddControllers();
+            builder.Services.AddHostedServices();
             builder.Services.AddDatabaseServices();
             builder.Services.AddCors(options =>
             {
@@ -22,6 +25,14 @@ namespace BlizzardWebApp.Server
             });
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var laderboardDatabase = scope.ServiceProvider.GetRequiredService<LbDbContext>();
+                laderboardDatabase.Database.Migrate();
+            }
+
+
 
             app.UseCors("AllowReact");
             app.UseDefaultFiles();

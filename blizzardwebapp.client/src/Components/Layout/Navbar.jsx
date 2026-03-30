@@ -8,8 +8,10 @@ export default function Navbar() {
 
     return (
 
-        <AppBar position="static"
+        <AppBar position="sticky"
             sx={{
+                top: 0,
+                zIndex: 1100,
                 background: 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%)',
                 borderBottom: '2px solid',
                 borderImage: 'linear-gradient(90deg, #00ff88, #ff6b9d) 1',

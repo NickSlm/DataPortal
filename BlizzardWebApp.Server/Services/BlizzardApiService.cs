@@ -51,7 +51,6 @@ namespace BlizzardWebApp.Server.Services
 
             return seasons;
         }
-
         public async Task<Leaderboard> GetLeaderboard(int season, string bracket)
         {
 
@@ -69,6 +68,5 @@ namespace BlizzardWebApp.Server.Services
             return leaderboard;
 
         }
-
-}
+    }
 }

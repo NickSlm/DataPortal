@@ -12,6 +12,16 @@ namespace BlizzardWebApp.Server.Data
 
         public DbSet<LeaderboardEntry> LeaderboardEntry { get; set; }
         public DbSet<LeaderboardSnapshot> LeaderboardSnapshots { get; set; }
+        public DbSet<ConnectedRealms> ConnectedRealms { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ConnectedRealms>()
+                .HasMany(c => c.Realms)
+                .WithOne(c => c.ConnectedRealm)
+                .HasForeignKey(c => c.CRealmsId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

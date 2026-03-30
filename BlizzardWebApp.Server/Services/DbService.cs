@@ -19,7 +19,6 @@ namespace BlizzardWebApp.Server.Services
 
             return snapshots;
         }
-
         public async Task<List<LeaderboardEntry>> GetEntriesByDate(DateTime dateTime)
         {
 

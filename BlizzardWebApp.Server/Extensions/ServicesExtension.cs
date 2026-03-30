@@ -36,6 +36,10 @@ namespace BlizzardWebApp.Server.Extensions
             });
         }
 
+        public static void AddHostedServices(this IServiceCollection Services)
+        {
+            Services.AddHostedService<ServerSyncService>();
+        }
 
         public static void AddDatabaseServices(this IServiceCollection Services)
         {
