@@ -3,6 +3,8 @@ using BlizzardWebApp.Server.Models;
 using Polly;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BlizzardWebApp.Server.Services
 {
@@ -66,6 +68,58 @@ namespace BlizzardWebApp.Server.Services
             var leaderboard = JsonSerializer.Deserialize<Leaderboard>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return leaderboard;
+
+        }
+        public async Task<List<ConnectedRealmData>> GetConnectedRealms()
+        {
+            var token = await _authService.GetAccessToken();
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/connected-realm/index?namespace=dynamic-eu&locale=en_US");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var connectedRealms = JsonSerializer.Deserialize<ConnectedRealm>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+
+
+
+            var tasks = connectedRealms.ConnectedRealms
+              .Select(href => GetConnectedRealmById(href))
+              .ToList();
+
+            var results = await Task.WhenAll(tasks);
+
+            return results.ToList();
+        }
+
+        private async Task<ConnectedRealmData> GetConnectedRealmById(HRef href)
+        {
+            var token = await _authService.GetAccessToken();
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{href.Href}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var connectedRealmData = JsonSerializer.Deserialize<ConnectedRealmData>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            return connectedRealmData;
+
 
         }
     }

@@ -6,5 +6,6 @@ namespace BlizzardWebApp.Server.Interfaces
     {
         Task<Seasons> GetCurrentPvPSeason();
         Task<Leaderboard> GetLeaderboard(int season, string bracket);
+        Task<List<ConnectedRealmData>> GetConnectedRealms();
     }
 }

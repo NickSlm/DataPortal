@@ -39,7 +39,7 @@ namespace BlizzardWebApp.Server.Services
                     {
                         using var scope = _scopeFactory.CreateScope();
                         var dbService = scope.ServiceProvider.GetService<IDbService>();
-                       
+                        await dbService.SaveConnectedRealms();
                         _loggingService.LogInfo($"Servers Fetched on {DateTime.UtcNow}");
                         break;
 

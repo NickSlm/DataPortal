@@ -4,7 +4,7 @@ namespace BlizzardWebApp.Server.Data
 {
     [Index(nameof(Name))]
 
-    public class Realm
+    public class RealmDb
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,6 +13,6 @@ namespace BlizzardWebApp.Server.Data
 
 
         public int CRealmsId { get; set; }
-        public ConnectedRealms ConnectedRealm { get; set; }
+        public ConnectedRealmsDb ConnectedRealm { get; set; }
     }
 }

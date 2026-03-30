@@ -7,9 +7,12 @@ namespace BlizzardWebApp.Server.Services
 {
     public class DbService: IDbService
     {
+        private readonly IBlizzardApiService _blizzardApi;
         private readonly LbDbContext _dbContext;
-        public DbService(LbDbContext dbContext)
+
+        public DbService(LbDbContext dbContext, IBlizzardApiService blizzardApi)
         {
+            _blizzardApi = blizzardApi;
             _dbContext = dbContext;
         }
         public async Task<List<LeaderboardSnapshot>> ListSnapshots()
@@ -30,5 +33,29 @@ namespace BlizzardWebApp.Server.Services
             return entries;
         }
 
+        public async Task SaveConnectedRealms()
+        {
+            var realms = await _blizzardApi.GetConnectedRealms();
+
+            foreach (var realm in realms)
+            {
+                var realmDb = new ConnectedRealmsDb
+                {
+                    Id = realm.Id,
+                    MythicLeaderboard = realm.MLeaderboardHref.Href,
+                    Auctions = realm.AuctionHref.Href,
+                    Realms = realm.RealmData.Select(e => new RealmDb
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        Slug = e.Slug,
+                        Category = e.Category,
+                    }).ToList()
+                   
+                };
+                _dbContext.Add(realmDb);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

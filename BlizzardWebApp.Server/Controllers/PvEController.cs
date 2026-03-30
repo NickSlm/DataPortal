@@ -9,7 +9,7 @@ namespace BlizzardWebApp.Server.Controllers
     public class PvEController : ControllerBase
     {
         // GET: api/<PvEController>
-        [HttpGet]
+        [HttpGet("/connected_realms/get")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

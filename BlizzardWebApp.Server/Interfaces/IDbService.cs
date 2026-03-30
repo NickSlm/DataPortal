@@ -7,5 +7,6 @@ namespace BlizzardWebApp.Server.Interfaces
     {
         Task<List<LeaderboardSnapshot>> ListSnapshots();
         Task<List<LeaderboardEntry>> GetEntriesByDate(DateTime dateTime);
+        Task SaveConnectedRealms();
     }
 }
