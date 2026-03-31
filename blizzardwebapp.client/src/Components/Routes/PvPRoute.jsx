@@ -28,68 +28,39 @@ export default function PvPRoute() {
 
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4 }}>
-            <Typography
-                variant="h4"
-                sx={{
-                    mb: 4,
-                    fontWeight: 800,
-                    fontSize: { xs: '2rem', md: '2.5rem' },
-                    background: 'linear-gradient(135deg, #00ff88 0%, #00cfff 50%, #a855f7 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    letterSpacing: '-0.02em',
-                    position: 'relative',
-                    '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: -8,
-                        left: 0,
-                        width: 60,
-                        height: 4,
-                        background: 'linear-gradient(90deg, #00ff88, transparent)',
-                        borderRadius: 2,
-                    }
-                }}
-            >
-                PvP Leaderboard
-            </Typography>
-            <Box sx={{ maxWidth: 'fit-content', mx: 'auto' }}>
-                 <Paper
-                    elevation={0}
-                    sx={{
-                        p: 3,
-                        mb: 4,
-                        background: 'rgba(15, 18, 41, 0.6)',
-                        backdropFilter: 'blur(20px)',
-                        border: '1px solid rgba(0, 255, 136, 0.2)',
-                        borderRadius: 2,
-                        boxShadow: '0 8px 32px rgba(0, 255, 136, 0.1)',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        '&::before': {
-                            content: '""',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            height: '1px',
-                            background: 'linear-gradient(90deg, transparent, #00ff88, transparent)',
-                            opacity: 0.5,
-                        }
-                    }}>
-
-                    <Box
+        <Container maxWidth="xl" sx={{ py:4 }}>
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto',mb:6 }}>
+                    <Typography
+                        variant="h4"
                         sx={{
-                            display: 'flex',
-                            gap: 2,
-                            alignItems: 'center',
-                            flexWrap: 'wrap',
-                            }}>
+                            fontWeight: 300,
+                            fontSize: { xs: '2rem', md: '2.5rem' },
+                            background: 'linear-gradient(135deg, #00ff88 0%, #00cfff 50%, #a855f7 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            letterSpacing: '-0.02em',
+                            position: 'relative',
+                            '&::after': {
+                                content: '""',
+                                position: 'absolute',
+                                bottom: -8,
+                                left: 0,
+                                width: 60,
+                                height: 4,
+                                background: 'linear-gradient(90deg, #00ff88, transparent)',
+                                borderRadius: 2,
+                            }
+                        }}
+                    >
+                    WoW Arena Leaderboard
+                    </Typography>
 
-                        {/* Bracket Select */}
+            </Box>
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb:3 }}>
+                            {/* Bracket Select */}
                         <FormControl
-                            sx={{
+                    sx={{
+                                mx:3,
                                 width: 200,
                                 '& .MuiOutlinedInput-root': {
                                     backgroundColor: 'rgba(255, 255, 255, 0.03)',
@@ -139,16 +110,10 @@ export default function PvPRoute() {
                         </FormControl>
                         {/* Season Select */}
                         <SeasonsSelect selectSeason={handleSelectSeason} />
-                    </Box>
-                </Paper>
-
-
-                {/* DataGrid */}
             </Box>
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto' }}>
                 <SeasonLbDataGrid season={season} bracket={bracket} />
-
-
-
+            </Box>
         </Container>
 
     );

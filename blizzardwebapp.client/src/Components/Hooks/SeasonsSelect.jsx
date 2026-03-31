@@ -59,6 +59,7 @@ export default function SeasonsSelect({selectSeason}) {
     return (
         <FormControl
             sx={{
+                mx:3,
                 width: 200,
                 '& .MuiOutlinedInput-root': {
                     backgroundColor: 'rgba(255, 255, 255, 0.03)',

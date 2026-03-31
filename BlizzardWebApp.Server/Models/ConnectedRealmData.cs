@@ -10,6 +10,7 @@ namespace BlizzardWebApp.Server.Models
         public List<RealmData> RealmData { get; set; } 
         [JsonPropertyName("mythic_leaderboards")]
         public HRef MLeaderboardHref { get; set; }
+
         [JsonPropertyName("auctions")]
         public HRef AuctionHref { get; set; }
 

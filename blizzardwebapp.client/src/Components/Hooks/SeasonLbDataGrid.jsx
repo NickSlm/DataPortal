@@ -16,7 +16,18 @@ import {
     Typography
 } from '@mui/material';
 
+import {
+    GridToolbarContainer,
+    GridToolbarQuickFilter,
+} from '@mui/x-data-grid';
 
+function CustomToolbar(props) {
+    return (
+        <GridToolbarContainer>
+            <GridToolbarQuickFilter />
+        </GridToolbarContainer>
+    );
+}
 export default function SeasonLbDataGrid({season, bracket}) {
 
     const [data, setData] = useState([]);
@@ -71,7 +82,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
                             fontWeight: params.row.rank <= 3 ? 700 : 500,
                         }}
                     >
-                        {params.row.rank}
+                        #{params.row.rank}
                     </Typography>
                 </Box>
             ),
@@ -79,7 +90,8 @@ export default function SeasonLbDataGrid({season, bracket}) {
         {
             field: 'name',
             headerName: 'Player',
-            align: 'center',
+            width: 150,
+            align: 'left',
             headerAlign: 'center',
             renderCell: (params) => (
                 <Typography sx={{  fontWeight: 600 }}>
@@ -125,7 +137,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
         },
         {
             field: 'total',
-            headerName: 'Played',
+            headerName: 'Total',
             width: 120,
             align: 'center',
             headerAlign: 'center',
@@ -137,7 +149,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
         },
         {
             field: 'wins',
-            headerName: 'W',
+            headerName: 'Win',
             width: 70,
             align: 'center',
             headerAlign: 'center',
@@ -149,7 +161,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
         },
         {
             field: 'losses',
-            headerName: 'L',
+            headerName: 'Loss',
             width: 70,
             align: 'center',
             headerAlign: 'center',
@@ -240,11 +252,10 @@ export default function SeasonLbDataGrid({season, bracket}) {
     }
     return (
 
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Paper
                 elevation={0}
                 sx={{
-                    height: 600,
+                    height: 'fit-content',
                     background: 'linear-gradient(145deg, #0f1229 0%, #1a1f3a 100%)',
                     border: '1px solid rgba(0, 255, 136, 0.15)',
                     borderRadius: 1,
@@ -330,16 +341,25 @@ export default function SeasonLbDataGrid({season, bracket}) {
                <DataGrid
                     rows={data ?? []}
                     columns={columns}
-
                     pageSize={10}
                     loading={loading}
                     rowsPerPageOptions={[10, 25, 50]}
                     disableSelectionOnClick
+                    slots={{
+                        toolbar: CustomToolbar,
+                    }}
+                    slotProps={{
+                        toolbar: {
+                            showQuickFilter: true,
+                        },
+                    }}
+                    showToolbar
                     sx={{
                         // Core styling
                         border: 'none',
                         color: 'white',
 
+                        background:'transparent',
                         // Cell styling
                         '& .MuiDataGrid-cell': {
                             borderBottom: '1px solid rgba(255, 255, 255, 0.03)',
@@ -588,9 +608,11 @@ export default function SeasonLbDataGrid({season, bracket}) {
                                 border: '1px solid rgba(0, 255, 136, 0.2)',
                             },
                         },
+                        '& .MuiDataGrid-toolbarContainer': {
+                            backgroundColor: 'transparent',
+                        }
                     }}
                 />
             </Paper>
-        </Box>
     );
 }
