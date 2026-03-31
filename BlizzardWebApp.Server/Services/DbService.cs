@@ -47,9 +47,9 @@ namespace BlizzardWebApp.Server.Services
                     Realms = realm.RealmData.Select(e => new RealmDb
                     {
                         Id = e.Id,
-                        Name = e.Name,
+                        Name = e.Name["en_US"],
                         Slug = e.Slug,
-                        Category = e.Category,
+                        Category = e.Category["en_US"]
                     }).ToList()
                    
                 };

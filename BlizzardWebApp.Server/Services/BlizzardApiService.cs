@@ -88,21 +88,32 @@ namespace BlizzardWebApp.Server.Services
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
 
-
+            var semaphore = new SemaphoreSlim(5);
 
 
             var tasks = connectedRealms.ConnectedRealms
-              .Select(href => GetConnectedRealmById(href))
-              .ToList();
+                .Select(async href =>
+                {
+                    await semaphore.WaitAsync();
+                    try
+                    {
+                        return await GetConnectedRealmById(href, token);
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                })
+                .ToList();
+
 
             var results = await Task.WhenAll(tasks);
 
             return results.ToList();
         }
 
-        private async Task<ConnectedRealmData> GetConnectedRealmById(HRef href)
+        private async Task<ConnectedRealmData> GetConnectedRealmById(HRef href, string token)
         {
-            var token = await _authService.GetAccessToken();
 
             using var request = new HttpRequestMessage(HttpMethod.Get, $"{href.Href}");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
