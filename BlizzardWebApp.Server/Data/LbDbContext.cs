@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BlizzardWebApp.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlizzardWebApp.Server.Data
 {
@@ -17,11 +18,22 @@ namespace BlizzardWebApp.Server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ConnectedRealmsDb>()
-                .HasMany(c => c.Realms)
+            modelBuilder.Entity<ConnectedRealmsDb>(e =>
+            {
+                e.HasKey(c => c.Id);
+                e.Property(c => c.Id).ValueGeneratedNever();
+
+                e.HasMany(c => c.Realms)
                 .WithOne(c => c.ConnectedRealm)
                 .HasForeignKey(c => c.CRealmsId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            });
+
+            modelBuilder.Entity<RealmDb>(e =>
+            {
+                e.HasKey(r => r.Id);
+            });
         }
     }
 }

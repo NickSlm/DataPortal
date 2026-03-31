@@ -3,6 +3,7 @@ using System;
 using BlizzardWebApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlizzardWebApp.Server.Migrations
 {
     [DbContext(typeof(LbDbContext))]
-    partial class LbDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260331093719_ConnectedRealmsDS")]
+    partial class ConnectedRealmsDS
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");

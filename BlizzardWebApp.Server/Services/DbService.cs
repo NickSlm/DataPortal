@@ -1,7 +1,9 @@
 ﻿using BlizzardWebApp.Server.Data;
 using BlizzardWebApp.Server.Dto;
 using BlizzardWebApp.Server.Interfaces;
+using BlizzardWebApp.Server.Models;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 
 namespace BlizzardWebApp.Server.Services
 {
@@ -35,26 +37,52 @@ namespace BlizzardWebApp.Server.Services
 
         public async Task SaveConnectedRealms()
         {
-            var realms = await _blizzardApi.GetConnectedRealms();
+            var connectedRealms = await _blizzardApi.GetConnectedRealms();
 
-            foreach (var realm in realms)
+            var incomingIds = connectedRealms.Select(c => c.Id).ToList();
+
+            var existingRealms = await _dbContext.ConnectedRealms
+                .Include(c => c.Realms)
+                .Where(c => incomingIds.Contains(c.Id))
+                .ToDictionaryAsync(c => c.Id);
+
+            foreach (var realm in connectedRealms)
             {
-                var realmDb = new ConnectedRealmsDb
+                if (existingRealms.TryGetValue(realm.Id, out var existing))
                 {
-                    Id = realm.Id,
-                    MythicLeaderboard = realm.MLeaderboardHref.Href,
-                    Auctions = realm.AuctionHref.Href,
-                    Realms = realm.RealmData.Select(e => new RealmDb
+                    existing.MythicLeaderboard = realm.MLeaderboardHref?.Href;
+                    existing.Auctions = realm.AuctionHref?.Href;
+
+                    _dbContext.RemoveRange(existing.Realms);
+                    existing.Realms = realm.RealmData.Select(e => new RealmDb
                     {
                         Id = e.Id,
                         Name = e.Name["en_US"],
                         Slug = e.Slug,
                         Category = e.Category["en_US"]
-                    }).ToList()
-                   
-                };
-                _dbContext.Add(realmDb);
+                    }).ToList();
+                }
+                else
+                {
+                    var newRealm = new ConnectedRealmsDb
+                    {
+                        Id = realm.Id,
+                        MythicLeaderboard = realm.MLeaderboardHref?.Href,
+                        Auctions = realm.AuctionHref?.Href,
+                        Realms = realm.RealmData.Select(e => new RealmDb
+                        {
+                            Id = e.Id,
+                            Name = e.Name["en_US"],
+                            Slug = e.Slug,
+                            Category = e.Category["en_US"]
+                        }).ToList()
+
+                    };
+                    _dbContext.ConnectedRealms.Add(newRealm);
+                }
             }
+
+
             await _dbContext.SaveChangesAsync();
         }
     }
