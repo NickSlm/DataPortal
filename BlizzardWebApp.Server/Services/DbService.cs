@@ -34,7 +34,6 @@ namespace BlizzardWebApp.Server.Services
             var entries = await _dbContext.LeaderboardEntry.Where(e => snapshot.Id == e.SnapshotId).ToListAsync();
             return entries;
         }
-
         public async Task SaveConnectedRealms()
         {
             var connectedRealms = await _blizzardApi.GetConnectedRealms();
@@ -85,5 +84,10 @@ namespace BlizzardWebApp.Server.Services
 
             await _dbContext.SaveChangesAsync();
         }
+        public async Task GetRealms()
+        {
+
+        }
+
     }
 }

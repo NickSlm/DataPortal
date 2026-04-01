@@ -11,12 +11,16 @@ import {
     Tabs,
     Tab,
 } from '@mui/material';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import { useState } from 'react';
-
 
 export default function PvERoute() {
 
-    const [activeTab, setActiveTab] = useState('');
+    const [activeTab, setActiveTab] = useState('Mythics');
+
+    const images = import.meta.glob("../../Assets/affix_*.jpg", {eager:true});
+    const imageArray = Object.values(images);
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -43,7 +47,7 @@ export default function PvERoute() {
                         }
                     }}
                 >
-                    WoW PvE Leaderboards
+                    WoW {activeTab} Leaderboards
                 </Typography>
             </Box>
 
@@ -58,11 +62,10 @@ export default function PvERoute() {
                     border: '1px solid rgba(0, 255, 136, 0.15)',
                     borderRadius: 2,
                 }}>
-                    {/* Sliding background indicator */}
                     <Box sx={{
                         position: 'absolute',
                         top: 4,
-                        left: activeTab === 'tab1' ? 4 : 'calc(50% + 2px)',
+                        left: activeTab === 'Mythics' ? 4 : 'calc(50% + 2px)',
                         width: 'calc(50% - 6px)',
                         height: 'calc(100% - 8px)',
                         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 207, 255, 0.15))',
@@ -73,7 +76,7 @@ export default function PvERoute() {
                     }} />
 
                     <Button
-                        onClick={() => setActiveTab('tab1')}
+                        onClick={() => setActiveTab('Mythics')}
                         sx={{
                             px: 4,
                             py: 1.5,
@@ -83,7 +86,7 @@ export default function PvERoute() {
                             textTransform: 'none',
                             position: 'relative',
                             zIndex: 1,
-                            color: activeTab === 'tab1' ? '#00ff88' : 'rgba(255, 255, 255, 0.6)',
+                            color: activeTab === 'Mythics' ? '#00ff88' : 'rgba(255, 255, 255, 0.6)',
                             transition: 'color 0.3s ease',
                             minWidth: 140,
                             '&:hover': {
@@ -95,7 +98,7 @@ export default function PvERoute() {
                         Mythics
                     </Button>
                     <Button
-                        onClick={() => setActiveTab('tab2')}
+                        onClick={() => setActiveTab('Raids')}
                         sx={{
                             px: 4,
                             py: 1.5,
@@ -105,7 +108,7 @@ export default function PvERoute() {
                             textTransform: 'none',
                             position: 'relative',
                             zIndex: 1,
-                            color: activeTab === 'tab2' ? '#00ff88' : 'rgba(255, 255, 255, 0.6)',
+                            color: activeTab === 'Raids' ? '#00ff88' : 'rgba(255, 255, 255, 0.6)',
                             transition: 'color 0.3s ease',
                             minWidth: 140,
                             '&:hover': {
@@ -118,6 +121,21 @@ export default function PvERoute() {
                     </Button>
                 </Box>
 
+            </Box>
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6}}>
+                <ImageList cols={2 }>
+                    {
+                        imageArray.map((item) => (
+                            <ImageListItem key={item.default}>
+                                <img
+                                    srcSet={`${item.default}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                    src={`${item.default}?w=164&h=164&fit=crop&auto=format`}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                        ))
+                    }
+                </ImageList>
             </Box>
         </Container>
     )
