@@ -9,7 +9,7 @@ import {
     Paper,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-
+import { glassSelectStyle } from '../../Styles/componentStyles';
 
 
 
@@ -58,41 +58,7 @@ export default function SeasonsSelect({selectSeason}) {
 
     return (
         <FormControl
-            sx={{
-                mx:3,
-                width: 200,
-                '& .MuiOutlinedInput-root': {
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                    borderRadius: 1.5,
-                    transition: 'all 0.2s ease',
-                    '& fieldset': {
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        transition: 'all 0.2s ease',
-                    },
-                    '&:hover': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        '& fieldset': {
-                            borderColor: '#00ff88',
-                        },
-                    },
-                    '&.Mui-focused': {
-                        backgroundColor: 'rgba(0, 255, 136, 0.05)',
-                        '& fieldset': {
-                            borderColor: '#00ff88',
-                            borderWidth: 2,
-                        },
-                    },
-                },
-                '& .MuiInputLabel-root': {
-                    color: 'rgba(255, 255, 255, 0.5)',
-                    '&.Mui-focused': {
-                        color: '#00ff88',
-                    },
-                },
-                '& .MuiSelect-icon': {
-                    color: '#00ff88',
-                },
-            }}
+            sx={glassSelectStyle.FormControl }
         >
             <InputLabel sx={{ color: 'text.secondary' }}>Season</InputLabel>
             <Select
@@ -100,7 +66,7 @@ export default function SeasonsSelect({selectSeason}) {
                 label="Season"
                 onChange={handleSelect}
                 disabled={loading}
-                MenuProps={{ PaperProps: { sx: { maxHeight: 266 } } }}
+                MenuProps={glassSelectStyle.menuProps}
             >
                 {loading ? (
                     <MenuItem disabled>Loading seasons</MenuItem>

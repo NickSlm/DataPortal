@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import SeasonsSelect from '../Hooks/SeasonsSelect';
 import SeasonLbDataGrid from '../Hooks/SeasonLbDataGrid';
+import { glassSelectStyle } from '../../Styles/componentStyles';
 
 
 
@@ -58,48 +59,15 @@ export default function PvPRoute() {
             </Box>
             <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb:3 }}>
                             {/* Bracket Select */}
-                        <FormControl
-                    sx={{
-                                mx:3,
-                                width: 200,
-                                '& .MuiOutlinedInput-root': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                                    borderRadius: 1.5,
-                                    transition: 'all 0.2s ease',
-                                    '& fieldset': {
-                                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                                        transition: 'all 0.2s ease',
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                                        '& fieldset': {
-                                            borderColor: '#00ff88',
-                                        },
-                                    },
-                                    '&.Mui-focused': {
-                                        backgroundColor: 'rgba(0, 255, 136, 0.05)',
-                                        '& fieldset': {
-                                            borderColor: '#00ff88',
-                                            borderWidth: 2,
-                                        },
-                                    },
-                                },
-                                '& .MuiInputLabel-root': {
-                                    color: 'rgba(255, 255, 255, 0.5)',
-                                    '&.Mui-focused': {
-                                        color: '#00ff88',
-                                    },
-                                },
-                                '& .MuiSelect-icon': {
-                                    color: '#00ff88',
-                                },
-                            }}
+                <FormControl
+                    sx={glassSelectStyle.FormControl}
                         >
-                            <InputLabel sx={{ color: 'text.secondary' }}>Bracket</InputLabel>
-                            <Select
-                                value={bracket}
-                                label="Category"
-                                onChange={(e) => setBracket(e.target.value)}
+                        <InputLabel sx={{ color: 'text.secondary' }}>Bracket</InputLabel>
+                        <Select
+                            value={bracket}
+                            label="Category"
+                            onChange={(e) => setBracket(e.target.value)}
+                            MenuProps={glassSelectStyle.menuProps}
                             >
                                 <MenuItem value="">
                                     <em>None</em>
