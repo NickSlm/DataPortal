@@ -88,9 +88,22 @@ namespace BlizzardWebApp.Server.Services
         {
 
         }
-        public async Task GetRealms()
+        public async Task<List<ConnectedRealmDto>> GetRealms()
         {
+            var realms = await _dbContext.ConnectedRealms.Select(c => new ConnectedRealmDto
+            {
+                Id = c.Id,
+                Auctions = c.Auctions,
+                MythicLeaderboard = c.MythicLeaderboard,
+                Realms = c.Realms.Select(r => new RealmDto
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Category = r.Category
+                }).ToList()
+            }).ToListAsync();
 
+            return realms;
         }
 
     }

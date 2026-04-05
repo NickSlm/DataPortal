@@ -11,17 +11,20 @@ import {
     Tabs,
     Tab,
 } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+
 import { glassSelectStyle } from '../../Styles/componentStyles';
 import { useState } from 'react';
 
 export default function PvERoute() {
 
     const [activeTab, setActiveTab] = useState('Mythics');
+    
 
-    const images = import.meta.glob("../../Assets/affix_*.jpg", {eager:true});
-    const imageArray = Object.values(images);
+
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -52,6 +55,18 @@ export default function PvERoute() {
                 </Typography>
             </Box>
 
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6}}>
+    
+                <FormControl
+                    sx={glassSelectStyle.FormControl}
+                >
+                    <Autocomplete
+                        disablePortal
+                        renderInput={(params) => <TextField {...params} label="Server" />}
+                        MenuProps={glassSelectStyle.menuProps}
+                    />
+                </FormControl>
+            </Box>
             <Box sx={{ maxWidth:'fit-content' , mx:'auto', mb:6}}>
                 <Box sx={{
                     position: 'relative',
@@ -122,34 +137,6 @@ export default function PvERoute() {
                     </Button>
                 </Box>
 
-            </Box>
-            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6}}>
-                {/*<ImageList cols={2 }>*/}
-                {/*    {*/}
-                {/*        imageArray.map((item) => (*/}
-                {/*            <ImageListItem key={item.default}>*/}
-                {/*                <img*/}
-                {/*                    srcSet={`${item.default}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}*/}
-                {/*                    src={`${item.default}?w=164&h=164&fit=crop&auto=format`}*/}
-                {/*                    loading="lazy"*/}
-                {/*                />*/}
-                {/*            </ImageListItem>*/}
-                {/*        ))*/}
-                {/*    }*/}
-                {/*</ImageList>*/}
-                <FormControl
-                    sx={glassSelectStyle.FormControl}
-                >
-                    <InputLabel>Select Option</InputLabel>
-                    <Select
-                        label="Select Option"
-                        MenuProps={glassSelectStyle.menuProps}
-                    >
-                        <MenuItem value="option1">Option One</MenuItem>
-                        <MenuItem value="option2">Option Two</MenuItem>
-                        <MenuItem value="option3">Option Three</MenuItem>
-                    </Select>
-                </FormControl>
             </Box>
         </Container>
     )

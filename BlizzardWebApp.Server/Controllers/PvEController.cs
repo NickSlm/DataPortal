@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlizzardWebApp.Server.Interfaces;
+using BlizzardWebApp.Server.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +10,21 @@ namespace BlizzardWebApp.Server.Controllers
     [ApiController]
     public class PvEController : ControllerBase
     {
-        // GET: api/<PvEController>
-        [HttpGet("/connected_realms/get")]
-        public IEnumerable<string> Get()
+        private readonly IDbService _dbService;
+
+
+        public PvEController(IDbService dbService)
         {
-            return new string[] { "value1", "value2" };
+            _dbService = dbService;
+        }
+
+
+        [HttpGet("/connected_realms/get")]
+        public async Task<ActionResult<ConnectedRealmDto>> Get()
+        {
+            var dto = await _dbService.GetRealms();
+
+            return Ok(dto);
         }
 
     }
