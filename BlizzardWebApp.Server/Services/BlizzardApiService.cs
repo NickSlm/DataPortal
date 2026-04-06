@@ -14,13 +14,15 @@ namespace BlizzardWebApp.Server.Services
         private readonly IBlizzardAuthService _authService;
         private readonly IAsyncPolicy<HttpResponseMessage> _asyncPolicy;
         private readonly HttpClient _httpClient;
+        private ILoggingService _logger;
 
-        public BlizzardApiService(IBlizzardAuthService authService, IAsyncPolicy<HttpResponseMessage> asyncPolicy, IHttpClientFactory httpClientFactory, ICacheService cacheService)
+        public BlizzardApiService(IBlizzardAuthService authService, IAsyncPolicy<HttpResponseMessage> asyncPolicy, IHttpClientFactory httpClientFactory, ICacheService cacheService, ILoggingService logger)
         {
             _authService = authService;
             _asyncPolicy = asyncPolicy;
             _httpClient = httpClientFactory.CreateClient("BlizzardApp");
             _cacheService = cacheService;
+            _logger = logger;
         }
 
 
@@ -57,6 +59,8 @@ namespace BlizzardWebApp.Server.Services
         {
 
             var token = await _authService.GetAccessToken();
+            //for testing DELETE LATER
+            _logger.LogInfo(token);
 
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/pvp-season/{season}/pvp-leaderboard/{bracket}?namespace=dynamic-eu&locale=en_US");
 

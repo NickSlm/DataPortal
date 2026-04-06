@@ -9,6 +9,5 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<List<LeaderboardEntry>> GetEntriesByDate(DateTime dateTime);
         Task SaveConnectedRealms();
         Task<List<ConnectedRealmDto>> GetRealms();
-        Task SaveCurrentDungeons();
     }
 }

@@ -15,9 +15,9 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-
 import { glassSelectStyle } from '../../Styles/componentStyles';
 import { useState } from 'react';
+import RealmsSelect from '../Hooks/RealmsSelect';
 
 export default function PvERoute() {
 
@@ -55,17 +55,9 @@ export default function PvERoute() {
                 </Typography>
             </Box>
 
-            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6}}>
-    
-                <FormControl
-                    sx={glassSelectStyle.FormControl}
-                >
-                    <Autocomplete
-                        disablePortal
-                        renderInput={(params) => <TextField {...params} label="Server" />}
-                        MenuProps={glassSelectStyle.menuProps}
-                    />
-                </FormControl>
+            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6 }}>
+                <RealmsSelect />
+               
             </Box>
             <Box sx={{ maxWidth:'fit-content' , mx:'auto', mb:6}}>
                 <Box sx={{

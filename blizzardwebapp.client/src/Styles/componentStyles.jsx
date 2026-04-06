@@ -44,8 +44,70 @@ export const glassSelectStyle = {
             transform: 'rotate(180deg)',
         },
     },
+    slotProps: {
+        paper: {
+            sx: {
+                mt: 1,
+                background: 'rgba(15, 18, 41, 0.95)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(0, 255, 136, 0.3)',
+                borderRadius: 2,
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+            }
+        },
+        listbox: {
+            sx: {
+                maxHeight: 300,
+                overflow: 'auto',
 
-     menuProps: {
+                '& li': {
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    py: 1.5,
+                    px: 2,
+                    borderRadius: 1,
+                    mx: 1,
+                    my: 0.5,
+                    transition: 'all 0.2s ease',
+
+                    '&:hover': {
+                        background: 'rgba(0, 255, 136, 0.1)',
+                        color: '#fff',
+                        transform: 'translateX(4px)',
+                    },
+
+                    '&.Mui-focused': {
+                        background: 'rgba(0, 255, 136, 0.1)',
+                    },
+
+                    '&[aria-selected="true"]': {
+                        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 207, 255, 0.15))',
+                        color: '#00ff88',
+                        fontWeight: 600,
+                        border: '1px solid rgba(0, 255, 136, 0.3)',
+                    },
+                },
+
+                /* scrollbar */
+                '&::-webkit-scrollbar': {
+                    width: 8,
+                },
+                '&::-webkit-scrollbar-track': {
+                    background: 'rgba(0, 0, 0, 0.2)',
+                    borderRadius: 4,
+                    margin: 8,
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    background: 'rgba(0, 255, 136, 0.3)',
+                    borderRadius: 4,
+                    '&:hover': {
+                        background: 'rgba(0, 255, 136, 0.5)',
+                    },
+                },
+            }
+        }
+    },
+
+    menuProps: {
         PaperProps: {
             sx: {
                 mt: 1,

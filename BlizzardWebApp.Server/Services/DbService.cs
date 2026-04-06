@@ -84,17 +84,12 @@ namespace BlizzardWebApp.Server.Services
 
             await _dbContext.SaveChangesAsync();
         }
-        public async Task SaveCurrentDungeons()
-        {
 
-        }
         public async Task<List<ConnectedRealmDto>> GetRealms()
         {
             var realms = await _dbContext.ConnectedRealms.Select(c => new ConnectedRealmDto
             {
                 Id = c.Id,
-                Auctions = c.Auctions,
-                MythicLeaderboard = c.MythicLeaderboard,
                 Realms = c.Realms.Select(r => new RealmDto
                 {
                     Id = r.Id,
