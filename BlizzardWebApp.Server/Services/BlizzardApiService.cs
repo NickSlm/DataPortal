@@ -87,7 +87,7 @@ namespace BlizzardWebApp.Server.Services
             var connectedRealms = JsonSerializer.Deserialize<ConnectedRealm>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
@@ -128,13 +128,35 @@ namespace BlizzardWebApp.Server.Services
             var connectedRealmData = JsonSerializer.Deserialize<ConnectedRealmData>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
 
             return connectedRealmData;
 
+
+        }
+
+        public async Task GetMythicKeystones(int id)
+        {
+            var token = await _authService.GetAccessToken();
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/connected-realm/{id}/mythic-leaderboard/?namespace=dynamic-eu");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var keystones = JsonSerializer.Deserialize<MythicLeaderboards>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            var semaphore = new SemaphoreSlim(5);
 
         }
     }
