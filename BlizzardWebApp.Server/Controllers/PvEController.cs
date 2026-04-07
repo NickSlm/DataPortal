@@ -36,7 +36,7 @@ namespace BlizzardWebApp.Server.Controllers
 
 
 
-        //https://eu.api.blizzard.com/data/wow/connected-realm/{connected_realm_id}/mythic-leaderboard/?namespace=dynamic-eu
+        //https://eu.api.blizzard.com/data/wow/connected-realm/{connected_realm_id}/mythic-leaderboard/?namespace=dynamic-eu 
 
         //https://eu.api.blizzard.com/data/wow/mythic-keystone/dungeon/{keystone_id}?namespace=dynamic-eu&locale=en_US
 
