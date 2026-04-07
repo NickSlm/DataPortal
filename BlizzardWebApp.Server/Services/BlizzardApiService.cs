@@ -138,11 +138,11 @@ namespace BlizzardWebApp.Server.Services
 
         }
 
-        public async Task GetMythicKeystones(int id)
+        public async Task<List<string>> GetMythicKeystones()
         {
             var token = await _authService.GetAccessToken();
 
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/connected-realm/{id}/mythic-leaderboard/?namespace=dynamic-eu");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/connected-realm/509/mythic-leaderboard/?namespace=dynamic-eu");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
@@ -158,6 +158,66 @@ namespace BlizzardWebApp.Server.Services
 
             var semaphore = new SemaphoreSlim(5);
 
+            var tasks = keystones.MythicKeystones
+            .Select(async k =>
+            {
+                await semaphore.WaitAsync();
+                try
+                {
+                    return await GetDungeonData(k.Id, token);
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+            })
+            .ToList();
+
+
+            var results = await Task.WhenAll(tasks);
+
+            return results.ToList();
+
+        }
+
+        private async Task<string> GetDungeonData(int keystoneId, string token)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/mythic-keystone/dungeon/{keystoneId}?namespace=dynamic-eu&locale=en_US");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var dungeon = JsonSerializer.Deserialize<Dungeon>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            var asset = await GetDungeonAsset(dungeon.Info.Id, token);
+
+            return asset;
+        }
+
+        private async Task<string> GetDungeonAsset(int dungeonId, string token)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/media/journal-instance/{dungeonId}?namespace=static-12.0.1_65617-eu");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var asset = JsonSerializer.Deserialize<DungeonAsset>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            return asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
         }
     }
 }

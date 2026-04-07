@@ -35,16 +35,10 @@ namespace BlizzardWebApp.Server.Controllers
             var category = request.Category;
 
 
+            var res = await _dbService.SaveKeystonesData();
 
-        //https://eu.api.blizzard.com/data/wow/connected-realm/{connected_realm_id}/mythic-leaderboard/?namespace=dynamic-eu 
 
-        //https://eu.api.blizzard.com/data/wow/mythic-keystone/dungeon/{keystone_id}?namespace=dynamic-eu&locale=en_US
-
-        //https://eu.api.blizzard.com/data/wow/journal-instance/{dungeon_id}?namespace=static-12.0.1_65617-eu
-
-        //https://render.worldofwarcraft.com/eu/zones/algethar-academy-small.jpg
-
-            return Ok(new { message = $"{name} {id} {category}" });
+            return Ok(new { message = $"{name} {id} {res[0]}" });
         }
 
 

@@ -2,18 +2,15 @@
 
 namespace BlizzardWebApp.Server.Models
 {
-    public class MythicKeystone
+    public class DungeonInfo
     {
         [JsonPropertyName("key")]
         public HRef Href { get; set; }
 
         [JsonPropertyName("name")]
-        public Dictionary<string, string> Name { get; set; }
+        public string Name { get; set; }
 
         [JsonPropertyName("id")]
         public int Id { get; set; }
-
-
-
     }
 }

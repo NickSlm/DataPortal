@@ -84,7 +84,6 @@ namespace BlizzardWebApp.Server.Services
 
             await _dbContext.SaveChangesAsync();
         }
-
         public async Task<List<ConnectedRealmDto>> GetRealms()
         {
             var realms = await _dbContext.ConnectedRealms.Select(c => new ConnectedRealmDto
@@ -99,6 +98,11 @@ namespace BlizzardWebApp.Server.Services
             }).ToListAsync();
 
             return realms;
+        }
+        public async Task<List<string>> SaveKeystonesData()
+        {
+            var keystones = await _blizzardApi.GetMythicKeystones();
+            return keystones;
         }
 
     }
