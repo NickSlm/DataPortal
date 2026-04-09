@@ -110,7 +110,27 @@ namespace BlizzardWebApp.Server.Services
         public async Task SaveKeystonesData()
         {
             var keystones = await _blizzardApi.GetMythicKeystones();
-            _logger.LogInfo(keystones[0].Name);
+
+            var incomingId = keystones.Select(k => k.Id).ToList();
+
+            var existingKeystones = await _dbContext.Keystones
+                .Where(k => incomingId.Contains(k.Id))
+                .ToDictionaryAsync(k => k.Id);
+
+
+            foreach (var key in keystones)
+            {
+                if (existingKeystones.TryGetValue(key.Id, out var existing))
+                {
+                    existing.DungeonId = key.DungeonId;
+                    existing.ImagePath = key.ImagePath;
+                }
+                else
+                {
+                    _dbContext.Keystones.Add(key);
+                }
+            }
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
