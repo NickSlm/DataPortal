@@ -35,10 +35,10 @@ namespace BlizzardWebApp.Server.Controllers
             var category = request.Category;
 
 
-            var res = await _dbService.SaveKeystonesData();
+            await _dbService.SaveKeystonesData();
 
 
-            return Ok(new { message = $"{name} {id} {res[0]}" });
+            return Ok(new { message = $"{name}" });
         }
 
 

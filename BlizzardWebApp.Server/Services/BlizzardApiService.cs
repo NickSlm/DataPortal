@@ -1,4 +1,5 @@
-﻿using BlizzardWebApp.Server.Interfaces;
+﻿using BlizzardWebApp.Server.Data;
+using BlizzardWebApp.Server.Interfaces;
 using BlizzardWebApp.Server.Models;
 using Polly;
 using System.Net.Http.Headers;
@@ -138,7 +139,7 @@ namespace BlizzardWebApp.Server.Services
 
         }
 
-        public async Task<List<string>> GetMythicKeystones()
+        public async Task<List<MythicKeystoneDb>> GetMythicKeystones()
         {
             var token = await _authService.GetAccessToken();
 
@@ -164,7 +165,7 @@ namespace BlizzardWebApp.Server.Services
                 await semaphore.WaitAsync();
                 try
                 {
-                    return await GetDungeonData(k.Id, token);
+                    return await GetDungeonData(k, token);
                 }
                 finally
                 {
@@ -180,9 +181,9 @@ namespace BlizzardWebApp.Server.Services
 
         }
 
-        private async Task<string> GetDungeonData(int keystoneId, string token)
+        private async Task<MythicKeystoneDb> GetDungeonData(MythicKeystone key, string token)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/mythic-keystone/dungeon/{keystoneId}?namespace=dynamic-eu&locale=en_US");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/mythic-keystone/dungeon/{key.Id}?namespace=dynamic-eu&locale=en_US");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
@@ -196,12 +197,21 @@ namespace BlizzardWebApp.Server.Services
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
 
-            var asset = await GetDungeonAsset(dungeon.Info.Id, token);
 
-            return asset;
+            var keystoneData = new MythicKeystoneDb
+            {
+                Id = key.Id,
+                Name = dungeon.Name,
+                DungeonId = dungeon.Info.Id,
+                ImagePath = $"../blizzardwebapp.client/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg"
+            };
+
+            await DownloadDungeonAsset(keystoneData.DungeonId, token, keystoneData.ImagePath);
+
+            return keystoneData;
         }
 
-        private async Task<string> GetDungeonAsset(int dungeonId, string token)
+        private async Task DownloadDungeonAsset(int dungeonId, string token, string path)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/media/journal-instance/{dungeonId}?namespace=static-12.0.1_65617-eu");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -217,7 +227,9 @@ namespace BlizzardWebApp.Server.Services
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
 
-            return asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
+            var imageUrl = asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
+
+            await ImageDownloaderService.SaveImageAsync(path, imageUrl);
         }
     }
 }

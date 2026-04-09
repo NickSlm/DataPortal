@@ -14,6 +14,7 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<LeaderboardEntry> LeaderboardEntry { get; set; }
         public DbSet<LeaderboardSnapshot> LeaderboardSnapshots { get; set; }
         public DbSet<ConnectedRealmsDb> ConnectedRealms { get; set; }
+        public DbSet<MythicKeystoneDb> Keystones { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

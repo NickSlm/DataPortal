@@ -1,4 +1,5 @@
-﻿using BlizzardWebApp.Server.Models;
+﻿using BlizzardWebApp.Server.Data;
+using BlizzardWebApp.Server.Models;
 
 namespace BlizzardWebApp.Server.Interfaces
 {
@@ -7,6 +8,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<Seasons> GetCurrentPvPSeason();
         Task<Leaderboard> GetLeaderboard(int season, string bracket);
         Task<List<ConnectedRealmData>> GetConnectedRealms();
-        Task<List<string>> GetMythicKeystones();
+        Task<List<MythicKeystoneDb>> GetMythicKeystones();
     }
 }
