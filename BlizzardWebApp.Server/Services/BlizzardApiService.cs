@@ -203,10 +203,10 @@ namespace BlizzardWebApp.Server.Services
                 Id = key.Id,
                 Name = dungeon.Name,
                 DungeonId = dungeon.Info.Id,
-                ImagePath = $"../blizzardwebapp.client/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg"
+                ImagePath = $"/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg"
             };
-
-            await DownloadDungeonAsset(keystoneData.DungeonId, token, keystoneData.ImagePath);
+            var downloadPath = $"../blizzardwebapp.client/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg";
+            await DownloadDungeonAsset(keystoneData.DungeonId, token, downloadPath);
 
             return keystoneData;
         }
@@ -228,7 +228,7 @@ namespace BlizzardWebApp.Server.Services
             });
 
             var imageUrl = asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
-
+            Console.WriteLine(path);
             await ImageDownloaderService.SaveImageAsync(path, imageUrl);
         }
     }
