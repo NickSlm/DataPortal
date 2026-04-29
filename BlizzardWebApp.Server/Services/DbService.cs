@@ -42,6 +42,32 @@ namespace BlizzardWebApp.Server.Services
             var entries = await _dbContext.LeaderboardEntry.Where(e => snapshot.Id == e.SnapshotId).ToListAsync();
             return entries;
         }
+        public async Task<List<ConnectedRealmDto>> GetRealms()
+        {
+            var realms = await _dbContext.ConnectedRealms.Select(c => new ConnectedRealmDto
+            {
+                Id = c.Id,
+                Realms = c.Realms.Select(r => new RealmDto
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Category = r.Category
+                }).ToList()
+            }).ToListAsync();
+
+            return realms;
+        }
+        public async Task<List<MythicKeystoneDb>> GetKeystonesData()
+        {
+            var keystones = await _dbContext.Keystones.Select(k => new MythicKeystoneDb
+            {
+                Id = k.Id,
+                DungeonId = k.DungeonId,
+                Name = k.Name,
+                ImagePath = k.ImagePath
+            }).ToListAsync();
+            return keystones;
+        }
         public async Task SaveConnectedRealms()
         {
             var connectedRealms = await _blizzardApi.GetConnectedRealms();
@@ -91,21 +117,6 @@ namespace BlizzardWebApp.Server.Services
 
 
             await _dbContext.SaveChangesAsync();
-        }
-        public async Task<List<ConnectedRealmDto>> GetRealms()
-        {
-            var realms = await _dbContext.ConnectedRealms.Select(c => new ConnectedRealmDto
-            {
-                Id = c.Id,
-                Realms = c.Realms.Select(r => new RealmDto
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    Category = r.Category
-                }).ToList()
-            }).ToListAsync();
-
-            return realms;
         }
         public async Task SaveKeystonesData()
         {

@@ -1,6 +1,7 @@
 ﻿using BlizzardWebApp.Server.Interfaces;
 using BlizzardWebApp.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
+using BlizzardWebApp.Server.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,6 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(dto);
         }
 
-
         [HttpPost("/leaderboard")]
         public async Task<ActionResult> GetLeaderboardById([FromBody] RealmDto request)
         {
@@ -41,6 +41,13 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new { message = $"{name}" });
         }
 
+        [HttpGet("/mythicKeystones/get")]
+        public async Task<ActionResult<MythicKeystoneDb>> GetMythicKeystones()
+        {
+            var keystones = await _dbService.GetKeystonesData();
+
+            return Ok(keystones);
+        }
 
     }
 }

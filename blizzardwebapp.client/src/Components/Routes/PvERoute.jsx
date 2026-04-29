@@ -24,7 +24,7 @@ export default function PvERoute() {
     const [activeTab, setActiveTab] = useState('Mythics');
     const [selectedImage, setSelectedImage] = useState(null);
 
-    const images = import.meta.glob('../../Assets/Dungeon/dung_*.jpg', {
+    const images = import.meta.glob('../../Assets/Dungeon/dungeon_*.jpg', {
         eager: true
     });
     const imageArray = Object.values(images).map(img => img.default);

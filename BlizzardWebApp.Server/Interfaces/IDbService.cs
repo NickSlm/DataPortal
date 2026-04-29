@@ -10,6 +10,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task SaveConnectedRealms();
         Task<List<ConnectedRealmDto>> GetRealms();
         Task SaveKeystonesData();
-
+        Task<List<MythicKeystoneDb>> GetKeystonesData();
     }
 }
