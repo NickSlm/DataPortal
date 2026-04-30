@@ -34,9 +34,7 @@ namespace BlizzardWebApp.Server.Controllers
             var name = request.Name;
             var category = request.Category;
 
-
             await _dbService.SaveKeystonesData();
-
 
             return Ok(new { message = $"{name}" });
         }

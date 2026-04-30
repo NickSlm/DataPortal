@@ -1,24 +1,8 @@
 import { useState, useEffect } from 'react';
-import { glassSelectStyle } from '../../Styles/componentStyles';
-import {
-    Container,
-    Box,
-    Select,
-    MenuItem,
-    Typography,
-    FormControl,
-    InputLabel,
-    Button,
-    Paper,
-    Tabs,
-    Tab,
-} from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 
 
 
-export default function RealmsSelect(){
+export const useRealms = () => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -55,27 +39,6 @@ export default function RealmsSelect(){
         }
         fetchData();
     }, []);
-
-
-
-
-
-    return (
-        <FormControl sx={glassSelectStyle.FormControl}>
-            <Autocomplete
-                options={data}
-                disablePortal
-                onChange={(event, value) => {
-                    console.log(value.id);
-                }}
-                getOptionLabel={(option) => option.name}
-                isOptionEqualToValue={(option, value) => option.rId === value.rId}
-                renderInput={(params) => (
-                    <TextField {...params} label="Server" />
-                )}
-                slotProps={glassSelectStyle.slotProps}
-        />
-        </FormControl>
-    );
+    return {realms: data, loading, error}
 };
 

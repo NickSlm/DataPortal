@@ -10,22 +10,26 @@
     Paper,
     Tabs,
     Tab,
+    Grid
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { useState } from 'react';
-import RealmsSelect from '../Hooks/RealmsSelect';
 import { useKeystoneImages } from '../Hooks/KeystoneAssets';
+import { useRealms } from '../Hooks/useRealms';
+import RealmsSelect from '../Layout/RealmsSelect';
 
 export default function PvERoute() {
 
     const [activeTab, setActiveTab] = useState('Mythics');
+    const [selectedRealm, setSelectedRealm] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
+    const { realms, loading, error } = useRealms();
 
-    if (!keystoneImages) return <div>No data</div>; // Add this check
+    if (!keystoneImages) return <div>No data</div>; 
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -50,22 +54,16 @@ export default function PvERoute() {
                             background: 'linear-gradient(90deg, #00ff88, transparent)',
                             borderRadius: 2,
                         }
-                    }}
-                >
-
-                    WoW {activeTab} Leaderboards
+                    }}>
+                      WoW {activeTab} Leaderboards
                 </Typography>
-                <div>
-                    {keystoneImages.map(item => (
-                        console.log(item.imagePath),
-                        <img key={item.id} src={item.imagePath} alt={item.name} />
-                ))}
-                </div>
             </Box>
 
             <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6 }}>
-                <RealmsSelect />
-               
+                <RealmsSelect realms={realms}
+                    value={selectedRealm}
+                    onChange={setSelectedRealm}
+                    loading={loading} />
             </Box>
             <Box sx={{ maxWidth:'fit-content' , mx:'auto', mb:6}}>
                 <Box sx={{
@@ -137,6 +135,127 @@ export default function PvERoute() {
                     </Button>
                 </Box>
 
+
+
+            </Box>
+            <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                    xs: '1fr',                   
+                    md: '1fr 2fr',               
+                    lg: '360px 1fr 280px',       
+                },
+                gridTemplateAreas: {
+                    xs: `"left"
+             "center"
+             "right"`,
+                    md: `"left center"
+             "left right"`,
+                    lg: '"left center right"',
+                },
+                gap: 3,
+                p: 3,
+                minHeight: '100vh',
+            }}>
+                
+                <Box sx={{ gridArea: 'left' }}>
+                    <Box sx={{
+                        background: 'rgba(15, 18, 41, 0.6)',
+                        backdropFilter: 'blur(10px)',
+                        borderRadius: 3,
+                        border: '1px solid rgba(0, 255, 136, 0.1)',
+                        p: 2,
+                    }}>
+                        <Box sx={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)',
+                            gap: 1,
+                        }}>
+                            {keystoneImages.map(keystone => (
+                                <Box
+                                    key={keystone.id}
+                                    onClick={() => setSelectedImage(keystone.id)}
+                                    sx={{
+                                        position: 'relative',
+                                        cursor: 'pointer',
+                                        borderRadius: 2,
+                                        overflow: 'hidden',
+                                        aspectRatio: '1',
+                                        transition: 'all 0.3s ease',
+                                        boxShadow: selectedImage === keystone.id
+                                            ? '0 0 0 3px #00ff88'
+                                            : 'none',
+                                        '&:hover': {
+                                            boxShadow: selectedImage === keystone.id
+                                                ? '0 0 0 3px #00ff88, 0 4px 12px rgba(0, 255, 136, 0.4)'
+                                                : '0 4px 12px rgba(0, 255, 136, 0.2)',
+                                        },
+                                    }}>
+
+                                    <Box
+                                        component="img"
+                                        src={keystone.imagePath}
+                                        alt={keystone.name}
+                                        sx={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            filter: selectedImage === keystone.id
+                                                ? 'brightness(1)'
+                                                : 'brightness(0.8)',
+                                            transition: 'filter 0.3s ease',
+                                        }}
+                                    />
+
+                                    <Box sx={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent)',
+                                        p: 1.5,
+                                    }}>
+                                        <Typography sx={{
+                                            color: '#fff',
+                                            fontWeight: 600,
+                                            fontSize: '0.9rem',
+                                        }}>
+                                            {keystone.name}
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Selected checkmark */}
+                                    {selectedImage === keystone.id && (
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: 8,
+                                            right: 8,
+                                            width: 28,
+                                            height: 28,
+                                            background: '#00ff88',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}>
+                                            <Typography sx={{
+                                                color: '#0f1229',
+                                                fontWeight: 700,
+                                                fontSize: '1.1rem',
+                                            }}>
+                                                ✓
+                                            </Typography>
+                                        </Box>
+                                    )}
+                                </Box>
+                            ))}
+                        </Box>
+                    </Box>
+                </Box>
+                <Box sx={{ gridArea: 'center' }}>
+                    <h1>{selectedRealm?.id} {selectedImage}</h1>
+                </Box>
+                <Box sx={{ gridArea: 'right' }}>...</Box>
             </Box>
             
         </Container>

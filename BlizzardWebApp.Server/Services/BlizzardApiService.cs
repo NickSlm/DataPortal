@@ -61,7 +61,9 @@ namespace BlizzardWebApp.Server.Services
 
             var token = await _authService.GetAccessToken();
             //for testing DELETE LATER
+            _logger.LogInfo("===========================================================================================================");
             _logger.LogInfo(token);
+            _logger.LogInfo("===========================================================================================================");
 
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/pvp-season/{season}/pvp-leaderboard/{bracket}?namespace=dynamic-eu&locale=en_US");
 
@@ -206,6 +208,7 @@ namespace BlizzardWebApp.Server.Services
                 ImagePath = $"/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg"
             };
             var downloadPath = $"../blizzardwebapp.client/src/Assets/Dungeon/dungeon_{dungeon.Name}.jpg";
+
             await DownloadDungeonAsset(keystoneData.DungeonId, token, downloadPath);
 
             return keystoneData;
@@ -230,6 +233,11 @@ namespace BlizzardWebApp.Server.Services
             var imageUrl = asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
             Console.WriteLine(path);
             await ImageDownloaderService.SaveImageAsync(path, imageUrl);
+        }
+
+        public async Task GetCurrentMythicLeaderboardsAsync()
+        {
+
         }
     }
 }
