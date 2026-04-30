@@ -12,8 +12,8 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
-import SeasonsSelect from '../Hooks/SeasonsSelect';
-import SeasonLbDataGrid from '../Hooks/SeasonLbDataGrid';
+import SeasonsSelect from '../Elements/SeasonsSelect';
+import SeasonLbDataGrid from '../Elements/SeasonLbDataGrid';
 import { glassSelectStyle } from '../../Styles/componentStyles';
 
 

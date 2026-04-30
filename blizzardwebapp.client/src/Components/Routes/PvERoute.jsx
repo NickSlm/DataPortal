@@ -17,9 +17,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { useState } from 'react';
-import { useKeystoneImages } from '../Hooks/KeystoneAssets';
+import { useKeystoneImages } from '../Hooks/useKeystoneImages';
 import { useRealms } from '../Hooks/useRealms';
-import RealmsSelect from '../Layout/RealmsSelect';
+import RealmsSelect from '../Elements/RealmsSelect';
 
 export default function PvERoute() {
 
@@ -224,7 +224,6 @@ export default function PvERoute() {
                                         </Typography>
                                     </Box>
 
-                                    {/* Selected checkmark */}
                                     {selectedImage === keystone.id && (
                                         <Box sx={{
                                             position: 'absolute',
