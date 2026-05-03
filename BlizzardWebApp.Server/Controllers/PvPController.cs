@@ -35,7 +35,7 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("/pvp/seasons/leaderboard/{season}/{bracket}")]
+        [HttpGet("/pvp/seasons/leaderboard/season/{season}/bracket/{bracket}")]
         public async Task<ActionResult<LeaderboardDto>> GetLeaderboard(int season, string bracket)
         {
 

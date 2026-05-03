@@ -185,7 +185,7 @@ export default function SeasonLbDataGrid({season, bracket}) {
             try {
                 const s = Number(season);
 
-                const response = await fetch(`http://127.0.0.1:5201/pvp/seasons/leaderboard/${s}/${bracket}`, { signal: controller.signal });
+                const response = await fetch(`http://127.0.0.1:5201/pvp/seasons/leaderboard/season/${s}/bracket/${bracket}`, { signal: controller.signal });
 
                 if (!response.ok) {
                     throw new Error(`Season ${season} Leaderboard not available`)

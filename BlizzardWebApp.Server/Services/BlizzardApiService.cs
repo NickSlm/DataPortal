@@ -1,6 +1,7 @@
 ﻿using BlizzardWebApp.Server.Data;
 using BlizzardWebApp.Server.Interfaces;
 using BlizzardWebApp.Server.Models;
+using BlizzardWebApp.Server.Models.MythicKeystones;
 using Polly;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -235,9 +236,25 @@ namespace BlizzardWebApp.Server.Services
             await ImageDownloaderService.SaveImageAsync(path, imageUrl);
         }
 
-        public async Task GetCurrentMythicLeaderboardsAsync()
+        public async Task<MythicLeaderboard> GetCurrentMythicLeaderboardsAsync(int realmId, int keystoneId)
         {
+            var token = await _authService.GetAccessToken();
 
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}/period/1061?namespace=dynamic-eu");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var mythicLeaderboard = JsonSerializer.Deserialize<MythicLeaderboard>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            return mythicLeaderboard;
         }
     }
 }

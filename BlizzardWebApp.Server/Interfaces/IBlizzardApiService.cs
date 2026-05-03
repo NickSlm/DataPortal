@@ -1,5 +1,6 @@
 ﻿using BlizzardWebApp.Server.Data;
 using BlizzardWebApp.Server.Models;
+using BlizzardWebApp.Server.Models.MythicKeystones;
 
 namespace BlizzardWebApp.Server.Interfaces
 {
@@ -9,5 +10,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<Leaderboard> GetLeaderboard(int season, string bracket);
         Task<List<ConnectedRealmData>> GetConnectedRealms();
         Task<List<MythicKeystoneDb>> GetMythicKeystones();
+        Task<MythicLeaderboard> GetCurrentMythicLeaderboardsAsync(int realmId, int keystoneId);
     }
 }

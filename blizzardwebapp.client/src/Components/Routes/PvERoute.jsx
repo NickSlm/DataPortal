@@ -157,7 +157,6 @@ export default function PvERoute() {
                 p: 3,
                 minHeight: '100vh',
             }}>
-                
                 <Box sx={{ gridArea: 'left' }}>
                     <Box sx={{
                         background: 'rgba(15, 18, 41, 0.6)',
@@ -252,7 +251,7 @@ export default function PvERoute() {
                     </Box>
                 </Box>
                 <Box sx={{ gridArea: 'center' }}>
-                    <h1>{selectedRealm?.id} {selectedImage}</h1>
+                    <h1>realm {selectedRealm?.id} image {selectedImage}</h1>
                 </Box>
                 <Box sx={{ gridArea: 'right' }}>...</Box>
             </Box>

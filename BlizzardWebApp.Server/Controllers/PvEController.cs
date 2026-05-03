@@ -12,10 +12,13 @@ namespace BlizzardWebApp.Server.Controllers
     public class PvEController : ControllerBase
     {
         private readonly IDbService _dbService;
+        private readonly IBlizzardApiService _blizzardApi;
 
-        public PvEController(IDbService dbService, ILoggingService logger)
+
+        public PvEController(IDbService dbService, ILoggingService logger, IBlizzardApiService blizzardApi)
         {
             _dbService = dbService;
+            _blizzardApi = blizzardApi;
         }
 
 
@@ -39,13 +42,24 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new { message = $"{name}" });
         }
 
-        [HttpGet("/mythicKeystones/get")]
+        [HttpGet("/MythicKeystones/get")]
         public async Task<ActionResult<MythicKeystoneDb>> GetMythicKeystones()
         {
             var keystones = await _dbService.GetKeystonesData();
 
             return Ok(keystones);
         }
+
+        [HttpGet("/MythicKeystone/Leaderboard/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}")]
+        public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
+        {
+
+            var keystoneLeaderboard = await _blizzardApi.GetCurrentMythicLeaderboardsAsync(realmId, keystoneId);
+
+            return Ok(keystoneLeaderboard);
+
+        }
+
 
     }
 }
