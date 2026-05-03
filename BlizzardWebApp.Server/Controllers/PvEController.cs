@@ -42,7 +42,7 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new { message = $"{name}" });
         }
 
-        [HttpGet("/MythicKeystones/get")]
+        [HttpGet("/mythic-keystones/get")]
         public async Task<ActionResult<MythicKeystoneDb>> GetMythicKeystones()
         {
             var keystones = await _dbService.GetKeystonesData();
@@ -50,7 +50,7 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(keystones);
         }
 
-        [HttpGet("/MythicKeystone/Leaderboard/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}")]
+        [HttpGet("/mythic-keystone/leaderboard/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}")]
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
 

@@ -14,7 +14,7 @@ namespace BlizzardWebApp.Server.Models.MythicKeystones
         public int KeystoneLevel { get; set; }
 
         [JsonPropertyName("members")]
-        public List<Character> Members { get; set; }
+        public List<Member> Members { get; set; }
 
 
     }
