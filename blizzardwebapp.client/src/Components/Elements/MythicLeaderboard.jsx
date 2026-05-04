@@ -6,7 +6,7 @@ import KeystoneIcon from '../../Assets/Misc/inv_relics_hourglass.jpg';
 import HourglassIcon from '../../Assets/Misc/ability_mage_timewarp.jpg';
 import TimerIcon from '@mui/icons-material/Timer';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-
+import bgImage from '../../Assets/Dungeon/dungeon_Windrunner Spire.jpg';
 
 const PlayerName = styled(Typography)(
     {
@@ -30,28 +30,24 @@ const TimeChip = styled(Chip)({
 
 const LeaderboardEntry = styled(Card)(
     {
-        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%)',
-        border:  '1px solid rgba(0, 255, 157, 0.3)',
-        borderRadius: '12px',
-        margin: '12px',
-        '&:hover': {
-            borderColor: 'rgba(0, 255, 157, 0.5)',
-            background: 'linear-gradient(135deg, rgba(0, 255, 157, 0.12) 0%, rgba(0, 200, 255, 0.08) 100%)',
-            boxShadow: '0 4px 20px rgba(0, 255, 157, 0.2)',
-        },
+        backgroundSize: "cover",
+        backgroundPosition: "center"
     }
+);
+    
 
-)
 
-
-export default function MythicLeaderboard({ leaderboardData, loading })
+export function MythicLeaderboard({ leaderboardData, loading, image })
 {
+    console.log("Leaderboard render");
+
     const formatDuration = (ms) => {
         const totalSeconds = Math.floor(ms / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
+
 
     if (loading) return <div>Loading...</div>;
 
@@ -62,7 +58,14 @@ export default function MythicLeaderboard({ leaderboardData, loading })
     return (
         <Box>
             {leaderboardData.map((entry) => (
-                <LeaderboardEntry>
+                
+                <LeaderboardEntry sx={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), 
+                        rgba(0,0,0,0.5)),url("${encodeURI(image)}")`,
+                    border: '1px solid rgba(0, 255, 157, 0.3)',
+                    borderRadius: '12px',
+                    margin: '12px',}}>
+
                     <CardContent>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                             {/* Rank Badge */}
@@ -161,3 +164,5 @@ export default function MythicLeaderboard({ leaderboardData, loading })
         </Box>
     );
 }
+
+export default React.memo(MythicLeaderboard);

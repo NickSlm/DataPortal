@@ -27,14 +27,16 @@ export default function PvERoute() {
 
     const [activeTab, setActiveTab] = useState('Mythics');
     const [selectedRealm, setSelectedRealm] = useState(null);
+    const [selectedKeystone, setSelectedKeystone] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
-    const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedImage);
+    const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone);
 
-
-    console.log('leaderboardData:', leaderboard);
-
+    const HandleSelection = (keystone) => {
+        setSelectedKeystone(keystone.id),
+        setSelectedImage(keystone.imagePath)
+    }
 
     if (!keystoneImages) return <div>No data</div>; 
 
@@ -180,7 +182,7 @@ export default function PvERoute() {
                             {keystoneImages.map(keystone => (
                                 <Box
                                     key={keystone.id}
-                                    onClick={() => setSelectedImage(keystone.id)}
+                                    onClick={() => HandleSelection(keystone)}
                                     sx={{
                                         position: 'relative',
                                         cursor: 'pointer',
@@ -188,11 +190,11 @@ export default function PvERoute() {
                                         overflow: 'hidden',
                                         aspectRatio: '1',
                                         transition: 'all 0.3s ease',
-                                        boxShadow: selectedImage === keystone.id
+                                        boxShadow: selectedKeystone === keystone.id
                                             ? '0 0 0 3px #00ff88'
                                             : 'none',
                                         '&:hover': {
-                                            boxShadow: selectedImage === keystone.id
+                                            boxShadow: selectedKeystone === keystone.id
                                                 ? '0 0 0 3px #00ff88, 0 4px 12px rgba(0, 255, 136, 0.4)'
                                                 : '0 4px 12px rgba(0, 255, 136, 0.2)',
                                         },
@@ -206,7 +208,7 @@ export default function PvERoute() {
                                             width: '100%',
                                             height: '100%',
                                             objectFit: 'cover',
-                                            filter: selectedImage === keystone.id
+                                            filter: selectedKeystone === keystone.id
                                                 ? 'brightness(1)'
                                                 : 'brightness(0.8)',
                                             transition: 'filter 0.3s ease',
@@ -230,7 +232,7 @@ export default function PvERoute() {
                                         </Typography>
                                     </Box>
 
-                                    {selectedImage === keystone.id && (
+                                    {selectedKeystone === keystone.id && (
                                         <Box sx={{
                                             position: 'absolute',
                                             top: 8,
@@ -258,11 +260,10 @@ export default function PvERoute() {
                     </Box>
                 </Box>
                 <Box sx={{ gridArea: 'center' }}>
-                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} />
+                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Box>
                 <Box sx={{ gridArea: 'right' }}><Typography>Affixes</Typography></Box>
             </Box>
-            
         </Container>
     )
 

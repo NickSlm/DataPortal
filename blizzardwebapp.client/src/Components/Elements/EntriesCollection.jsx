@@ -57,9 +57,6 @@ export default function EntriesCollection({ date }) {
             try {
                 const formattedDate = new Date(date).toISOString().split('T')[0];
 
-                console.log('Original date:', date);
-                console.log('Formatted date:', formattedDate);
-
                 const response = await fetch(
                     `http://127.0.0.1:5201/Snapshot/Date/${formattedDate}`
                 );
