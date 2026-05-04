@@ -53,13 +53,9 @@ namespace BlizzardWebApp.Server.Controllers
         [HttpGet("/mythic-keystone/leaderboard/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}")]
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
-
             var keystoneLeaderboard = await _blizzardApi.GetCurrentMythicLeaderboardsAsync(realmId, keystoneId);
 
             return Ok(keystoneLeaderboard);
-
         }
-
-
     }
 }

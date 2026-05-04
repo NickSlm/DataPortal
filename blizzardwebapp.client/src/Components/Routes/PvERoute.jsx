@@ -20,6 +20,8 @@ import { useState } from 'react';
 import { useKeystoneImages } from '../Hooks/useKeystoneImages';
 import { useRealms } from '../Hooks/useRealms';
 import RealmsSelect from '../Elements/RealmsSelect';
+import MythicLeaderboard  from '../Elements/MythicLeaderboard';
+import { useMythicLeaderboard } from '../Hooks/useMythicLeaderboard';
 
 export default function PvERoute() {
 
@@ -28,6 +30,11 @@ export default function PvERoute() {
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
+    const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedImage);
+
+
+    console.log('leaderboardData:', leaderboard);
+
 
     if (!keystoneImages) return <div>No data</div>; 
 
@@ -55,7 +62,7 @@ export default function PvERoute() {
                             borderRadius: 2,
                         }
                     }}>
-                      WoW {activeTab} Leaderboards
+                    WoW {activeTab} Leaderboards
                 </Typography>
             </Box>
 
@@ -251,9 +258,9 @@ export default function PvERoute() {
                     </Box>
                 </Box>
                 <Box sx={{ gridArea: 'center' }}>
-                    <h1>realm {selectedRealm?.id} image {selectedImage}</h1>
+                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} />
                 </Box>
-                <Box sx={{ gridArea: 'right' }}>...</Box>
+                <Box sx={{ gridArea: 'right' }}><Typography>Affixes</Typography></Box>
             </Box>
             
         </Container>
