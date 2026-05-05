@@ -39,7 +39,6 @@ const LeaderboardEntry = styled(Card)(
 
 export function MythicLeaderboard({ leaderboardData, loading, image })
 {
-    console.log("Leaderboard render");
 
     const formatDuration = (ms) => {
         const totalSeconds = Math.floor(ms / 1000);
@@ -51,9 +50,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
 
     if (loading) return <div>Loading...</div>;
 
-    if (!leaderboardData || leaderboardData.length === 0) {
-        return <div>No data available</div>;
-    }
+
 
     return (
         <Box>

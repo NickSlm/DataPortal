@@ -11,16 +11,18 @@ export const useMythicLeaderboard = (realmId, keystoneId) => {
 
 
     useEffect(() => {
+
         if (!realmId || !keystoneId) {
             setData([]);
             return;
         }
 
+        const controller = new AbortController();
         const fetchData = async () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch(`http://127.0.0.1:5201/mythic-keystone/leaderboard/connected-realm/${realmId}/mythic-leaderboard/${keystoneId}`);
+                const response = await fetch(`http://127.0.0.1:5201/mythic-keystone/leaderboard/connected-realm/${realmId}/mythic-leaderboard/${keystoneId}`, { signal: controller.signal });
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
@@ -28,12 +30,19 @@ export const useMythicLeaderboard = (realmId, keystoneId) => {
                 const result = await response.json();
                 setData(result.leading_groups);
             } catch (err) {
-                setError(err);
+                if (err.name !== 'AbortError') {
+                    setError(err);
+                }
             } finally {
-                setLoading(false);
+                if (!controller.signal.aborted) {
+                    setLoading(false);
+                }
             }
         }
         fetchData();
+        return () => {
+            controller.abort();
+        };
     }, [realmId, keystoneId]);
     return { leaderboard: data, loading, error }
 }

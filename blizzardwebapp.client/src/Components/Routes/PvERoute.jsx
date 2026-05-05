@@ -170,8 +170,6 @@ export default function PvERoute() {
                     <Box sx={{
                         background: 'rgba(15, 18, 41, 0.6)',
                         backdropFilter: 'blur(10px)',
-                        borderRadius: 3,
-                        border: '1px solid rgba(0, 255, 136, 0.1)',
                         p: 2,
                     }}>
                         <Box sx={{

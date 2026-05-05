@@ -1,4 +1,5 @@
-﻿using BlizzardWebApp.Server.Models;
+﻿using BlizzardWebApp.Server.Data.KeystoneLeaderboard;
+using BlizzardWebApp.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlizzardWebApp.Server.Data
@@ -15,7 +16,7 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<LeaderboardSnapshot> LeaderboardSnapshots { get; set; }
         public DbSet<ConnectedRealmsDb> ConnectedRealms { get; set; }
         public DbSet<MythicKeystoneDb> Keystones { get; set; }
-
+        public DbSet<KeystoneLeaderboard.Leaderboard> KeystoneLeaderboards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +36,29 @@ namespace BlizzardWebApp.Server.Data
             {
                 e.HasKey(r => r.Id);
             });
+
+
+            modelBuilder.Entity<GroupMember>(e =>
+            {
+                e.HasKey(gm => new { gm.GroupId, gm.MemberId });
+
+                e.HasOne(gm => gm.Group)
+                .WithMany(g => g.GroupMembers)
+                .HasForeignKey(gm => gm.GroupId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasOne(gm => gm.Member)
+                .WithMany(m => m.GroupMembers)
+                .HasForeignKey(gm => gm.MemberId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<KeystoneLeaderboard.Leaderboard>()
+                .HasMany(l => l.LeadingGroups)
+                .WithOne(g => g.Leaderboard)
+                .HasForeignKey(g => g.LeaderboardId);
+
         }
+           
     }
 }
