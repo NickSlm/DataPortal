@@ -254,6 +254,8 @@ namespace BlizzardWebApp.Server.Services
                 Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             });
 
+            mythicLeaderboard.LeaderboardId = $"{realmId}-{keystoneId}";
+
             return mythicLeaderboard;
         }
     }

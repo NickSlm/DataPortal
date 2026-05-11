@@ -1,5 +1,6 @@
 ﻿using BlizzardWebApp.Server.Data;
 using BlizzardWebApp.Server.Dto;
+using BlizzardWebApp.Server.Models.MythicKeystones;
 
 namespace BlizzardWebApp.Server.Interfaces
 {
@@ -11,5 +12,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<List<ConnectedRealmDto>> GetRealms();
         Task SaveKeystonesData();
         Task<List<MythicKeystoneDb>> GetKeystonesData();
+        Task SaveKeystoneLeaderboardAsync();
     }
 }

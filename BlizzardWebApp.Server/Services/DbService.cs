@@ -9,6 +9,7 @@ using System;
 using NuGet.ContentModel;
 using NuGet.Common;
 using System.Threading;
+using BlizzardWebApp.Server.Models.MythicKeystones;
 
 namespace BlizzardWebApp.Server.Services
 {
@@ -142,6 +143,37 @@ namespace BlizzardWebApp.Server.Services
                 }
             }
             await _dbContext.SaveChangesAsync();
+        }
+        public async Task SaveKeystoneLeaderboardAsync()
+        {
+            var semaphore = new SemaphoreSlim(10);
+
+            var keystones = await _dbContext.Keystones.Select(k => k.Id).ToListAsync();
+            var realms = await _dbContext.ConnectedRealms.Select(r => r.Id).ToListAsync();
+
+            var tasks = keystones.SelectMany(key => realms.Select(async realm =>
+            {
+                await semaphore.WaitAsync();
+                try
+                {
+                    return await _blizzardApi.GetCurrentMythicLeaderboardsAsync(realm, key);
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+            })).ToList();
+
+            var leaderboards = await Task.WhenAll(tasks);
+            Console.WriteLine("====================================Pulled NOW SAVING================================");
+
+            var allMemberId = leaderboards.SelectMany(lb => lb.LeadingGroups).SelectMany(g => g.Members).Select(m => m.Profile.Id).Distinct().ToHashSet();
+            var existingMembers = await _dbContext.Member.Where(m => allMemberId.Contains(m.Id)).ToDictionaryAsync(m => m.Id);
+
+
+
+
+
         }
     }
 }

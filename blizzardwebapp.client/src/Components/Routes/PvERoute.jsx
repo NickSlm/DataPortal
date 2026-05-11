@@ -31,7 +31,7 @@ export default function PvERoute() {
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
-    const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone);
+    //const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone);
 
     const HandleSelection = (keystone) => {
         setSelectedKeystone(keystone.id),
@@ -258,7 +258,7 @@ export default function PvERoute() {
                     </Box>
                 </Box>
                 <Box sx={{ gridArea: 'center' }}>
-                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
+                    {/*<MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />*/}
                 </Box>
                 <Box sx={{ gridArea: 'right' }}><Typography>Affixes</Typography></Box>
             </Box>

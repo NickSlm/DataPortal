@@ -3,6 +3,7 @@ using System;
 using BlizzardWebApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlizzardWebApp.Server.Migrations
 {
     [DbContext(typeof(LbDbContext))]
-    partial class LbDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260507104327_ChangeLeaderboardIdToString")]
+    partial class ChangeLeaderboardIdToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
@@ -81,13 +84,17 @@ namespace BlizzardWebApp.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("KeystoneId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("LeaderboardId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<int>("RealmId")
+                        .HasColumnType("INTEGER");
 
-                    b.HasIndex("LeaderboardId");
+                    b.HasKey("Id");
 
                     b.ToTable("KeystoneLeaderboards");
                 });
@@ -237,7 +244,7 @@ namespace BlizzardWebApp.Server.Migrations
                     b.HasOne("BlizzardWebApp.Server.Data.KeystoneLeaderboard.Member", "Member")
                         .WithMany("GroupMembers")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Group");

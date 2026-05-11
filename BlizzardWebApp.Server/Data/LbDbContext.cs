@@ -17,6 +17,8 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<ConnectedRealmsDb> ConnectedRealms { get; set; }
         public DbSet<MythicKeystoneDb> Keystones { get; set; }
         public DbSet<KeystoneLeaderboard.Leaderboard> KeystoneLeaderboards { get; set; }
+        public DbSet<Member> Member { get; set; } 
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +39,6 @@ namespace BlizzardWebApp.Server.Data
                 e.HasKey(r => r.Id);
             });
 
-
             modelBuilder.Entity<GroupMember>(e =>
             {
                 e.HasKey(gm => new { gm.GroupId, gm.MemberId });
@@ -50,7 +51,7 @@ namespace BlizzardWebApp.Server.Data
                 e.HasOne(gm => gm.Member)
                 .WithMany(m => m.GroupMembers)
                 .HasForeignKey(gm => gm.MemberId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<KeystoneLeaderboard.Leaderboard>()
@@ -59,6 +60,5 @@ namespace BlizzardWebApp.Server.Data
                 .HasForeignKey(g => g.LeaderboardId);
 
         }
-           
     }
 }
