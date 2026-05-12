@@ -146,7 +146,7 @@ namespace BlizzardWebApp.Server.Services
         }
         public async Task SaveKeystoneLeaderboardAsync()
         {
-            var semaphore = new SemaphoreSlim(10);
+            var semaphore = new SemaphoreSlim(5);
 
             var keystones = await _dbContext.Keystones.Select(k => k.Id).ToListAsync();
             var realms = await _dbContext.ConnectedRealms.Select(r => r.Id).ToListAsync();
@@ -165,15 +165,65 @@ namespace BlizzardWebApp.Server.Services
             })).ToList();
 
             var leaderboards = await Task.WhenAll(tasks);
+
             Console.WriteLine("====================================Pulled NOW SAVING================================");
 
             var allMemberId = leaderboards.SelectMany(lb => lb.LeadingGroups).SelectMany(g => g.Members).Select(m => m.Profile.Id).Distinct().ToHashSet();
             var existingMembers = await _dbContext.Member.Where(m => allMemberId.Contains(m.Id)).ToDictionaryAsync(m => m.Id);
 
+            var LeaderboardId = leaderboards.Select(lb => lb.LeaderboardId).ToHashSet();
+            var existingLeaderboards = await _dbContext.KeystoneLeaderboards
+                .Include(l => l.LeadingGroups)
+                .Where(l => LeaderboardId.Contains(l.LeaderboardId))
+                .ToDictionaryAsync(l => l.LeaderboardId);
 
+            
+            foreach (var leaderboard in leaderboards)
+            {
+                if (existingLeaderboards.TryGetValue(leaderboard.LeaderboardId, out var existing)){
+                    _dbContext.RemoveRange(existing.LeadingGroups);
+                    existing.LeadingGroups = CreateGroups(leaderboard.LeadingGroups, existingMembers);
+                }
+                else
+                {
+                    var newLeaderboard = new Data.KeystoneLeaderboard.Leaderboard
+                    {
+                        LeaderboardId = leaderboard.LeaderboardId,
+                        LeadingGroups = CreateGroups(leaderboard.LeadingGroups, existingMembers)
+                    };
+                    _dbContext.KeystoneLeaderboards.Add(newLeaderboard);
+                }
+            }
 
-
+            await _dbContext.SaveChangesAsync();
 
         }
+        private List<Data.KeystoneLeaderboard.Group> CreateGroups(List<Group> leadingGroups, Dictionary<int, Data.KeystoneLeaderboard.Member> memberCache)
+        {
+            var newGroups = leadingGroups.Select(lg => new Data.KeystoneLeaderboard.Group
+            {
+                Duration = lg.Duration,
+                Ranking = lg.Ranking,
+                KeystoneLevel = lg.KeystoneLevel,
+                GroupMembers = lg.Members.Select(m =>
+                {
+                    if (!memberCache.TryGetValue(m.Profile.Id, out var member))
+                    {
+                        member = new Data.KeystoneLeaderboard.Member
+                        {
+                            Id = m.Profile.Id,
+                            Name = m.Profile.Name,
+                            Realm = m.Profile.Realm.Slug
+                        };
+                        memberCache[m.Profile.Id] = member;
+                    }
+                    return new Data.KeystoneLeaderboard.GroupMember
+                    {
+                        Member = member
+                    };
+                }).ToList()
+            }).ToList();
+            return newGroups;
+        } 
     }
 }
