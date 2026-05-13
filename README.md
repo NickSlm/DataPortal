@@ -1,29 +1,26 @@
-**DataPortal**
+# WoW Leaderboard Data Portal
 
-A modern web portal for visualizing and managing Blizzard game data, providing a centralized interface for data aggregated through BlizzardDataGateway.
-Overview
-DataPortal is a full-stack web application that serves as a visualization and management layer for Blizzard game data. Built with a modern tech stack, it provides an intuitive interface for exploring, analyzing, and managing game-related information.
-Features
+A full-stack leaderboard application for World of Warcraft competitive content. Features automated daily data collection from the Blizzard API, backend processing, and an interactive frontend for exploring PvP and PvE rankings.
 
-**Features**
+## 🚀 Tech Stack
 
-  - Data Visualization - Interactive dashboards and charts for game data analysis
-  - Real-time Data Display - Live updates of game statistics and player information
-  - User-friendly Interface - Modern, responsive design for seamless navigation
-  - Data Management - Tools for organizing and managing aggregated game data
-  - API Integration - Seamless connection with BlizzardDataGateway backend
+**Frontend**
+- React + Material-UI
+- Responsive design
 
-**Tech Stack**
+**Backend**
+- C# / ASP.NET Core
+- Entity Framework Core + SQL Server
+- RESTful API
 
-Frontend
+**Data Pipeline**
+- Automated daily collection service
+- Blizzard Battle.net API integration
+- Data transformation and normalization
 
-  - React
-  - JavaScript
-  - CSS
-  - HTML
+## ✨ Features
 
-Backend
-
-  - ASP.NET Core
-  - C#
-  - Redis
+- Browse leaderboards for different PvP and PvE content types
+- Dynamic filtering by content preferences
+- Automated daily data updates
+- Pre-processed data for fast queries
