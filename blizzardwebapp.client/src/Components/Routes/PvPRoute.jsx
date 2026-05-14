@@ -75,9 +75,9 @@ export default function PvPRoute() {
                                 <MenuItem value="2v2">2v2</MenuItem>
                                 <MenuItem value="3v3">3v3</MenuItem>
                             </Select>
-                        </FormControl>
-                        {/* Season Select */}
-                        <SeasonsSelect selectSeason={handleSelectSeason} />
+                </FormControl>
+                {/* Season Select */}
+                <SeasonsSelect selectSeason={handleSelectSeason} />
             </Box>
             <Box sx={{ maxWidth: 'fit-content', mx: 'auto' }}>
                 <SeasonLbDataGrid season={season} bracket={bracket} />

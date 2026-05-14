@@ -18,6 +18,7 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<MythicKeystoneDb> Keystones { get; set; }
         public DbSet<KeystoneLeaderboard.Leaderboard> KeystoneLeaderboards { get; set; }
         public DbSet<Member> Member { get; set; } 
+        public DbSet<Group> Group { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

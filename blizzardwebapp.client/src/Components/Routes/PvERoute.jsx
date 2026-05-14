@@ -10,12 +10,15 @@
     Paper,
     Tabs,
     Tab,
-    Grid
+    Grid,
+    InputAdornment
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import SearchIcon from '@mui/icons-material/Search';
+
 import { useState } from 'react';
 import { useKeystoneImages } from '../Hooks/useKeystoneImages';
 import { useRealms } from '../Hooks/useRealms';
@@ -76,7 +79,7 @@ export default function PvERoute() {
                         loading={loading} />
                 </Box>
             </Box>
-            <Box sx={{ maxWidth:'fit-content' , mx:'auto',background:"red", mb:6}}>
+            <Box sx={{ maxWidth:'fit-content' , mx:'auto', mb:6}}>
                 <Box sx={{
                     position: 'relative',
                     display: 'inline-flex',
@@ -151,7 +154,6 @@ export default function PvERoute() {
             </Box>
             <Box sx={{
                 display: 'grid',
-                background:'green',
                 gridTemplateColumns: {
                     xs: '1fr',                   
                     md: '1fr 2fr',               
@@ -171,10 +173,10 @@ export default function PvERoute() {
             }}>
                 <Box sx={{ gridArea: 'left' }}>
                     <Box sx={{
-                        background: 'rgba(15, 18, 41, 0.6)',
                         backdropFilter: 'blur(10px)',
                         p: 2,
                     }}>
+                        <Typography sx={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.25)', textTransform:'uppercase', mb:'12px' }}>Dungeon</Typography>
                         <Box sx={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(2, 1fr)',
@@ -227,7 +229,13 @@ export default function PvERoute() {
                                         <Typography sx={{
                                             color: '#fff',
                                             fontWeight: 600,
-                                            fontSize: '0.9rem',
+                                            fontSize: '12px',
+                                            letterSpacing: '0.02em',
+                                            textShadow: '0 1px 4px rgba(0,0,0,0.6)',
+                                            lineHeight: 1.2,
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis'
                                         }}>
                                             {keystone.name}
                                         </Typography>
@@ -263,7 +271,7 @@ export default function PvERoute() {
                 <Box sx={{ gridArea: 'center' }}>
                     {/*<MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />*/}
                 </Box>
-                <Box sx={{ gridArea: 'right' }}><Typography>Affixes</Typography></Box>
+                <Box sx={{ gridArea: 'right', background:'red' }}><Typography>Affixes</Typography></Box>
             </Box>
         </Container>
     )

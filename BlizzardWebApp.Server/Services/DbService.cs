@@ -69,6 +69,38 @@ namespace BlizzardWebApp.Server.Services
             }).ToListAsync();
             return keystones;
         }
+        public async Task<PaginatedResultDto<KeystoneGroupDto>> GetKeystoneLeaderboard(int realmId, int keystoneId, int page)
+        {
+            var leaderboardId = $"{realmId}-{keystoneId}";
+
+            var leaderboard = await _dbContext.KeystoneLeaderboards
+            .FirstOrDefaultAsync(l => l.LeaderboardId == leaderboardId);
+
+            var leaderboardDto = await _dbContext.Group.Where(g => g.LeaderboardId == leaderboard.Id)
+                        .Select(g => new KeystoneGroupDto
+                        {
+                            Ranking = g.Ranking,
+                            Duration = g.Duration,
+                            KeystoneLevel = g.KeystoneLevel,
+                            GroupMembers = g.GroupMembers.Select(gm => new Dictionary<string, string> { { "Name", gm.Member.Name }, { "Slug", gm.Member.Realm } }).ToList()
+                        })
+                        .Skip((page - 1) * 50)
+                        .Take(10)
+                        .ToListAsync();
+
+            int totalGroups = await _dbContext.Group
+                .CountAsync(g => g.Leaderboard.LeaderboardId == leaderboardId);
+
+            var paginatedResDto = new PaginatedResultDto<KeystoneGroupDto>
+            {
+                Data = leaderboardDto,
+                TotalPages = (int)Math.Ceiling(totalGroups / (double)50),
+                TotalCount = totalGroups,
+                CurrentPage = page
+            };
+
+            return paginatedResDto;
+        }
         public async Task SaveConnectedRealms()
         {
             var connectedRealms = await _blizzardApi.GetConnectedRealms();

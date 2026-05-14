@@ -58,11 +58,14 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new {message = "DONE syncing"});
         }
 
-        [HttpGet("/data/leaderboard/groups/page={page}&size=10")]
-        public async Task<ActionResult> OffsetPagination(int page)
-        {
 
-            return Ok(new { message = $"page {page}" });
+
+        [HttpGet("/data/mythic-keystones/realm/{realmId}/keystone/{keystoneId}/groups/page={page}&size=50")]
+        public async Task<ActionResult<PaginatedResultDto<KeystoneGroupDto>>> OffsetPagination(int realmId, int keystoneId, int page)
+        {
+            var result = await _dbService.GetKeystoneLeaderboard(realmId, keystoneId, page);
+
+            return Ok(result);
         }
     }
 }

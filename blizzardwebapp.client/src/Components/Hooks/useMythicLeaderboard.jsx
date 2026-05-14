@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react';
 
 
 
-export const useMythicLeaderboard = (realmId, keystoneId) => {
+export const useMythicLeaderboard = (realmId, keystoneId, page = 1) => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
 
     useEffect(() => {
 
@@ -22,7 +21,7 @@ export const useMythicLeaderboard = (realmId, keystoneId) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch(`http://127.0.0.1:5201/data/mythic-keystone/leaderboard/connected-realm/${realmId}/mythic-leaderboard/${keystoneId}`, { signal: controller.signal });
+                const response = await fetch(`http://127.0.0.1:5201/data/mythic-keystones/realm/${realmId}/keystone/${keystoneId}/groups/page=${page}&size=10")`, { signal: controller.signal });
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
