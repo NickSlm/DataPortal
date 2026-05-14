@@ -42,7 +42,9 @@ export default function PvERoute() {
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
-            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6 }}>
+            <Box sx={{ mx: 'auto', mb: 6, display: 'flex', alignItems:'center' }}>
+                <Box sx={{flex:1} }>
+                </Box>
                 <Typography
                     variant="h4"
                     sx={{
@@ -66,15 +68,15 @@ export default function PvERoute() {
                     }}>
                     WoW {activeTab} Leaderboards
                 </Typography>
-            </Box>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
 
-            <Box sx={{ maxWidth: 'fit-content', mx: 'auto', mb: 6 }}>
-                <RealmsSelect realms={realms}
-                    value={selectedRealm}
-                    onChange={setSelectedRealm}
-                    loading={loading} />
+                    <RealmsSelect realms={realms}
+                        value={selectedRealm}
+                        onChange={setSelectedRealm}
+                        loading={loading} />
+                </Box>
             </Box>
-            <Box sx={{ maxWidth:'fit-content' , mx:'auto', mb:6}}>
+            <Box sx={{ maxWidth:'fit-content' , mx:'auto',background:"red", mb:6}}>
                 <Box sx={{
                     position: 'relative',
                     display: 'inline-flex',
@@ -149,6 +151,7 @@ export default function PvERoute() {
             </Box>
             <Box sx={{
                 display: 'grid',
+                background:'green',
                 gridTemplateColumns: {
                     xs: '1fr',                   
                     md: '1fr 2fr',               

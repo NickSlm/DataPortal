@@ -22,7 +22,7 @@ namespace BlizzardWebApp.Server.Controllers
         }
 
 
-        [HttpGet("/connected_realms/get")]
+        [HttpGet("/data/connected_realms/get")]
         public async Task<ActionResult<ConnectedRealmDto>> GetConnectedRealms()
         {
             var dto = await _dbService.GetRealms();
@@ -42,23 +42,27 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new { message = $"{name}" });
         }
 
-        [HttpGet("/mythic-keystones/get")]
+        [HttpGet("/data/mythic-keystones/get")]
         public async Task<ActionResult<MythicKeystoneDb>> GetMythicKeystones()
         {
             var keystones = await _dbService.GetKeystonesData();
 
             return Ok(keystones);
         }
-
-        [HttpGet("/mythic-keystone/leaderboard/connected-realm/{realmId}/mythic-leaderboard/{keystoneId}")]
+        [HttpGet("/REMOVE-LATER")]
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
-
+            //REMOVE THIS CONTROLLER INTO THE WORKER SERVICE
             await _dbService.SaveKeystoneLeaderboardAsync();
 
+            return Ok(new {message = "DONE syncing"});
+        }
 
+        [HttpGet("/data/leaderboard/groups/page={page}&size=10")]
+        public async Task<ActionResult> OffsetPagination(int page)
+        {
 
-            return Ok(new {message = "asdf"});
+            return Ok(new { message = $"page {page}" });
         }
     }
 }

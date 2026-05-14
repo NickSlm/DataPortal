@@ -194,9 +194,7 @@ namespace BlizzardWebApp.Server.Services
                     _dbContext.KeystoneLeaderboards.Add(newLeaderboard);
                 }
             }
-
             await _dbContext.SaveChangesAsync();
-
         }
         private List<Data.KeystoneLeaderboard.Group> CreateGroups(List<Group> leadingGroups, Dictionary<int, Data.KeystoneLeaderboard.Member> memberCache)
         {

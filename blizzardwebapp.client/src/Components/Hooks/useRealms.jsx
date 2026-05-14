@@ -13,7 +13,7 @@ export const useRealms = () => {
         const fetchData = async () => {
 
             try {
-                const response = await fetch('http://127.0.0.1:5201/connected_realms/get');
+                const response = await fetch('http://127.0.0.1:5201/data/connected_realms/get');
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
