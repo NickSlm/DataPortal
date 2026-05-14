@@ -77,20 +77,18 @@ namespace BlizzardWebApp.Server.Services
             .FirstOrDefaultAsync(l => l.LeaderboardId == leaderboardId);
 
             var groups = await _dbContext.Group
-    .Where(g => g.LeaderboardId == leaderboard.Id)
-    .Select(g => new { g.Id, g.Ranking, g.Duration, g.KeystoneLevel })
-    .Skip((page - 1) * 50)
-    .Take(10)
-    .ToListAsync();
+                .Where(g => g.LeaderboardId == leaderboard.Id)
+                .Select(g => new { g.Id, g.Ranking, g.Duration, g.KeystoneLevel })
+                .Skip((page - 1) * 50)
+                .Take(10)
+                .ToListAsync();
 
-            // Step 2 - get members only for those 10 group IDs
             var groupIds = groups.Select(g => g.Id).ToList();
             var members = await _dbContext.GroupMember
                 .Where(gm => groupIds.Contains(gm.GroupId))
                 .Select(gm => new { gm.GroupId, gm.Member.Name, gm.Member.Realm })
                 .ToListAsync();
 
-            // Step 3 - assemble in memory
             var leaderboardDto = groups.Select(g => new KeystoneGroupDto
             {
                 Ranking = g.Ranking,

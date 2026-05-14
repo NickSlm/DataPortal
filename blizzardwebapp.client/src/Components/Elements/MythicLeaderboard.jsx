@@ -54,7 +54,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
 
     return (
         <Box>
-            {leaderboardData.map((entry) => (
+            {leaderboardData.data?.map((entry) => (
                 
                 <LeaderboardEntry sx={{
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5), 
@@ -100,7 +100,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
                                         fontWeight: 700,
                                         fontSize: '15px',
                                     }}>
-                                        +{entry.keystone_level}
+                                        +{entry.keystoneLevel}
                                     </Typography>
                                 </Box>
 
@@ -127,7 +127,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
                         </Box>
                         {/* Players Row */}
                         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                            {entry.members.map((member, idx) => (
+                            {entry.groupMembers.map((member, idx) => (
                                 <Box
                                     key={idx}
                                     sx={{
@@ -150,7 +150,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
                                         color: '#fff',
                                         fontWeight: 500,
                                     }}>
-                                        {member.profile.name}
+                                        {member.Name}
                                     </Typography>
                                 </Box>
                             ))}
