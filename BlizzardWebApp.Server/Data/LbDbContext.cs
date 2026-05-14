@@ -19,6 +19,7 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<KeystoneLeaderboard.Leaderboard> KeystoneLeaderboards { get; set; }
         public DbSet<Member> Member { get; set; } 
         public DbSet<Group> Group { get; set; }
+        public DbSet<GroupMember> GroupMember { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +40,13 @@ namespace BlizzardWebApp.Server.Data
             {
                 e.HasKey(r => r.Id);
             });
+
+            modelBuilder.Entity<GroupMember>()
+                .HasIndex(gm => gm.GroupId);
+
+            modelBuilder.Entity<GroupMember>()
+                .HasIndex(gm => gm.MemberId);
+
 
             modelBuilder.Entity<GroupMember>(e =>
             {

@@ -1,5 +1,8 @@
-﻿namespace BlizzardWebApp.Server.Data.KeystoneLeaderboard
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace BlizzardWebApp.Server.Data.KeystoneLeaderboard
 {
+    [Index(nameof(LeaderboardId))]
     public class Group
     {
         public int Id { get; set; }

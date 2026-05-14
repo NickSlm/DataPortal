@@ -76,20 +76,37 @@ namespace BlizzardWebApp.Server.Services
             var leaderboard = await _dbContext.KeystoneLeaderboards
             .FirstOrDefaultAsync(l => l.LeaderboardId == leaderboardId);
 
-            var leaderboardDto = await _dbContext.Group.Where(g => g.LeaderboardId == leaderboard.Id)
-                        .Select(g => new KeystoneGroupDto
-                        {
-                            Ranking = g.Ranking,
-                            Duration = g.Duration,
-                            KeystoneLevel = g.KeystoneLevel,
-                            GroupMembers = g.GroupMembers.Select(gm => new Dictionary<string, string> { { "Name", gm.Member.Name }, { "Slug", gm.Member.Realm } }).ToList()
-                        })
-                        .Skip((page - 1) * 50)
-                        .Take(10)
-                        .ToListAsync();
+            var groups = await _dbContext.Group
+    .Where(g => g.LeaderboardId == leaderboard.Id)
+    .Select(g => new { g.Id, g.Ranking, g.Duration, g.KeystoneLevel })
+    .Skip((page - 1) * 50)
+    .Take(10)
+    .ToListAsync();
+
+            // Step 2 - get members only for those 10 group IDs
+            var groupIds = groups.Select(g => g.Id).ToList();
+            var members = await _dbContext.GroupMember
+                .Where(gm => groupIds.Contains(gm.GroupId))
+                .Select(gm => new { gm.GroupId, gm.Member.Name, gm.Member.Realm })
+                .ToListAsync();
+
+            // Step 3 - assemble in memory
+            var leaderboardDto = groups.Select(g => new KeystoneGroupDto
+            {
+                Ranking = g.Ranking,
+                Duration = g.Duration,
+                KeystoneLevel = g.KeystoneLevel,
+                GroupMembers = members
+                    .Where(m => m.GroupId == g.Id)
+                    .Select(m => new Dictionary<string, string>
+                    {
+            { "Name", m.Name },
+            { "Slug", m.Realm }
+                    }).ToList()
+            }).ToList();
 
             int totalGroups = await _dbContext.Group
-                .CountAsync(g => g.Leaderboard.LeaderboardId == leaderboardId);
+                .CountAsync(g => g.LeaderboardId == leaderboard.Id);
 
             var paginatedResDto = new PaginatedResultDto<KeystoneGroupDto>
             {

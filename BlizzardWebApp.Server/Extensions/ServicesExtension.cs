@@ -46,7 +46,9 @@ namespace BlizzardWebApp.Server.Extensions
             Services.AddDbContext<LbDbContext>((sp, options) =>
             {
                 var conf = sp.GetRequiredService<IConfiguration>();
-                options.UseSqlite(conf.GetConnectionString("DefaultConnection"));
+                options.UseSqlite(conf.GetConnectionString("DefaultConnection"))
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging();
             });
 
             Services.AddSingleton<IConnectionMultiplexer>(sp =>
