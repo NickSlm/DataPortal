@@ -71,17 +71,11 @@ export default function EntriesCollection({ date }) {
                 setError(err);
             }finally{
                 setLoading(false);
-
             }
-
-
         }
-
         if (date) {
             fetchData();
         }
-
-
     }, [date]);
 
 

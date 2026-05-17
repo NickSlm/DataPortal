@@ -232,7 +232,6 @@ namespace BlizzardWebApp.Server.Services
             });
 
             var imageUrl = asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
-            Console.WriteLine(path);
             await ImageDownloaderService.SaveImageAsync(path, imageUrl);
         }
 

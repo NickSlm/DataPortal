@@ -58,8 +58,6 @@ namespace BlizzardWebApp.Server.Controllers
             return Ok(new {message = "DONE syncing"});
         }
 
-
-
         [HttpGet("/data/mythic-keystones/realm/{realmId}/keystone/{keystoneId}/groups/page={page}&size=50")]
         public async Task<ActionResult<PaginatedResultDto<KeystoneGroupDto>>> OffsetPagination(int realmId, int keystoneId, int page)
         {
@@ -67,5 +65,6 @@ namespace BlizzardWebApp.Server.Controllers
 
             return Ok(result);
         }
+
     }
 }

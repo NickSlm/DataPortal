@@ -1,6 +1,7 @@
 export const glassSelectStyle = {
     FormControl: {
-        minWidth: 220,
+        width: 180,
+
         ml:2
     },
 

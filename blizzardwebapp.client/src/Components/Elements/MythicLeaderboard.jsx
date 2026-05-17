@@ -7,6 +7,11 @@ import HourglassIcon from '../../Assets/Misc/ability_mage_timewarp.jpg';
 import TimerIcon from '@mui/icons-material/Timer';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import bgImage from '../../Assets/Dungeon/dungeon_Windrunner Spire.jpg';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 const PlayerName = styled(Typography)(
     {
@@ -47,13 +52,22 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
+    const handleChangePage = (event, value) => {
+        console.log(value);
+    }
 
     if (loading) return <div>Loading...</div>;
 
 
 
     return (
-        <Box>
+        <Box    >
+            <Pagination
+                count={leaderboardData.totalPages}
+                onChange={handleChangePage}
+                sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}
+                renderItem={item => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+            />
             {leaderboardData.data?.map((entry) => (
                 
                 <LeaderboardEntry sx={{
