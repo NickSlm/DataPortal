@@ -1,10 +1,10 @@
 ﻿import {
     Box,
+    Grid,
     Container,
     Typography,
     Button
 } from '@mui/material';
-
 import { useState } from 'react';
 import { useKeystoneImages } from '../Hooks/useKeystoneImages';
 import { useRealms } from '../Hooks/useRealms';
@@ -12,6 +12,8 @@ import RealmsSelect from '../Elements/RealmsSelect';
 import AffixCollection from '../Elements/AffixCollection';
 import MythicLeaderboard  from '../Elements/MythicLeaderboard';
 import { useMythicLeaderboard } from '../Hooks/useMythicLeaderboard';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 
 export default function PvERoute() {
 
@@ -35,53 +37,47 @@ export default function PvERoute() {
     if (!keystoneImages) return <div>No data</div>; 
 
     return (
-        <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Container maxWidth="xl" sx={{ py: 4}}>
+            <Grid container spacing={2}>
+                <Grid size={{ xs: 12 }} sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                }}>      
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography sx={{ fontSize: 14, fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)', mb: 0.75 }}>
+                            Leaderboards
+                        </Typography>
+                        <Typography sx={{ fontSize: 26, fontWeight: 200, letterSpacing: '-0.5px', color: 'rgba(255,255,255,0.9)' }}>
+                            Who's{' '}
+                            <Box component="span" sx={{ fontWeight: 700, background: 'linear-gradient(135deg,#00ff88 0%,#00cfff 60%,#a855f7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                pumping keys
+                            </Box>
+                            {' '}this week?
+                        </Typography>
+                    </Box>
 
-        <Box>
-                <Box sx={{ px: 5, pt: 5, pb: 5}}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1.75 }}>
-                        <Box>
-                            <Typography sx={{ fontSize: 14, fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)', mb: 0.75 }}>
-                                Leaderboards
-                            </Typography>
-                            <Typography sx={{ fontSize: 26, fontWeight: 200, letterSpacing: '-0.5px', color: 'rgba(255,255,255,0.9)' }}>
-                                Who's{' '}
-                                <Box component="span" sx={{ fontWeight: 700, background: 'linear-gradient(135deg,#00ff88 0%,#00cfff 60%,#a855f7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                                    pumping keys
-                                </Box>
-                                {' '}this week?
-                            </Typography>
-                        </Box>
+                    {/* Right side - pushed to far right */}
+                    <Box sx={{ ml: 'auto' }}>
                         <RealmsSelect realms={realms}
                             value={selectedRealm}
                             onChange={setSelectedRealm}
                             loading={loading} />
                     </Box>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Typography sx={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
+                            {selectedKeystoneName} - {selectedRealm?.name}
+                        </Typography>
+                    </Box>
+                    <Box sx={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: 1,
+                        margin:'12px'
+                    }}>
 
-
-               
-                </Box>
-
-                <Box sx={{ px: 5, pt: 2.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                <Box sx={{ display: 'flex', background: 'rgba(255,255,255,0.04)', borderRadius: 1.5, p: 0.4, gap: 0.25 }}>
-                    {['Solo', 'Party'].map(t => (
-                        <Button key={t} onClick={() => setActiveTab(t)} sx={{
-                            fontSize: 11, fontWeight: 600, textTransform: 'none', px: 2.25, py: 0.6, borderRadius: 1.25,
-                            color: activeTab === t ? '#00ff88' : 'rgba(255,255,255,0.3)',
-                            background: activeTab === t ? 'rgba(0,255,136,0.1)' : 'transparent',
-                            '&:hover': { background: activeTab === t ? 'rgba(0,255,136,0.1)' : 'rgba(255,255,255,0.04)' },
-                        }}>{t}</Button>
-                    ))}
-                </Box>
-              
-               
-                <Box sx={{ flex: 1 }} />
-
-                <Box sx={{ display: 'flex', gap: 0.75 }}>
-                    Affixes go here
-                </Box>
-            </Box>
-            <Box sx={{ px: 5, pt: 2.5, pb:2, display: 'flex', gap: 1, overflowX: 'auto', scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
                     {keystoneImages.map(keystone => (
                         <Box
                             key={keystone.id}
@@ -166,18 +162,15 @@ export default function PvERoute() {
                             )}
                         </Box>
                     ))}
-                </Box>
-                <Box sx={{ px: 5, pt: 2.5, pb: 4 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.75 }}>
-                        <Typography sx={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
-                            {selectedKeystoneName} - { selectedRealm?.name}
-                        </Typography>
-                        <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>ADD LAST UPDATE TO DB</Typography>
                     </Box>
-
-                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage}/>
-                 </Box>
-            </Box>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 6 }} >  
+                    <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} >  
+                    Placeholder for affixes
+                </Grid>
+            </Grid>
         </Container>
     )
 

@@ -61,13 +61,23 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
 
 
     return (
-        <Box    >
-            <Pagination
-                count={leaderboardData.totalPages}
-                onChange={handleChangePage}
-                sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}
-                renderItem={item => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
-            />
+        <Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mx: '12px' }}>
+                <Pagination
+                    count={leaderboardData.totalPages}
+                    showFirstButton
+                    onChange={handleChangePage}
+                    showLastButton
+                    renderItem={(item) => {
+                        if (item.type === 'page') {
+                            return null;
+                        }
+                        return <PaginationItem {...item} />;
+                    }}
+                />
+                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>ADD LAST UPDATE TO DB</Typography>
+            </Box>
             {leaderboardData.data?.map((entry) => (
                 
                 <LeaderboardEntry sx={{
