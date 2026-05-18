@@ -63,22 +63,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
     return (
         <Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',margin:1 }}>
-                <Pagination
-                    count={leaderboardData.totalPages}
-                    showFirstButton
-                    onChange={handleChangePage}
-                    showLastButton
-                    renderItem={(item) => {
-                        if (item.type === 'page') {
-                            return null;
-                        }
-                        return <PaginationItem {...item} />;
-                    }}
-                />
-                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
-            </Box>
-
+           
             {leaderboardData.data?.map((entry) => (
                 <LeaderboardEntry sx={{
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5), 

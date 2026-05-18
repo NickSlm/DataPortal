@@ -24,7 +24,7 @@ export default function PvERoute() {
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
-    const { leaderboard, leaderboardLoading, leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone, 1);
+    const { leaderboard, loading: leaderboardLoading, error: leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone, 1);
 
 
 
@@ -164,6 +164,20 @@ export default function PvERoute() {
                     </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 12, md: 6 }}>  
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: 1 }}>
+                        <Pagination
+                            count={leaderboard.totalPages}
+                            page={2}         
+                            showFirstButton
+                            showLastButton
+                            renderItem={(item) => {
+                                if (item.type === 'page') return null;
+                                return <PaginationItem {...item} />;
+                            }}
+                        />
+                        <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
+                    </Box>
+
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>  

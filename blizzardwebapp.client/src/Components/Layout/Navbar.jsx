@@ -29,7 +29,7 @@ export default function Navbar() {
                 </Typography>
 
                 <Box sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: 'center', gap: 0.5 }}>
-                    {[{ label: 'Home', path: '/' }, { label: 'PVE', path: '/PvE' }, { label: 'PVP', path: '/PvP' }].map(item => (
+                    {[{ label: 'Home', path: '/' }, { label: 'Keystones', path: '/PvE' }, { label: 'Arena', path: '/PvP' }].map(item => (
                         <Button key={item.path} component={Link} to={item.path} sx={{
                             fontSize: 11.5, fontWeight: 500, color: isActive(item.path) ? '#00ff88' : 'rgba(255,255,255,0.38)',
                             borderRadius: 1.5, textTransform: 'none', px: 1.75, py: 0.75,
