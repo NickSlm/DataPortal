@@ -52,10 +52,6 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    const handleChangePage = (event, value) => {
-        console.log(value);
-    }
-
     if (loading) return <div>Loading...</div>;
 
 

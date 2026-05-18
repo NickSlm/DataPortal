@@ -80,7 +80,7 @@ namespace BlizzardWebApp.Server.Services
                 .Where(g => g.LeaderboardId == leaderboard.Id)
                 .Select(g => new { g.Id, g.Ranking, g.Duration, g.KeystoneLevel })
                 .Skip((page - 1) * 50)
-                .Take(10)
+                .Take(50)
                 .ToListAsync();
 
             var groupIds = groups.Select(g => g.Id).ToList();

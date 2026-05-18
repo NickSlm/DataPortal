@@ -6,6 +6,7 @@
     Button
 } from '@mui/material';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useKeystoneImages } from '../Hooks/useKeystoneImages';
 import { useRealms } from '../Hooks/useRealms';
 import RealmsSelect from '../Elements/RealmsSelect';
@@ -17,22 +18,39 @@ import PaginationItem from '@mui/material/PaginationItem';
 
 export default function PvERoute() {
 
-    const [activeTab, setActiveTab] = useState('Players');
+    const [searchParams, setSearchParams] = useSearchParams();
     const [selectedRealm, setSelectedRealm] = useState(null);
-    const [selectedKeystone, setSelectedKeystone] = useState(null);
     const [selectedKeystoneName, setSelectedKeystoneName] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
-    const { leaderboard, loading: leaderboardLoading, error: leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystone, 1);
 
+
+    const selectedPage = Number(searchParams.get('page') ?? 1);
+
+    const selectedKeystoneId = Number(searchParams.get('keystone') ?? 161);
+
+    const { leaderboard, loading: leaderboardLoading, error: leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystoneId, selectedPage);
 
 
     const HandleSelection = (keystone) => {
-        setSelectedKeystone(keystone.id),
-        setSelectedKeystoneName(keystone.name),
-        setSelectedImage(keystone.imagePath)
+
+        setSearchParams(prev => {
+            prev.set('keystone', keystone.id);
+            prev.set('page', '1');
+            return prev;
+        });
+
+        setSelectedImage(keystone.imagePath);
+        setSelectedKeystoneName(keystone.name);
     }
+    const HandlePagination = (event, value) => {
+        setSearchParams(prev => {
+            prev.set('page', value);
+            return prev;
+        })
+    }
+
 
     if (!keystoneImages) return <div>No data</div>; 
 
@@ -88,11 +106,11 @@ export default function PvERoute() {
                                 overflow: 'hidden',
                                 aspectRatio: '1',
                                 transition: 'all 0.3s ease',
-                                boxShadow: selectedKeystone === keystone.id
+                                boxShadow: selectedKeystoneId === keystone.id
                                     ? '0 0 0 3px #00ff88'
                                     : 'none',
                                 '&:hover': {
-                                    boxShadow: selectedKeystone === keystone.id
+                                    boxShadow: selectedKeystoneId === keystone.id
                                         ? '0 0 0 3px #00ff88, 0 4px 12px rgba(0, 255, 136, 0.4)'
                                         : '0 4px 12px rgba(0, 255, 136, 0.2)',
                                 },
@@ -106,7 +124,7 @@ export default function PvERoute() {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
-                                    filter: selectedKeystone === keystone.id
+                                    filter: selectedKeystoneId === keystone.id
                                         ? 'brightness(1)'
                                         : 'brightness(0.8)',
                                     transition: 'filter 0.3s ease',
@@ -137,7 +155,7 @@ export default function PvERoute() {
                                 </Typography>
                             </Box>
 
-                            {selectedKeystone === keystone.id && (
+                            {selectedKeystoneId === keystone.id && (
                                 <Box sx={{
                                     position: 'absolute',
                                     top: 8,
@@ -167,17 +185,14 @@ export default function PvERoute() {
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: 1 }}>
                         <Pagination
                             count={leaderboard.totalPages}
-                            page={2}         
                             showFirstButton
                             showLastButton
-                            renderItem={(item) => {
-                                if (item.type === 'page') return null;
-                                return <PaginationItem {...item} />;
-                            }}
+                            page={selectedPage}
+                            onChange={HandlePagination}
                         />
                         <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
                     </Box>
-
+                    
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>  

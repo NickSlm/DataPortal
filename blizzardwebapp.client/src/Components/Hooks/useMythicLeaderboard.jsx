@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 
 
-export const useMythicLeaderboard = (realmId, keystoneId, page = 1) => {
+export const useMythicLeaderboard = (realmId, keystoneId, page) => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
