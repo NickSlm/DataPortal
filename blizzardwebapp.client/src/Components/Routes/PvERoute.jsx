@@ -20,15 +20,14 @@ export default function PvERoute() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [selectedRealm, setSelectedRealm] = useState(null);
-    const [selectedKeystoneName, setSelectedKeystoneName] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
     const { data: keystoneImages, isLoading } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
 
 
     const selectedPage = Number(searchParams.get('page') ?? 1);
-
-    const selectedKeystoneId = Number(searchParams.get('keystone') ?? 161);
+    const selectedKeystoneId = Number(searchParams.get('keystone'));
+    const selectedKeystoneName = keystoneImages?.find(k => k.id === selectedKeystoneId)?.name ?? null;
+    const selectedImage = keystoneImages?.find(k => k.id === selectedKeystoneId)?.imagePath ?? null;
 
     const { leaderboard, loading: leaderboardLoading, error: leaderboardError } = useMythicLeaderboard(selectedRealm?.id, selectedKeystoneId, selectedPage);
 
@@ -41,7 +40,6 @@ export default function PvERoute() {
             return prev;
         });
 
-        setSelectedImage(keystone.imagePath);
         setSelectedKeystoneName(keystone.name);
     }
     const HandlePagination = (event, value) => {
