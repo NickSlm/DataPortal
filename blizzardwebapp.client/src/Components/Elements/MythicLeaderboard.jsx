@@ -63,7 +63,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
     return (
         <Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mx: '12px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between',margin:1 }}>
                 <Pagination
                     count={leaderboardData.totalPages}
                     showFirstButton
@@ -76,16 +76,17 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
                         return <PaginationItem {...item} />;
                     }}
                 />
-                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>ADD LAST UPDATE TO DB</Typography>
+                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
             </Box>
+
             {leaderboardData.data?.map((entry) => (
-                
                 <LeaderboardEntry sx={{
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5), 
                         rgba(0,0,0,0.5)),url("${encodeURI(image)}")`,
                     border: '1px solid rgba(0, 255, 157, 0.3)',
                     borderRadius: '12px',
-                    margin: '12px',}}>
+                    margin:1
+                    }}>
 
                     <CardContent>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>

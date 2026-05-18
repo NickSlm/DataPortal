@@ -44,7 +44,7 @@ export default function PvERoute() {
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>      
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', mx:1 }}>
                         <Typography sx={{ fontSize: 14, fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)', mb: 0.75 }}>
                             Leaderboards
                         </Typography>
@@ -57,7 +57,6 @@ export default function PvERoute() {
                         </Typography>
                     </Box>
 
-                    {/* Right side - pushed to far right */}
                     <Box sx={{ ml: 'auto' }}>
                         <RealmsSelect realms={realms}
                             value={selectedRealm}
@@ -66,8 +65,8 @@ export default function PvERoute() {
                     </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Typography sx={{ fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
+                    <Box sx={{  display:'flex', alignItems: 'center', justifyContent: 'center', margin:2 }}>
+                        <Typography sx={{fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
                             {selectedKeystoneName} - {selectedRealm?.name}
                         </Typography>
                     </Box>
@@ -75,7 +74,7 @@ export default function PvERoute() {
                         display: 'grid',
                         gridTemplateColumns: 'repeat(2, 1fr)',
                         gap: 1,
-                        margin:'12px'
+                        margin:1
                     }}>
 
                     {keystoneImages.map(keystone => (
@@ -164,11 +163,13 @@ export default function PvERoute() {
                     ))}
                     </Box>
                 </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 6 }} >  
+                <Grid size={{ xs: 12, sm: 12, md: 6 }}>  
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }} >  
-                    Placeholder for affixes
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
+                    <Box sx={{ margin: 1 }}>
+                    Weekly Affixes
+                    </Box>
                 </Grid>
             </Grid>
         </Container>
