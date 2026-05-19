@@ -202,7 +202,16 @@ export default function PvERoute() {
                             page={selectedPage}
                             onChange={HandlePagination}
                         />
-                        <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
+                        <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>
+                            Last update {
+                                leaderboard?.lastFetchTime
+                                    ? new Date(leaderboard.lastFetchTime)
+                                        .toISOString()
+                                        .slice(0, 19)
+                                        .replace('T', ' ')
+                                    : 'N/A'
+                            }
+                        </Typography>
                     </Box>
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>

@@ -76,6 +76,11 @@ namespace BlizzardWebApp.Server.Services
             var leaderboard = await _dbContext.KeystoneLeaderboards
             .FirstOrDefaultAsync(l => l.LeaderboardId == leaderboardId);
 
+            if (leaderboard == null)
+            {
+                return null;
+            }
+
             var groups = await _dbContext.Group
                 .Where(g => g.LeaderboardId == leaderboard.Id)
                 .Select(g => new { g.Id, g.Ranking, g.Duration, g.KeystoneLevel })
@@ -111,7 +116,8 @@ namespace BlizzardWebApp.Server.Services
                 Data = leaderboardDto,
                 TotalPages = (int)Math.Ceiling(totalGroups / (double)50),
                 TotalCount = totalGroups,
-                CurrentPage = page
+                CurrentPage = page,
+                LastFetchTime = leaderboard.LastFetchTime
             };
 
             return paginatedResDto;
@@ -230,12 +236,14 @@ namespace BlizzardWebApp.Server.Services
                 if (existingLeaderboards.TryGetValue(leaderboard.LeaderboardId, out var existing)){
                     _dbContext.RemoveRange(existing.LeadingGroups);
                     existing.LeadingGroups = CreateGroups(leaderboard.LeadingGroups, existingMembers);
+                    existing.LastFetchTime = DateTime.UtcNow;
                 }
                 else
                 {
                     var newLeaderboard = new Data.KeystoneLeaderboard.Leaderboard
                     {
                         LeaderboardId = leaderboard.LeaderboardId,
+                        LastFetchTime = DateTime.UtcNow,
                         LeadingGroups = CreateGroups(leaderboard.LeadingGroups, existingMembers)
                     };
                     _dbContext.KeystoneLeaderboards.Add(newLeaderboard);
