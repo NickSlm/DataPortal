@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Box, Paper, Typography, Avatar, Chip, Stack, Card, CardContent, Badge } from '@mui/material';
+import { Box, Paper, Typography, Avatar, Chip, Stack, Card, CardContent, Badge, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import KeystoneIcon from '../../Assets/Misc/inv_relics_hourglass.jpg';
@@ -42,6 +42,69 @@ const LeaderboardEntry = styled(Card)(
     
 
 
+const LeaderboardSkeleton = ({ count = 5 }) => {
+    return (
+        <Box>
+            {Array.from({ length: count }).map((_, i) => (
+                <Box
+                    key={i}
+                    sx={{
+                        border: '1px solid rgba(0, 255, 157, 0.1)',
+                        borderRadius: '12px',
+                        margin: 1,
+                        background: 'rgba(255,255,255,0.03)',
+                    }}
+                >
+                    <CardContent>
+                        {/* Top row: rank badge + keystone + duration */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                            {/* Rank badge */}
+                            <Skeleton
+                                variant="rounded"
+                                width={40}
+                                height={40}
+                                sx={{ borderRadius: '8px', bgcolor: 'rgba(0,255,157,0.08)' }}
+                            />
+
+                            {/* Stats row */}
+                            <Box sx={{ display: 'flex', gap: 2, flex: 1, flexWrap: 'wrap' }}>
+                                {/* Keystone */}
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                                    <Skeleton variant="circular" width={20} height={20} sx={{ bgcolor: 'rgba(0,255,157,0.08)' }} />
+                                    <Skeleton variant="text" width={32} height={22} sx={{ bgcolor: 'rgba(0,255,157,0.08)' }} />
+                                </Box>
+
+                                {/* Duration */}
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                                    <Skeleton variant="circular" width={20} height={20} sx={{ bgcolor: 'rgba(0,207,255,0.08)' }} />
+                                    <Skeleton variant="text" width={56} height={20} sx={{ bgcolor: 'rgba(0,207,255,0.08)' }} />
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        {/* Players row */}
+                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                            {Array.from({ length: 5 }).map((_, j) => (
+                                <Skeleton
+                                    key={j}
+                                    variant="rounded"
+                                    width={80 + Math.random() * 40} // vary widths so it looks natural
+                                    height={30}
+                                    sx={{
+                                        borderRadius: '6px',
+                                        bgcolor: 'rgba(255,255,255,0.05)',
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    </CardContent>
+                </Box>
+            ))}
+        </Box>
+    );
+};
+
+
 export function MythicLeaderboard({ leaderboardData, loading, image })
 {
 
@@ -52,7 +115,7 @@ export function MythicLeaderboard({ leaderboardData, loading, image })
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LeaderboardSkeleton/>;
 
 
 

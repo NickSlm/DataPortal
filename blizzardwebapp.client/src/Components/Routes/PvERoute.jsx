@@ -59,6 +59,7 @@ export default function PvERoute() {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    mb:6
                 }}>      
                     <Box sx={{ display: 'flex', flexDirection: 'column', mx:1 }}>
                         <Typography sx={{ fontSize: 14, fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)', mb: 0.75 }}>
@@ -73,18 +74,31 @@ export default function PvERoute() {
                         </Typography>
                     </Box>
 
-                    <Box sx={{ ml: 'auto' }}>
-                        <RealmsSelect realms={realms}
-                            value={selectedRealm}
-                            onChange={setSelectedRealm}
-                            loading={loading} />
-                    </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
-                    <Box sx={{  display:'flex', alignItems: 'center', justifyContent: 'center', margin:2 }}>
-                        <Typography sx={{fontSize: 10, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)' }}>
-                            {selectedKeystoneName} - {selectedRealm?.name}
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mx: 1,
+                        mb: 2,
+                    }}>
+                        <Typography sx={{
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: '1.5px',
+                            textTransform: 'uppercase',
+                            color: 'rgba(0, 255, 136, 0.5)',
+                        }}>
+                            {selectedKeystoneName ?? 'Pick a dungeon'}
                         </Typography>
+
+                        <RealmsSelect
+                            realms={realms}
+                            value={selectedRealm}
+                            onChange={setSelectedRealm}
+                            loading={loading}
+                        />
                     </Box>
                     <Box sx={{
                         display: 'grid',
@@ -190,7 +204,6 @@ export default function PvERoute() {
                         />
                         <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.18)' }}>Last update 7:30UTC</Typography>
                     </Box>
-                    
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
