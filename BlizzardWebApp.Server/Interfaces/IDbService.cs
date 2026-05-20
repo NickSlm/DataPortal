@@ -10,6 +10,7 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<List<LeaderboardEntry>> GetEntriesByDate(DateTime dateTime);
         Task SaveConnectedRealms();
         Task<List<ConnectedRealmDto>> GetRealms();
+        Task<List<Affixes>> GetAffixes(IEnumerable<int> affixes);
         Task<PaginatedResultDto<KeystoneGroupDto>> GetKeystoneLeaderboard(int realmId, int keystoneId, int page);
         Task SaveKeystonesData();
         Task<List<MythicKeystoneDb>> GetKeystonesData();

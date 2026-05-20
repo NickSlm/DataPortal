@@ -58,6 +58,19 @@ namespace BlizzardWebApp.Server.Services
 
             return realms;
         }
+        public async Task<List<Affixes>> GetAffixes(IEnumerable<int> affixes)
+        {
+            var result = await _dbContext.Affixes.Where(a => affixes.Contains(a.Id)).ToListAsync();
+            var dto = result.Select(e => new Affixes
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Description = e.Description,
+                ImagePath = e.ImagePath
+            }).ToList();
+
+            return dto;
+        }
         public async Task<List<MythicKeystoneDb>> GetKeystonesData()
         {
             var keystones = await _dbContext.Keystones.Select(k => new MythicKeystoneDb

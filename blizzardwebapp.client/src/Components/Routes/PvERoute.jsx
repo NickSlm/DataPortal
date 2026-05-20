@@ -20,7 +20,7 @@ export default function PvERoute() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [selectedRealm, setSelectedRealm] = useState(null);
-    const { data: keystoneImages, isLoading } = useKeystoneImages();
+    const { data: keystoneImages } = useKeystoneImages();
     const { realms, loading, error } = useRealms();
 
 
@@ -214,6 +214,23 @@ export default function PvERoute() {
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent:'center',
+                        mx: 1,
+                        mb: 2,
+                    }}>
+                        <Typography sx={{
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: '1.5px',
+                            textTransform: 'uppercase',
+                            color: 'rgba(0, 255, 136, 0.5)',
+                        }}>
+                            This week's affixes
+                        </Typography>
+                    </Box>
                     <AffixCollection/>
                 </Grid>
             </Grid>

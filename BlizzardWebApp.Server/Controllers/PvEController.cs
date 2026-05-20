@@ -49,6 +49,14 @@ namespace BlizzardWebApp.Server.Controllers
 
             return Ok(keystones);
         }
+
+        [HttpGet("/data/affixes/assets")]
+        public async Task<ActionResult<List<Affixes>>> GetAffixAssets()
+        {
+            var affixes = await _dbService.GetAffixes(new List<int> { 10, 9, 158, 147 });
+            return Ok(affixes);
+        }
+
         [HttpGet("/REMOVE-LATER")]
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
