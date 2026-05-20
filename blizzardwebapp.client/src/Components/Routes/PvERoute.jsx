@@ -39,8 +39,6 @@ export default function PvERoute() {
             prev.set('page', '1');
             return prev;
         });
-
-        setSelectedKeystoneName(keystone.name);
     }
     const HandlePagination = (event, value) => {
         setSearchParams(prev => {
@@ -215,10 +213,8 @@ export default function PvERoute() {
                     </Box>
                     <MythicLeaderboard leaderboardData={leaderboard} loading={leaderboardLoading} image={selectedImage} />
                 </Grid>
-                <Grid size={{ xs: 12, sm: 6, md: 3 }}>  
-                    <Box sx={{ margin: 1 }}>
-                    Weekly Affixes
-                    </Box>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                    <AffixCollection/>
                 </Grid>
             </Grid>
         </Container>

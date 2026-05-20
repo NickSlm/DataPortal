@@ -14,5 +14,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task SaveKeystonesData();
         Task<List<MythicKeystoneDb>> GetKeystonesData();
         Task SaveKeystoneLeaderboardAsync();
+        Task SaveAffixData();
     }
 }

@@ -11,5 +11,6 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<List<ConnectedRealmData>> GetConnectedRealms();
         Task<List<MythicKeystoneDb>> GetMythicKeystones();
         Task<MythicLeaderboard> GetCurrentMythicLeaderboardsAsync(int realmId, int keystoneId);
+        Task<Affix> GetAffixData(int affixId);
     }
 }

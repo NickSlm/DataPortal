@@ -20,7 +20,7 @@ namespace BlizzardWebApp.Server.Data
         public DbSet<Member> Member { get; set; } 
         public DbSet<Group> Group { get; set; }
         public DbSet<GroupMember> GroupMember { get; set; }
-
+        public DbSet<Affixes> Affixes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -119,7 +119,6 @@ namespace BlizzardWebApp.Server.Services
 
             return results.ToList();
         }
-
         private async Task<ConnectedRealmData> GetConnectedRealmById(HRef href, string token)
         {
 
@@ -141,7 +140,6 @@ namespace BlizzardWebApp.Server.Services
 
 
         }
-
         public async Task<List<MythicKeystoneDb>> GetMythicKeystones()
         {
             var token = await _authService.GetAccessToken();
@@ -183,7 +181,6 @@ namespace BlizzardWebApp.Server.Services
             return results.ToList();
 
         }
-
         private async Task<MythicKeystoneDb> GetDungeonData(MythicKeystone key, string token)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/mythic-keystone/dungeon/{key.Id}?namespace=dynamic-eu&locale=en_US");
@@ -214,7 +211,26 @@ namespace BlizzardWebApp.Server.Services
 
             return keystoneData;
         }
+        public async Task<Affix> GetAffixData(int affixId)
+        {
+            var token = await _authService.GetAccessToken();
 
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/keystone-affix/{affixId}?namespace=static-eu&locale=en_US");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _asyncPolicy.ExecuteAsync(() => _httpClient.SendAsync(request));
+            var json = await response.Content.ReadAsStringAsync();
+
+            var affixData = JsonSerializer.Deserialize<Affix>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            return affixData;
+        }
         private async Task DownloadDungeonAsset(int dungeonId, string token, string path)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/media/journal-instance/{dungeonId}?namespace=static-12.0.1_65617-eu");
@@ -234,7 +250,6 @@ namespace BlizzardWebApp.Server.Services
             var imageUrl = asset.Assets.FirstOrDefault(a => a.Key == "tile")?.Value;
             await ImageDownloaderService.SaveImageAsync(path, imageUrl);
         }
-
         public async Task<MythicLeaderboard> GetCurrentMythicLeaderboardsAsync(int realmId, int keystoneId)
         {
             var token = await _authService.GetAccessToken();

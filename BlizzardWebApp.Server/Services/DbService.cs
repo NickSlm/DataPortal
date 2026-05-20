@@ -197,6 +197,59 @@ namespace BlizzardWebApp.Server.Services
             }
             await _dbContext.SaveChangesAsync();
         }
+        public async Task SaveAffixData()
+        {
+            var affixIdArray = new int[] {
+                                    1,2,3,4,5,6,7,8,9,10,
+                                    11,12,13,14,16,117,119,
+                                    120,128,129,121,122,123,
+                                    124,130,132,131,133,135,
+                                    136,148,162,160,167,168,
+                                    169,144,145,146,147,153,
+                                    158,165,134,152,159,137,166,170
+                                    };
+
+            var semaphore = new SemaphoreSlim(5);
+
+            var tasks = affixIdArray.Select(async id =>
+            {
+                await semaphore.WaitAsync();
+                try
+                {
+                    return await _blizzardApi.GetAffixData(id);
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+
+            }).ToList();
+
+            var affixes = await Task.WhenAll(tasks);
+
+            var newAffixesId = affixes.Select(a => a.Id).Distinct().ToHashSet();
+            var existingAffixesId = await _dbContext.Affixes.Where(a => newAffixesId.Contains(a.Id)).ToDictionaryAsync(a => a.Id);
+
+            foreach (var affix in affixes)
+            {
+                if (existingAffixesId.TryGetValue(affix.Id, out var existing))
+                {
+                    continue;
+                }
+                else
+                {
+                    var newAffix = new Data.Affixes
+                    {
+                        Id = affix.Id,
+                        Name = affix.Name,
+                        Description = affix.Description,
+                        ImagePath = $"/src/Assets/Affix/{affix.Name}_affix.jpg"
+                    };
+                    _dbContext.Affixes.Add(newAffix);
+                }
+            }
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task SaveKeystoneLeaderboardAsync()
         {
             var semaphore = new SemaphoreSlim(5);

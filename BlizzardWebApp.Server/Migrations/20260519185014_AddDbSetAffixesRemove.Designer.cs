@@ -3,6 +3,7 @@ using System;
 using BlizzardWebApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,35 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlizzardWebApp.Server.Migrations
 {
     [DbContext(typeof(LbDbContext))]
-    partial class LbDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260519185014_AddDbSetAffixesRemove")]
+    partial class AddDbSetAffixesRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
-
-            modelBuilder.Entity("BlizzardWebApp.Server.Data.Affixes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Affixes");
-                });
 
             modelBuilder.Entity("BlizzardWebApp.Server.Data.ConnectedRealmsDb", b =>
                 {

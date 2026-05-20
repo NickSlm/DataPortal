@@ -53,9 +53,12 @@ namespace BlizzardWebApp.Server.Controllers
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
             //REMOVE THIS CONTROLLER INTO THE WORKER SERVICE
-            await _dbService.SaveKeystoneLeaderboardAsync();
+            //await _dbService.SaveKeystoneLeaderboardAsync();
 
-            return Ok(new {message = "DONE syncing"});
+            //REMOVE THIS CONTROLLER INTO SCRIPT
+            //await _dbService.SaveAffixData();
+
+            return Ok(new {message = "done"});
         }
 
         [HttpGet("/data/mythic-keystones/realm/{realmId}/keystone/{keystoneId}/groups/page={page}&size=50")]
