@@ -6,7 +6,7 @@ A full-stack leaderboard application for World of Warcraft competitive content. 
 ## 📸 Preview
 
 ### Mythic+ Leaderboards
-<img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/bc439f97-3c70-445e-b98a-9fbe714b338f" />
+<img width="1905" height="987" alt="image" src="https://github.com/user-attachments/assets/1cdc7f24-3383-4f31-81e6-4ccdde157325" />
 
 ### Game Modes Overview
 <img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/e1bd55c7-a6bd-42f5-b26d-ade375f4700b" />
