@@ -61,7 +61,7 @@ namespace BlizzardWebApp.Server.Services
         {
 
             var token = await _authService.GetAccessToken();
-            //for testing DELETE LATER
+            //:TODO testing DELETE LATER
             _logger.LogInfo("===========================================================================================================");
             _logger.LogInfo(token);
             _logger.LogInfo("===========================================================================================================");

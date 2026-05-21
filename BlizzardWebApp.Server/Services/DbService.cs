@@ -116,8 +116,8 @@ namespace BlizzardWebApp.Server.Services
                     .Where(m => m.GroupId == g.Id)
                     .Select(m => new Dictionary<string, string>
                     {
-            { "Name", m.Name },
-            { "Slug", m.Realm }
+                    { "Name", m.Name },
+                    { "Slug", m.Realm }
                     }).ToList()
             }).ToList();
 

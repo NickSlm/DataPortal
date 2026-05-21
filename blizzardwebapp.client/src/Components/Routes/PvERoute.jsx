@@ -61,7 +61,7 @@ export default function PvERoute() {
                 }}>      
                     <Box sx={{ display: 'flex', flexDirection: 'column', mx:1 }}>
                         <Typography sx={{ fontSize: 14, fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)', mb: 0.75 }}>
-                            Leaderboards
+                            Keystone Leaderboards
                         </Typography>
                         <Typography sx={{ fontSize: 26, fontWeight: 200, letterSpacing: '-0.5px', color: 'rgba(255,255,255,0.9)' }}>
                             Who's{' '}

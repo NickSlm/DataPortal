@@ -10,7 +10,7 @@ export default function AffixCollection() {
     const { data: affixData, isLoading } = useAffixImages();
 
     if (isLoading) {
-        return (<Box>asd</Box>);
+        return (<Box>loading</Box>);
     }
 
     return (

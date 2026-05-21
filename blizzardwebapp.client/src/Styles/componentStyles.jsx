@@ -1,8 +1,6 @@
 export const glassSelectStyle = {
     FormControl: {
         width: 180,
-
-        ml:2
     },
 
     autocomplete: {

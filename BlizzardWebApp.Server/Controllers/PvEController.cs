@@ -61,7 +61,7 @@ namespace BlizzardWebApp.Server.Controllers
         public async Task<ActionResult> GetMythicLeaderboard(int realmId, int keystoneId)
         {
             //REMOVE THIS CONTROLLER INTO THE WORKER SERVICE
-            //await _dbService.SaveKeystoneLeaderboardAsync();
+            await _dbService.SaveKeystoneLeaderboardAsync();
 
             //REMOVE THIS CONTROLLER INTO SCRIPT
             //await _dbService.SaveAffixData();
