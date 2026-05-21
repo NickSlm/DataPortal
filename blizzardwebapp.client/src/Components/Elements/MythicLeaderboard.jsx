@@ -81,23 +81,23 @@ function LeaderboardEntry({ entry, isTop }) {
                     <Box sx={{ width: '1px', height: 24, background: 'rgba(255,255,255,0.07)' }} />
 
                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-                                    <img
-                                        src={HourglassIcon}
-                                        alt=""
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                            filter: 'drop-shadow(0 0 4px rgba(0, 207, 255, 0.6))'
-                                        }}
-                                    />
-                                    <Typography sx={{
-                                        color: '#00cfff',
-                                        fontWeight: 600,
-                                        fontSize: '14px',
-                                    }}>
-                                        {formatDuration(entry.duration)}
-                                    </Typography>
-                                </Box>
+                        <img
+                            src={HourglassIcon}
+                            alt=""
+                            style={{
+                                width: 20,
+                                height: 20,
+                                filter: 'drop-shadow(0 0 4px rgba(0, 207, 255, 0.6))'
+                            }}
+                        />
+                        <Typography sx={{
+                            color: '#00cfff',
+                            fontWeight: 600,
+                            fontSize: '14px',
+                        }}>
+                            {formatDuration(entry.duration)}
+                        </Typography>
+                    </Box>
                 </Box>
             </Box>
 
@@ -168,62 +168,67 @@ function RankBadge({ ranking }) {
         </Box>
     );
 }
-const LeaderboardSkeleton = ({ count = 5 }) => {
+const LeaderboardSkeleton = ({ count = 5, isTop = false }) => {
     return (
         <Box>
             {Array.from({ length: count }).map((_, i) => (
                 <Box
-                    key={i}
                     sx={{
-                        border: '1px solid rgba(0, 255, 157, 0.1)',
-                        borderRadius: '12px',
-                        margin: 1,
-                        background: 'rgba(255,255,255,0.03)',
+                        borderRadius: 1,
+                        m: 1,
+                        overflow: 'hidden',
+                        backgroundImage: isTop
+                            ? `repeating-linear-gradient(0deg, rgba(0,255,157,0.018) 0px, rgba(0,255,157,0.018) 1px, transparent 1px, transparent 8px)`
+                            : `repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 8px)`,
+                        backgroundColor: isTop ? '#141d33' : '#11182b',
+                        border: '1px solid rgba(255,255,255,0.06)',
                     }}
                 >
-                    <CardContent>
-                        {/* Top row: rank badge + keystone + duration */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                            {/* Rank badge */}
-                            <Skeleton
-                                variant="rounded"
-                                width={40}
-                                height={40}
-                                sx={{ borderRadius: '8px', bgcolor: 'rgba(0,255,157,0.08)' }}
-                            />
+                    {/* Header row */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, px: 1.75, pt: 1.375, pb: 1.125 }}>
+                        {/* Rank badge */}
+                        <Skeleton variant="circular" width={28} height={28} sx={{ bgcolor: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
 
-                            {/* Stats row */}
-                            <Box sx={{ display: 'flex', gap: 2, flex: 1, flexWrap: 'wrap' }}>
-                                {/* Keystone */}
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-                                    <Skeleton variant="circular" width={20} height={20} sx={{ bgcolor: 'rgba(0,255,157,0.08)' }} />
-                                    <Skeleton variant="text" width={32} height={22} sx={{ bgcolor: 'rgba(0,255,157,0.08)' }} />
-                                </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.75, flex: 1 }}>
+                            {/* Keystone level */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                                <Skeleton variant="rounded" width={20} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
+                                <Skeleton variant="rounded" width={36} height={14} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
+                            </Box>
 
-                                {/* Duration */}
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-                                    <Skeleton variant="circular" width={20} height={20} sx={{ bgcolor: 'rgba(0,207,255,0.08)' }} />
-                                    <Skeleton variant="text" width={56} height={20} sx={{ bgcolor: 'rgba(0,207,255,0.08)' }} />
-                                </Box>
+                            {/* Divider */}
+                            <Box sx={{ width: '1px', height: 24, background: 'rgba(255,255,255,0.07)' }} />
+
+                            {/* Duration */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                                <Skeleton variant="rounded" width={20} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
+                                <Skeleton variant="rounded" width={52} height={13} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
                             </Box>
                         </Box>
+                    </Box>
 
-                        {/* Players row */}
-                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                            {Array.from({ length: 5 }).map((_, j) => (
-                                <Skeleton
-                                    key={j}
-                                    variant="rounded"
-                                    width={80 + Math.random() * 40} // vary widths so it looks natural
-                                    height={30}
-                                    sx={{
-                                        borderRadius: '6px',
-                                        bgcolor: 'rgba(255,255,255,0.05)',
-                                    }}
-                                />
-                            ))}
-                        </Box>
-                    </CardContent>
+                    {/* Member chips row */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: 0.625,
+                            flexWrap: 'wrap',
+                            px: 1.75,
+                            pt: 0.875,
+                            pb: 1.375,
+                            borderTop: '1px solid rgba(255,255,255,0.05)',
+                        }}
+                    >
+                        {[64, 72, 56, 80, 60].map((w, i) => (
+                            <Skeleton
+                                key={i}
+                                variant="rounded"
+                                width={w}
+                                height={22}
+                                sx={{ bgcolor: 'rgba(255,255,255,0.06)', borderRadius: 1.25 }}
+                            />
+                        ))}
+                    </Box>
                 </Box>
             ))}
         </Box>
@@ -238,7 +243,7 @@ const formatDuration = (ms) => {
 
 export function MythicLeaderboard({ leaderboardData, loading, image })
 {
-    if (loading) return <LeaderboardSkeleton/>;
+    if (!leaderboardData.data) return <LeaderboardSkeleton />;
 
     return (
         <Box>

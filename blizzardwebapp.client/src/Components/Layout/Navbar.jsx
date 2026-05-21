@@ -44,7 +44,7 @@ export default function Navbar() {
                     px: 2, py: 0.75, borderRadius: 1.5, border: '1px solid rgba(0,255,136,0.28)',
                     background: 'rgba(0,255,136,0.06)', color: '#00ff88',
                     '&:hover': { background: 'rgba(0,255,136,0.13)', borderColor: 'rgba(0,255,136,0.6)' },
-                }}>WIP</Button>
+                }}>Login</Button>
 
                 <IconButton sx={{ display: { xs: 'flex', sm: 'none' }, color: '#00ff88' }}>
                     <MenuIcon />
