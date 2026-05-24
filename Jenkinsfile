@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOTNET_ROOT = "/root/.dotnet"
+        PATH = "${env.PATH}:${DOTNET_ROOT}"
+    }
     stages {
 
         stage('Checkout') {
