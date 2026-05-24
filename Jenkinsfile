@@ -1,21 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/dotnet/sdk:8.0'
-        }
-    }
+    agent any
 
     stages {
 
-        stage('Restore') {
+        stage('Checkout') {
             steps {
-                sh 'dotnet restore'
+                checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Dotnet Check') {
             steps {
-                sh 'dotnet build'
+                sh 'dotnet --version'
             }
         }
 
