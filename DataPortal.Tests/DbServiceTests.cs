@@ -34,7 +34,7 @@ namespace DataPortal.Tests
         public async Task Create_Groups_WithInValidInput()
         {
             int a = 5;
-            int b = 22;
+            int b = 10;
 
             var result = a + b;
 
