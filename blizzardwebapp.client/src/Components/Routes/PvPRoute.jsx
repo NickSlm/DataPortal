@@ -57,7 +57,7 @@ export default function PvPRoute() {
                     }}>
                         {bracket}
                     </Box>
-                    {' '}Leaderboard
+                    {' '}Leaderboards
                 </Typography>
             </Box>
             <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems:'center' }}>
