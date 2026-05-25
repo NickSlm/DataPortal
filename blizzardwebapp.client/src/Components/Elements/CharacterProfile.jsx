@@ -1,4 +1,5 @@
 import { Box, Typography} from '@mui/material';
+import { useCharacterProfile } from '../Hooks/useCharacterProfile';
 
 const mono = { fontFamily: 'monospace' };
 
@@ -14,9 +15,10 @@ function Field({ label, value, color = '#d1d5db' }) {
         </Box>
     );
 }
-export function CharacterProfile({player}) {
+export function CharacterProfile({ player }) {
 
-    console.log(player)
+    const { data, loading, error } = useCharacterProfile(player.name, player.realm);
+
     return (
         <Box sx={{
             background: 'rgba(255,255,255,0.03)',
@@ -42,7 +44,7 @@ export function CharacterProfile({player}) {
                         }}>
                             <Box
                                 component="img"
-                                src="https://render.worldofwarcraft.com/eu/character/kazzak/177/210011569-avatar.jpg"
+                                src={data.avatar }
                                 sx={{
                                     width: 48,
                                     height: 48,
@@ -70,6 +72,10 @@ export function CharacterProfile({player}) {
                                 </Typography>
                             </Box>
                         </Box>
+                        {data.pvpStatistics.pvp_map_statistics.map(entry => (
+                        
+                            <Field label={entry.world_map.name["en_US"]} value={entry.match_statistics.played} />
+                        ))}
                 </>
             )}
         </Box>
