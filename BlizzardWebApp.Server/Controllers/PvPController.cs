@@ -1,8 +1,8 @@
 ﻿using BlizzardWebApp.Server.Dto;
+using BlizzardWebApp.Server.Dto.Response;
 using BlizzardWebApp.Server.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BlizzardWebApp.Server.Controllers
 {
@@ -46,11 +46,14 @@ namespace BlizzardWebApp.Server.Controllers
                 Name = leaderboard.Name,
                 Entries = leaderboard.Entries
             };
-
-
             return Ok(dto);
         }
 
-
+        [HttpGet("/pvp/profile/character/{character}/realm/{realm}/get")]
+        public async Task<ActionResult<CharacterProfileDto>> GetProfileData(string character, string realm)
+        {
+            var profileDto = await _blizzardApi.GetCharacterProfile(character.ToLower(), realm.ToLower());
+            return Ok(profileDto);
+        }
     }
 }

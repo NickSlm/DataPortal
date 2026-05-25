@@ -2,7 +2,7 @@
 
 namespace BlizzardWebApp.Server.Models
 {
-    public class AssetItem
+    public class BlizzardAsset
     {
         [JsonPropertyName("key")]
         public string Key { get; set; }

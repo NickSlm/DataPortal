@@ -1,7 +1,9 @@
 ﻿using BlizzardWebApp.Server.Data;
+using BlizzardWebApp.Server.Dto.Response;
 using BlizzardWebApp.Server.Interfaces;
 using BlizzardWebApp.Server.Models;
 using BlizzardWebApp.Server.Models.MythicKeystones;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Polly;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -230,6 +232,76 @@ namespace BlizzardWebApp.Server.Services
             });
 
             return affixData;
+        }
+        public async Task<CharacterProfileDto> GetCharacterProfile(string character, string realm)
+        {
+            var token = await _authService.GetAccessToken();
+
+            var response = await _asyncPolicy.ExecuteAsync(async () =>
+            {
+                using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                    $"/profile/wow/character/{realm}/{character}/pvp-summary?namespace=profile-eu");
+
+                request.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                return await _httpClient.SendAsync(request);
+            });
+            var json = await response.Content.ReadAsStringAsync();
+
+            var summary = JsonSerializer.Deserialize<BlizzardPvpStatistics>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+            var avatar = await GetCharacterAssets(token, character, realm);
+
+            var profileDto = new CharacterProfileDto
+            {
+                Avatar = avatar,
+                Name = character,
+                Realm = realm,
+                PvpStatistics = summary
+            };
+            return profileDto;
+
+        }
+        public async Task<string> GetCharacterAssets(string token, string character, string realm)
+        {
+            var response = await _asyncPolicy.ExecuteAsync(async () =>
+            {
+                using var request = new HttpRequestMessage(
+                    HttpMethod.Get,
+                    $"/profile/wow/character/{realm}/{character}/character-media?namespace=profile-eu");
+
+                request.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                return await _httpClient.SendAsync(request);
+            });
+            var json = await response.Content.ReadAsStringAsync();
+
+            var CharacterMedia = JsonSerializer.Deserialize<BlizzardCharacterMedia>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            if (CharacterMedia == null)
+            {
+                return "PlaceHolder";
+            }
+
+            var avatar = CharacterMedia.Assets[0].Value;
+            var inset = CharacterMedia.Assets[1].Value;
+            var raw = CharacterMedia.Assets[2].Value;
+
+            return avatar;
         }
         private async Task DownloadDungeonAsset(int dungeonId, string token, string path)
         {

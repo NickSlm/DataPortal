@@ -16,7 +16,7 @@ function Field({ label, value, color = '#d1d5db' }) {
 }
 export function CharacterProfile({player}) {
 
-
+    console.log(player)
     return (
         <Box sx={{
             background: 'rgba(255,255,255,0.03)',

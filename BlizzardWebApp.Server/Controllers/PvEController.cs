@@ -3,7 +3,6 @@ using BlizzardWebApp.Server.Dto;
 using Microsoft.AspNetCore.Mvc;
 using BlizzardWebApp.Server.Data;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BlizzardWebApp.Server.Controllers
 {
@@ -38,7 +37,6 @@ namespace BlizzardWebApp.Server.Controllers
             var category = request.Category;
 
             await _dbService.SaveKeystonesData();
-
             return Ok(new { message = $"{name}" });
         }
 

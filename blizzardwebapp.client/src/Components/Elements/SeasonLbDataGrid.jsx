@@ -160,7 +160,7 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
             <DataGrid
                 rows={data ?? []}         
                 columns={columns}
-                loading={false}      
+                loading={loading}      
                 onRowClick={(params) => onSelectRow?.(params.row)}
                 disableSelectionOnClick
                 hideFooterSelectedRowCount
