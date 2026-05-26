@@ -5,7 +5,7 @@ namespace BlizzardWebApp.Server.Models
     public class MythicLeaderboards
     {
         [JsonPropertyName("current_leaderboards")]
-        public List<MythicKeystone> MythicKeystones { get; set; }
+        public List<BlizzardKNI> MythicKeystones { get; set; }
 
     }
 }

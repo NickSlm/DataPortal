@@ -60,7 +60,7 @@ export function CharacterProfile({ player }) {
                                     color: 'rgba(255,255,255,0.85)',
                                     lineHeight: 1.3,
                                 }}>
-                                    Realm - {player.realm}
+                                    Realm - {data.realm}
                                 </Typography>
                                 <Typography sx={{
                                     fontSize: 16,
@@ -68,14 +68,11 @@ export function CharacterProfile({ player }) {
                                     lineHeight: 1.4,
                                     mt: 0.25,
                                 }}>
-                                    {player.name}
+                                    {data.name}
                                 </Typography>
                             </Box>
                         </Box>
-                        {data.pvpStatistics.pvp_map_statistics.map(entry => (
-                        
-                            <Field label={entry.world_map.name["en_US"]} value={entry.match_statistics.played} />
-                        ))}
+                       
                 </>
             )}
         </Box>

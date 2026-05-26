@@ -183,7 +183,7 @@ namespace BlizzardWebApp.Server.Services
             return results.ToList();
 
         }
-        private async Task<MythicKeystoneDb> GetDungeonData(MythicKeystone key, string token)
+        private async Task<MythicKeystoneDb> GetDungeonData(BlizzardKNI key, string token)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"/data/wow/mythic-keystone/dungeon/{key.Id}?namespace=dynamic-eu&locale=en_US");
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -241,7 +241,7 @@ namespace BlizzardWebApp.Server.Services
             {
                 using var request = new HttpRequestMessage(
                 HttpMethod.Get,
-                    $"/profile/wow/character/{realm}/{character}/pvp-summary?namespace=profile-eu");
+                    $"/profile/wow/character/{realm}/{character}?namespace=profile-eu");
 
                 request.Headers.Authorization =
                     new AuthenticationHeaderValue("Bearer", token);
@@ -250,7 +250,7 @@ namespace BlizzardWebApp.Server.Services
             });
             var json = await response.Content.ReadAsStringAsync();
 
-            var summary = JsonSerializer.Deserialize<BlizzardPvpStatistics>(json, new JsonSerializerOptions
+            var summary = JsonSerializer.Deserialize<BlizzardCharacterProfile>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -264,7 +264,7 @@ namespace BlizzardWebApp.Server.Services
                 Avatar = avatar,
                 Name = character,
                 Realm = realm,
-                PvpStatistics = summary
+                Profile = summary
             };
             return profileDto;
 

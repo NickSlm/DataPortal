@@ -2,7 +2,7 @@
 
 namespace BlizzardWebApp.Server.Models
 {
-    public class MythicKeystone
+    public class BlizzardKNI
     {
         [JsonPropertyName("key")]
         public HRef Href { get; set; }
