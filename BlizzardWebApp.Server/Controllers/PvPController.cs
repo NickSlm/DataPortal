@@ -52,7 +52,9 @@ namespace BlizzardWebApp.Server.Controllers
         [HttpGet("/pvp/profile/character/{character}/realm/{realm}/get")]
         public async Task<ActionResult<CharacterProfileDto>> GetProfileData(string character, string realm)
         {
-            var profileDto = await _blizzardApi.GetCharacterProfile(character.ToLower(), realm.ToLower());
+            var profileDto = await _blizzardApi.GetCharacterProfile(
+                character.ToLower(), 
+                realm.ToLower());
             return Ok(profileDto);
         }
     }

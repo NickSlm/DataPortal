@@ -236,6 +236,7 @@ namespace BlizzardWebApp.Server.Services
         public async Task<CharacterProfileDto> GetCharacterProfile(string character, string realm)
         {
             var token = await _authService.GetAccessToken();
+            Console.WriteLine(character);
 
             var response = await _asyncPolicy.ExecuteAsync(async () =>
             {

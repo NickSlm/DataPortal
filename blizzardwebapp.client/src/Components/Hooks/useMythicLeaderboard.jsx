@@ -9,6 +9,7 @@ export const useMythicLeaderboard = (realmId, keystoneId, page) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     useEffect(() => {
 
         if (!realmId || !keystoneId) {
