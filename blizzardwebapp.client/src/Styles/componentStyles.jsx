@@ -62,8 +62,8 @@ export const glassSelectStyle = {
     },
 };
 export const classColors = {
-    "Death knight": { color: '#C41E3A' },
-    "Demon hunter": { color: '#A330C9' },
+    "Death Knight": { color: '#C41E3A' },
+    "Demon Hunter": { color: '#A330C9' },
     "Druid": { color: '#FF7C0A' },
     "Evoker": { color: '#33937F' },
     "Hunter": { color: '#AAD372' },

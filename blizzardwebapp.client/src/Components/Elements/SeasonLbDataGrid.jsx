@@ -48,7 +48,7 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
             flex: 1,
             renderCell: ({ value }) => (
                 <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'white' }}>
-                    {value?.split('-')[0]}
+                    {value}
                 </Box>
             ),
         },

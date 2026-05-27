@@ -13,6 +13,7 @@ namespace BlizzardWebApp.Server.Interfaces
         Task<List<MythicKeystoneDb>> GetMythicKeystones();
         Task<CharacterProfileDto> GetCharacterProfile(string character, string realm);
         Task<string> GetCharacterAssets(string token, string character, string realm);
+        Task<BlizzardLoadout> GetCharacterLoadouts(string character, string realm, string activeSpec);
         Task<MythicLeaderboard> GetCurrentMythicLeaderboardsAsync(int realmId, int keystoneId);
         Task<Affix> GetAffixData(int affixId);
     }

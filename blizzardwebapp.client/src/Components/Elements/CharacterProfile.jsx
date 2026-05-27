@@ -29,7 +29,9 @@ const ProfileStats = ({ data }) => {
     const factionStyle = factionColors[data.profile.faction.name["en_US"]] ?? '#FFFFFF';
 
     return (
-        <Box sx={{ m: '2px', display: 'flex', alignItems: 'center', justifyContent:'center' }}>
+        <Box sx={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',
+        height:36}}>
             <Typography sx={{ fontSize: 16, m: 1, ...factionStyle }}>{data.profile.faction.name["en_US"]}</Typography>
             <Typography sx={{ fontSize: 16, m: 1, ...classStyle }}>{data.profile.character_class.name["en_US"]}</Typography>
             <Typography sx={{ color: '#4b5563', fontSize: 16, m: 1 }}>{data.profile.active_spec.name["en_US"]}</Typography>
@@ -46,6 +48,7 @@ function Field({ label, value, color = '#e0e0e0' }) {
             <Typography sx={{ ...mono, fontSize: 14, fontWeight: 600, color }}>
                 {value}
             </Typography>
+
         </Box>
     );
 }

@@ -236,7 +236,6 @@ namespace BlizzardWebApp.Server.Services
         public async Task<CharacterProfileDto> GetCharacterProfile(string character, string realm)
         {
             var token = await _authService.GetAccessToken();
-            Console.WriteLine(character);
 
             var response = await _asyncPolicy.ExecuteAsync(async () =>
             {
@@ -269,6 +268,45 @@ namespace BlizzardWebApp.Server.Services
             };
             return profileDto;
 
+        }
+        public async Task<BlizzardLoadout> GetCharacterLoadouts(string character, string realm, string activeSpec)
+        {
+            var token = await _authService.GetAccessToken();
+
+            Console.WriteLine($"{activeSpec}+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+            var response = await _asyncPolicy.ExecuteAsync(async () =>
+            {
+                using var request = new HttpRequestMessage(
+                HttpMethod.Get,
+                    $"/profile/wow/character/{realm}/{character}/specializations?namespace=profile-eu");
+
+                request.Headers.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                return await _httpClient.SendAsync(request);
+            });
+            var json = await response.Content.ReadAsStringAsync();
+
+            var data = JsonSerializer.Deserialize<BlizzardSpecializations>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReadCommentHandling = JsonCommentHandling.Skip,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            });
+
+            foreach (var spec in data.Specializations)
+            {
+                foreach(var loadout in spec.Loadouts)
+                {
+                    if (loadout.IsActive && loadout.SelectedSpec.Name["en_US"] == activeSpec)
+                    {
+                        return loadout;
+                    }
+                }
+            }
+            return null;
         }
         public async Task<string> GetCharacterAssets(string token, string character, string realm)
         {
