@@ -184,22 +184,17 @@ const LeaderboardSkeleton = ({ count = 5, isTop = false }) => {
                         border: '1px solid rgba(255,255,255,0.06)',
                     }}
                 >
-                    {/* Header row */}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, px: 1.75, pt: 1.375, pb: 1.125 }}>
-                        {/* Rank badge */}
                         <Skeleton variant="circular" width={28} height={28} sx={{ bgcolor: 'rgba(255,255,255,0.07)', flexShrink: 0 }} />
 
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.75, flex: 1 }}>
-                            {/* Keystone level */}
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                                 <Skeleton variant="rounded" width={20} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
                                 <Skeleton variant="rounded" width={36} height={14} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
                             </Box>
 
-                            {/* Divider */}
                             <Box sx={{ width: '1px', height: 24, background: 'rgba(255,255,255,0.07)' }} />
 
-                            {/* Duration */}
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                                 <Skeleton variant="rounded" width={20} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
                                 <Skeleton variant="rounded" width={52} height={13} sx={{ bgcolor: 'rgba(255,255,255,0.07)' }} />
@@ -207,7 +202,6 @@ const LeaderboardSkeleton = ({ count = 5, isTop = false }) => {
                         </Box>
                     </Box>
 
-                    {/* Member chips row */}
                     <Box
                         sx={{
                             display: 'flex',
