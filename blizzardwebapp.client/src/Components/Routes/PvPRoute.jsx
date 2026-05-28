@@ -35,29 +35,28 @@ export default function PvPRoute() {
     }
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
             <Box sx={{ mb: 4 }}>
                 <Typography sx={{
                     fontSize: 14, fontWeight: 700, letterSpacing: '3px',
                     textTransform: 'uppercase', color: 'rgba(0,255,136,0.45)',
                     fontFamily: 'monospace', mb: 0.5
                 }}>
-                    Arena {bracket} {season}
+                    Arena Leaderboards
                 </Typography>
                 <Typography sx={{
                     fontSize: 26, fontWeight: 200, color: 'rgba(255,255,255,0.9)',
                     fontFamily: 'monospace'
                 }}>
-                    Arena{' '}
+                    Season{' '}
                     <Box component="span" sx={{
                         fontWeight: 700,
                         background: 'linear-gradient(135deg, #00ff88 0%, #00cfff 60%, #a855f7 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent'
                     }}>
-                        {bracket}
+                        {season}
                     </Box>
-                    {' '}Leaderboards
                 </Typography>
             </Box>
             <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems:'center' }}>

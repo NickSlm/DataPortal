@@ -23,50 +23,58 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const styles = {
+        1: '#f6c344',
+        2: '#ff9f43',
+        3: '#ffe66d'
+    };
+
     const columns = [
         {
             field: 'rank',
-            headerName: 'rank',
+            headerName: 'Rank',
             width: 96,
             renderCell: ({ value }) => (
-                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'white' }}>
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: styles[value] ?? '#63b3ff'}}>
                     {String(value).padStart(2, '#')}
                 </Box>
             ),
         },
         {
             field: 'name',
-            headerName: 'name',
+            headerName: 'Name',
             flex: 1,
             renderCell: ({ value }) => (
-                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: '#d1d5db' }}>{value}</Box>
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: '#ffffff ' }}>{value}</Box>
             ),
         },
         {
             field: 'realm',
-            headerName: 'realm',
+            headerName: 'Realm',
             flex: 1,
             renderCell: ({ value }) => (
-                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'white' }}>
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>
                     {value}
                 </Box>
             ),
         },
         {
             field: 'rating',
-            headerName: 'rating',
+            headerName: 'Rating',
             width: 90,
             renderCell: ({ value }) => (
-                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: '#60a5fa' }}>{value}</Box>
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: '#f8c200' }}>{value}</Box>
             ),
         },
         {
             field: 'record',
-            headerName: 'w/l',
+            headerName: 'W/L',
             width: 90,
             renderCell: ({ row }) => (
-                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'white' }}>
-                    {row.wins}/{row.losses}
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14 }}>
+                    <span style={{ color: '#00ff88' }}>{row.wins}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.3)' }}>/</span>
+                    <span style={{ color: '#ff4d4d' }}>{row.losses}</span>
                 </Box>
             ),
         },
@@ -152,93 +160,48 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
     return (
 
         <Box sx={{
-            background: '#1e293b',
-            border: '1px solid #334155',
-            borderRadius: 1,
             overflow: 'hidden',
         }}>
             <DataGrid
-                rows={data ?? []}         
+                rows={data ?? []}
                 columns={columns}
-                loading={loading}      
+                loading={loading}
                 onRowClick={(params) => onSelectRow?.(params.row)}
                 disableSelectionOnClick
                 hideFooterSelectedRowCount
                 pageSizeOptions={[10, 25, 50]}
                 initialState={{
-                    pagination: { paginationModel: { pageSize: 10 } },
+                    pagination: { paginationModel: { pageSize: 25 } },
                 }}
                 sx={{
-                    border: 'none',
-                    fontFamily: 'monospace',
-                    color: '#6b7280',
-                    background: 'transparent',
-
-                    // Column headers
-                    '& .MuiDataGrid-columnHeaders': {
-                        background: 'transparent',
-                        borderBottom: '1px solid #1f2937',
+                    background: 'linear-gradient(90deg, rgba(26,31,58,0.8) 0%, rgba(10,14,39,0.6) 100%)',
+                    "& .MuiDataGrid-columnHeader": {
+                        background: "transparent",
                     },
-                    '& .MuiDataGrid-columnHeaderTitle': {
-                        fontFamily: 'monospace',
-                        fontSize: 14,
-                        color: 'gold',
-                        fontWeight: 400,
-                        textTransform: 'lowercase',
+                    "& .MuiDataGrid-columnHeadersInner": {
+                        borderBottom: "1px solid rgba(0,255,136,0.15)",
                     },
-                    '& .MuiDataGrid-columnHeader': {
-                        '&:focus, &:focus-within': { outline: 'none' },
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                        fontSize: "11px",
+                        letterSpacing: "1.4px",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.25)",
+                        fontWeight: 500,
                     },
-                    '& .MuiDataGrid-columnSeparator': { display: 'none' },
-
-                    // Sort icon
-                    '& .MuiDataGrid-sortIcon': { color: '#4b5563', opacity: 0.6 },
-                    '& .MuiDataGrid-columnHeader--sorted .MuiDataGrid-sortIcon': { opacity: 1 },
-
-                    // Cells
-                    '& .MuiDataGrid-cell': {
-                        borderBottom: '1px solid rgba(255,255,255,0.03)',
-                        '&:focus, &:focus-within': { outline: 'none' },
+                    "& .MuiDataGrid-row.Mui-selected": {
+                        background: 'linear-gradient(90deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%)',
+                        border: '1px solid rgba(0,255,136,0.25)',
+                    },
+                    "& .MuiDataGrid-row.Mui-selected:hover": {
+                        background: "linear-gradient(90deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%)",
+                    },
+                    "& .MuiDataGrid-cell:focus": {
+                        outline: "none",
+                    },
+                    "& .MuiDataGrid-cell:focus-within": {
+                        outline: "none",
                     },
 
-                    // Rows
-                    '& .MuiDataGrid-row': {
-                        cursor: 'pointer',
-                        transition: 'background 0.1s',
-                        '&:hover': {
-                            background: 'rgba(0,255,136,0.04)',
-                            '& .MuiDataGrid-cell': { color: '#00ff88' },
-                        },
-                        '&.Mui-selected': {
-                            background: 'rgba(0,255,136,0.05)',
-                            borderLeft: '2px solid #00ff88',
-                            '& .MuiDataGrid-cell': { color: '#00ff88' },
-                            '&:hover': { background: 'rgba(0,255,136,0.07)' },
-                        },
-                    },
-
-                    // Footer / pagination
-                    '& .MuiDataGrid-footerContainer': {
-                        borderTop: '1px solid #1f2937',
-                        background: 'transparent',
-                        minHeight: 48,
-                    },
-                    '& .MuiTablePagination-root': {
-                        color: 'white',
-                        fontFamily: 'monospace',
-                        fontSize: 11,
-                    },
-                    '& .MuiTablePagination-selectIcon': { color: 'white' },
-                    '& .MuiTablePagination-actions .MuiIconButton-root': {
-                        color: 'white',
-                        '&:hover': { color: 'white', background: 'rgba(0,255,136,0.05)' },
-                        '&.Mui-disabled': { color: 'white' },
-                    },
-
-                    // Loading overlay
-                    '& .MuiDataGrid-overlay': { background: 'rgba(10,12,15,0.85)' },
-                    '& .MuiCircularProgress-root': { color: '#00ff88' },
-                    '& .MuiDataGrid-overlayWrapper': { minHeight: 200 },
                 }}
             />
         </Box>
