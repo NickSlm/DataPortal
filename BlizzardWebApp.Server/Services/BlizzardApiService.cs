@@ -273,8 +273,6 @@ namespace BlizzardWebApp.Server.Services
         {
             var token = await _authService.GetAccessToken();
 
-            Console.WriteLine($"{activeSpec}+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
             var response = await _asyncPolicy.ExecuteAsync(async () =>
             {
                 using var request = new HttpRequestMessage(

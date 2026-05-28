@@ -91,7 +91,8 @@ export default function PvPRoute() {
                     position: { xs: 'relative', md: 'sticky' },
                     top: 72
                 }}>
-                    <CharacterProfile player={character} />
+                    {character && <CharacterProfile key={`${character.name}-${character.realm}`}
+ player={character} />}
                 </Box>
             </Box>
         </Container>

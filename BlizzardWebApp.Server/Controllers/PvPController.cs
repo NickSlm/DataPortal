@@ -61,14 +61,11 @@ namespace BlizzardWebApp.Server.Controllers
         [HttpGet("/pvp/loadout/character/{character}/realm/{realm}/spec/{spec}")]
         public async Task<ActionResult> GetLoadout(string character, string realm, string spec)
         {
-            var loadout = await _blizzardApi.GetCharacterLoadouts(character, realm, spec);
+            var loadout = await _blizzardApi.GetCharacterLoadouts(character.ToLower(), realm.ToLower(), spec);
 
-            var selectedClass = loadout.SelectedClass.Name["en_US"].ToLower();
-            var selectedSpec = loadout.SelectedSpec.Name["en_US"].ToLower();
-            var selectedHero = loadout.SelectedHero.Name["en_US"].ToLower();
             var code = loadout.LoadoutCode;
 
-            return RedirectPermanent($"https://wowhead.com/talent-calm/{selectedClass}/{selectedSpec}/{selectedHero}/{code}");
+            return Ok(new {loadoutCode = code});
         }
 
     }
