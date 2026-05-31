@@ -16,13 +16,12 @@ import { useState } from 'react';
 import SeasonsSelect from '../Elements/SeasonsSelect';
 import SeasonLbDataGrid from '../Elements/SeasonLbDataGrid';
 import { CharacterProfile } from '../Elements/CharacterProfile';
-import { glassSelectStyle } from '../../Styles/componentStyles';
 import { FilterPill } from '../Elements/FilterPill';
 
 
 export default function PvPRoute() {
 
-    const [bracket, setBracket] = useState('');
+    const [bracket, setBracket] = useState('2v2');
     const [season, setSeason] = useState('');
     const [character, setCharacter] = useState('');
 
@@ -90,8 +89,7 @@ export default function PvPRoute() {
                     position: { xs: 'relative', md: 'sticky' },
                     top: 72
                 }}>
-                    {character && <CharacterProfile key={`${character.name}-${character.realm}`}
- player={character} />}
+                    {character && <CharacterProfile key={`${character.name}-${character.realm}`} player={character} />}
                 </Box>
             </Box>
         </Container>

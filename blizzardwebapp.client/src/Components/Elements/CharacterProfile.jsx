@@ -98,10 +98,10 @@ const ProfileStats = ({ data }) => {
 function Field({ label, value, color = '#e0e0e0' }) {
     return (
         <Box sx={{ display: 'flex', gap: 1, m: 1, justifyContent:'space-between' }}>
-            <Typography sx={{ ...mono, fontSize: 14, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <Typography sx={{  fontSize: 14, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {label}
             </Typography>
-            <Typography sx={{ ...mono, fontSize: 14, fontWeight: 600, color }}>
+            <Typography sx={{ fontSize: 14, fontWeight: 600, color }}>
                 {value}
             </Typography>
 

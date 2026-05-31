@@ -171,7 +171,7 @@ function RankBadge({ ranking }) {
         </Box>
     );
 }
-const LeaderboardSkeleton = ({ count = 5, isTop = false }) => {
+const LeaderboardSkeleton = ({ count = 10, isTop = false }) => {
     return (
         <Box>
             {Array.from({ length: count }).map((_, i) => (

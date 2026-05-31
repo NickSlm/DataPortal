@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import {
     Box,
     Typography,
@@ -11,22 +11,36 @@ import { usePvpSeasons } from '../Hooks/usePvpSeasons';
 
 export default function SeasonSelect({ onChange }) {
     const { data: seasons, isLoading } = usePvpSeasons();
+
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [selected, setSelected] = useState(null);
+
+
     const anchorRef = useRef(null);
+
 
     const filtered = (seasons?.seasons ?? []).filter(s =>
         `Season ${s.id}`.toLowerCase().includes(inputValue.toLowerCase())
     );
 
+
     const handleSelect = (season) => {
         setSelected(season);
-        console.log(season.id);
         onChange(season.id);
         setOpen(false);
         setInputValue('');
     };
+
+    useEffect(() => {
+
+        if (!isLoading && seasons?.currentSeason) {
+            setSelected(seasons.currentSeason);
+            onChange(seasons.currentSeason.id);
+        }
+
+
+    }, [isLoading])
 
     return (
         <>
@@ -39,7 +53,6 @@ export default function SeasonSelect({ onChange }) {
                     gap: 1,
                     px: 1.5,
                     py: 0.75,
-                    background: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '999px',
                     cursor: 'pointer',
@@ -48,10 +61,10 @@ export default function SeasonSelect({ onChange }) {
                 }}
             >
                 <Box sx={{ width: 7, height: 7, borderRadius: '50%', background: '#00ff88', flexShrink: 0 }} />
-                <Typography sx={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>
+                <Typography sx={{ fontSize: 13, fontWeight: 500 }}>
                     {selected ? `Season ${selected.id}` : 'Select season'}
                 </Typography>
-                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', ml: 0.5 }}>▼</Typography>
+                <Typography sx={{ fontSize: 10, ml: 0.5 }}>▼</Typography>
             </Box>
 
             <Popper open={open} anchorEl={anchorRef.current} placement="bottom-end" sx={{ zIndex: 1300 }}>
@@ -59,7 +72,6 @@ export default function SeasonSelect({ onChange }) {
                     <Paper sx={{
                         mt: 1,
                         width: 200,
-                        background: '#1a1f3a',
                         border: '1px solid rgba(255,255,255,0.1)',
                         borderRadius: '12px',
                         overflow: 'hidden',
@@ -71,7 +83,7 @@ export default function SeasonSelect({ onChange }) {
                                 value={inputValue}
                                 onChange={e => setInputValue(e.target.value)}
                                 sx={{
-                                    fontSize: 13, color: 'rgba(255,255,255,0.8)', flex: 1,
+                                    fontSize: 13, flex: 1,
                                     '& input::placeholder': { color: 'rgba(255,255,255,0.25)' }
                                 }}
                             />

@@ -44,7 +44,6 @@ export default function RealmsSelect({ realms, value, onChange, loading }) {
                     gap: 1,
                     px: 1.5,
                     py: 0.75,
-                    background: 'rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     borderRadius: '999px',
                     cursor: 'pointer',
@@ -53,10 +52,10 @@ export default function RealmsSelect({ realms, value, onChange, loading }) {
                 }}
             >
                 <Box sx={{ width: 7, height: 7, borderRadius: '50%', background: '#00ff88', flexShrink: 0 }} />
-                <Typography sx={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>
+                <Typography sx={{ fontSize: 13,  fontWeight: 500 }}>
                     {value?.name ?? 'Select realm'}
                 </Typography>
-                <Typography sx={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', ml: 0.5 }}>▼</Typography>
+                <Typography sx={{ fontSize: 10, ml: 0.5 }}>▼</Typography>
             </Box>
 
             {/* Floating dropdown via Popper */}
@@ -65,7 +64,6 @@ export default function RealmsSelect({ realms, value, onChange, loading }) {
                     <Paper sx={{
                         mt: 1,
                         width: 240,
-                        background: '#1a1f3a',
                         border: '1px solid rgba(255,255,255,0.1)',
                         borderRadius: '12px',
                         overflow: 'hidden',

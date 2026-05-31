@@ -10,8 +10,6 @@ export function FilterPill({ label, active, onClick }) {
                 borderRadius: 1,
                 border: '1px solid',
                 borderColor: active ? 'rgba(0,255,136,0.4)' : '#1f2937',
-                background: active ? 'rgba(0,255,136,0.05)' : '#111827',
-                color: active ? '#00ff88' : '#4b5563',
                 fontFamily: 'monospace',
                 fontSize: 11,
                 cursor: 'pointer',
