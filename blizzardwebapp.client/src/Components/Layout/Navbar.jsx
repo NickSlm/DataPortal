@@ -11,20 +11,11 @@ export default function Navbar() {
     return (
 
         <AppBar position="sticky"
-            sx={{
-                top: 0,
-                zIndex: 1100,
-                background: 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%)',
-                borderBottom: '2px solid',
-                borderImage: 'linear-gradient(90deg, #00ff88, #ff6b9d) 1',
-            }}>
+           >
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', px: { xs: 2, sm: 4 }, minHeight: 56 }}>
 
-                <Typography sx={{
-                    fontSize: 12, fontWeight: 800, letterSpacing: '3px', textTransform: 'uppercase',
-                    background: 'linear-gradient(135deg,#00ff88,#00cfff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                    flexShrink: 0,
-                }}>
+                <Typography 
+                >
                     MR.APP
                 </Typography>
 
@@ -38,13 +29,7 @@ export default function Navbar() {
                     ))}
                 </Box>
 
-                <Button sx={{
-                    display: { xs: 'none', sm: 'flex' },
-                    fontSize: 11, fontWeight: 700, letterSpacing: '0.8px', textTransform: 'uppercase',
-                    px: 2, py: 0.75, borderRadius: 1.5, border: '1px solid rgba(0,255,136,0.28)',
-                    background: 'rgba(0,255,136,0.06)', color: '#00ff88',
-                    '&:hover': { background: 'rgba(0,255,136,0.13)', borderColor: 'rgba(0,255,136,0.6)' },
-                }}>Login</Button>
+                <Button variant="outlined">Login</Button>
 
                 <IconButton sx={{ display: { xs: 'flex', sm: 'none' }, color: '#00ff88' }}>
                     <MenuIcon />

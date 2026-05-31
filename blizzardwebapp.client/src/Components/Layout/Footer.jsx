@@ -11,7 +11,6 @@ export default function Footer() {
                 py: 4,
                 px: 2,
                 mt: 'auto',
-                background: 'linear-gradient(135deg, #1a1f3a 0%, #0a0e27 100%)',
                 borderTop: '1px solid rgba(0, 255, 136, 0.2)',
             }}
         >

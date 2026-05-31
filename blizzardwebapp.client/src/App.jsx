@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
-import { darkGamingTheme } from './Theme/theme';
+import { warcraftChronicleTheme } from './Theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 
@@ -17,7 +17,7 @@ const queryClient = new QueryClient();
 
 function App() {
     return (
-        <ThemeProvider theme={darkGamingTheme}>
+        <ThemeProvider theme={warcraftChronicleTheme}>
             <CssBaseline />
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>

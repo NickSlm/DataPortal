@@ -39,17 +39,20 @@ function LeaderboardEntry({ entry, isTop }) {
         <Box
             sx={{
                 borderRadius: 1,
-                m:1,
+                m: 1,
                 overflow: 'hidden',
                 cursor: 'pointer',
                 transition: 'border-color 0.25s, transform 0.2s',
-                backgroundImage: isTop
-                    ? `repeating-linear-gradient(0deg, rgba(0,255,157,0.018) 0px, rgba(0,255,157,0.018) 1px, transparent 1px, transparent 8px)`
-                    : `repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 8px)`,
-                backgroundColor: isTop ? '#141d33' : '#11182b',
+                border: '1px solid',
+                borderColor: isTop ? '#b8860b44' : '#b8860b22',
+                background: isTop
+                    ? 'linear-gradient(135deg, #241c08 0%, #1a1205 50%, #0f0d06 100%)'
+                    : 'linear-gradient(135deg, #1a1408 0%, #131008 60%, #0f0d06 100%)',
                 '&:hover': {
-                    backgroundColor: isTop ? '#18233d' : '#151d31',
-                    borderColor: 'rgba(0,255,157,0.2)',
+                    borderColor: isTop ? '#d4a52066' : '#b8860b44',
+                    background: isTop
+                        ? 'linear-gradient(135deg, #2c2209 0%, #1e1608 50%, #141008 100%)'
+                        : 'linear-gradient(135deg, #1e1a0a 0%, #171208 60%, #111008 100%)',
                     transform: 'translateY(-1px)',
                 }
             }}
@@ -177,10 +180,13 @@ const LeaderboardSkeleton = ({ count = 5, isTop = false }) => {
                         borderRadius: 1,
                         m: 1,
                         overflow: 'hidden',
-                        backgroundImage: isTop
-                            ? `repeating-linear-gradient(0deg, rgba(0,255,157,0.018) 0px, rgba(0,255,157,0.018) 1px, transparent 1px, transparent 8px)`
-                            : `repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 8px)`,
-                        backgroundColor: isTop ? '#141d33' : '#11182b',
+                        borderColor: isTop ? '#b8860b44' : '#b8860b22',
+                        backgroundColor: isTop ? '#1e1608' : '#16120a',
+                        '&:hover': {
+                            backgroundColor: isTop ? '#241c0a' : '#1a1508',
+                            borderColor: isTop ? '#d4a52066' : '#b8860b44',
+                            transform: 'translateY(-1px)',
+                        },
                         border: '1px solid rgba(255,255,255,0.06)',
                     }}
                 >

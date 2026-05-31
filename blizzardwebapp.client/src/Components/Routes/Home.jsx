@@ -7,7 +7,7 @@ function Home() {
     const modes = [
         {
             title: 'Arena Leaderboard',
-            description: 'Arena leaderboards for 2v2 and 3v3',
+            description: '2v2 and 3v3',
             path: '/PvP',
             gradient: 'linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%)',
         },
@@ -31,11 +31,6 @@ function Home() {
                 <Typography
                     variant="h2"
                     gutterBottom
-                    sx={{
-                        background: 'linear-gradient(135deg, #00ff88 0%, #ff6b9d 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                    }}
                 >
                     Game Modes
                 </Typography>
@@ -48,24 +43,10 @@ function Home() {
                 {modes.map((mode) => (
                     <Grid item xs={4} key={mode.path}>
                         <Card
-                            sx={{
-                                background: 'linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%)',
-                                border: '1px solid rgba(255, 255, 255, 0.1)',
-                                transition: 'all 0.3s ease',
-                                '&:hover': {
-                                    transform: 'translateY(-8px)',
-                                    boxShadow: `0 12px 40px ${mode.gradient.includes('ff6b9d') ? 'rgba(255, 107, 157, 0.3)' : 'rgba(0, 255, 136, 0.3)'}`,
-                                    borderColor: mode.gradient.includes('ff6b9d') ? '#ff6b9d' : '#00ff88',
-                                },
-                            }}
+                          
                         >
                             <CardActionArea onClick={() => navigate(mode.path)}>
-                                <Box
-                                    sx={{
-                                        height: 8,
-                                        background: mode.gradient,
-                                    }}
-                                />
+                                <Box/>
                                 <CardContent sx={{ p: 4 }}>
                                     <Typography variant="h4" gutterBottom fontWeight={700}>
                                         {mode.title}

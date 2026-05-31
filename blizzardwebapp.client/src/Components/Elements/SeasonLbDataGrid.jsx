@@ -174,7 +174,7 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
                     pagination: { paginationModel: { pageSize: 25 } },
                 }}
                 sx={{
-                    background: 'linear-gradient(90deg, rgba(26,31,58,0.8) 0%, rgba(10,14,39,0.6) 100%)',
+                    background: 'linear-gradient(135deg, #241c08 0%, #1a1205 50%, #0f0d06 100%)',
                     "& .MuiDataGrid-columnHeader": {
                         background: "transparent",
                     },
