@@ -2,7 +2,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Skeleton from '@mui/material/Skeleton';
-
+import { factionBgColors } from '../../Styles/componentStyles';
 
 import {
     Container,
@@ -33,6 +33,7 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
         3: '#ffe66d'
     };
 
+
     const columns = [
         {
             field: 'rank',
@@ -51,6 +52,15 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
             renderCell: ({ value }) => (
                 <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: '#ffffff ' }}>{value}</Box>
             ),
+        },
+        {
+            field: 'faction',
+            headerName: 'Faction',
+            flex: 1,
+            renderCell: ({ value }) => (
+                <Box sx={{ fontFamily: 'monospace', fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>
+                    {value}
+                </Box>            ),
         },
         {
             field: 'realm',
@@ -97,17 +107,18 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
                 const s = Number(season);
 
                 const response = await fetch(`http://127.0.0.1:5201/pvp/seasons/leaderboard/season/${s}/bracket/${bracket}`, { signal: controller.signal });
-
+                
                 if (!response.ok) {
                     throw new Error(`Season ${season} Leaderboard not available`)
                 }
 
                 const result = await response.json();
-
+                console.log(result);
 
                 const rows = result.entries.map(e => ({
                     id: e.character.id,
                     name: e.character.name,
+                    faction: e.faction.type,
                     rank: e.rank,
                     rating: e.rating,
                     realm: e.character.realm.slug,
@@ -169,6 +180,12 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
             <DataGrid
                 rows={data ?? []}
                 columns={columns}
+                getRowClassName={(params) => {
+                    const fact = params.row.faction;
+                    if (fact == "HORDE") return 'row-horde';
+                    if (fact == "ALLIANCE") return 'row-alliance';
+                    return '';
+                }}
                 loading={loading}
                 onRowClick={(params) => onSelectRow?.(params.row)}
                 disableSelectionOnClick
@@ -178,34 +195,52 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
                     pagination: { paginationModel: { pageSize: 25 } },
                 }}
                 sx={{
-                    background: 'linear-gradient(135deg, #241c08 0%, #1a1205 50%, #0f0d06 100%)',
+                    cursor: 'pointer',
+                    "& .MuiDataGrid-row.row-horde": {
+                        background: 'linear-gradient(160deg, #2e0808 0%, #4a1010 60%, #1a0606 100%)',
+                    },
+                    "& .MuiDataGrid-row.row-alliance": {
+                        background: 'linear-gradient(160deg, #060c1e 0%, #0d1a40 60%, #080f28 100%)',
+                    },
+
+                    "& .MuiDataGrid-row.row-horde:hover": {
+                        background: 'linear-gradient(160deg, #3d0c0c 0%, #5e1616 60%, #2a0a0a 100%)',
+                    },
+                    "& .MuiDataGrid-row.row-alliance:hover": {
+                        background: 'linear-gradient(160deg, #0a1228 0%, #142254 60%, #0c1232 100%)',
+                    },
+
+                    "& .MuiDataGrid-row.row-horde.Mui-selected": {
+                        background: 'linear-gradient(160deg, #4a1010 0%, #6b1a1a 60%, #3a0c0c 100%)',
+                        borderLeft: '2px solid #cc3333',
+                    },
+                    "& .MuiDataGrid-row.row-alliance.Mui-selected": {
+                        background: 'linear-gradient(160deg, #0e1a38 0%, #1a2e6a 60%, #0c1840 100%)',
+                        borderLeft: '2px solid #3366cc',
+                    },
+
+                    "& .MuiDataGrid-row.row-horde.Mui-selected:hover": {
+                        background: 'linear-gradient(160deg, #521212 0%, #7a1e1e 60%, #420e0e 100%)',
+                    },
+                    "& .MuiDataGrid-row.row-alliance.Mui-selected:hover": {
+                        background: 'linear-gradient(160deg, #101e40 0%, #1e3478 60%, #0e1c48 100%)',
+                    },
+
                     "& .MuiDataGrid-columnHeader": {
                         background: "transparent",
                     },
                     "& .MuiDataGrid-columnHeadersInner": {
-                        borderBottom: "1px solid rgba(0,255,136,0.15)",
+                        borderBottom: "1px solid #b8860b22",
                     },
                     "& .MuiDataGrid-columnHeaderTitle": {
                         fontSize: "11px",
                         letterSpacing: "1.4px",
                         textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.25)",
+                        color: "#F5F5F5",
                         fontWeight: 500,
                     },
-                    "& .MuiDataGrid-row.Mui-selected": {
-                        background: 'linear-gradient(90deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%)',
-                        border: '1px solid rgba(0,255,136,0.25)',
-                    },
-                    "& .MuiDataGrid-row.Mui-selected:hover": {
-                        background: "linear-gradient(90deg, rgba(0,255,136,0.08) 0%, rgba(0,255,136,0.02) 100%)",
-                    },
-                    "& .MuiDataGrid-cell:focus": {
-                        outline: "none",
-                    },
-                    "& .MuiDataGrid-cell:focus-within": {
-                        outline: "none",
-                    },
-
+                    "& .MuiDataGrid-cell:focus": { outline: "none" },
+                    "& .MuiDataGrid-cell:focus-within": { outline: "none" },
                 }}
             />
         </Box>

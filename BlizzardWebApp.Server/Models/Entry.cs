@@ -11,6 +11,9 @@ namespace BlizzardWebApp.Server.Models
         [JsonPropertyName("rank")]
         public int Rank { get; set; }
 
+        [JsonPropertyName("faction")]
+        public Dictionary<string, string> Faction { get; set; }
+
         [JsonPropertyName("rating")]
         public int Rating { get; set; }
 

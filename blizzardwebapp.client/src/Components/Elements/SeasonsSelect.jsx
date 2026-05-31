@@ -38,8 +38,6 @@ export default function SeasonSelect({ onChange }) {
             setSelected(seasons.currentSeason);
             onChange(seasons.currentSeason.id);
         }
-
-
     }, [isLoading])
 
     return (

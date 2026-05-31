@@ -44,7 +44,7 @@ namespace BlizzardWebApp.Server.Controllers
             var dto = new LeaderboardDto
             {
                 Name = leaderboard.Name,
-                Entries = leaderboard.Entries
+                Entries = leaderboard.Entries,
             };
             return Ok(dto);
         }

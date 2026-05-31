@@ -22,7 +22,7 @@ export default function Navbar() {
                 <Box sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: 'center', gap: 0.5 }}>
                     {[{ label: 'Home', path: '/' }, { label: 'Keystones', path: '/PvE' }, { label: 'Arena', path: '/PvP' }].map(item => (
                         <Button key={item.path} component={Link} to={item.path} sx={{
-                            fontSize: 11.5, fontWeight: 500, color: isActive(item.path) ? '#00ff88' : 'rgba(255,255,255,0.38)',
+                            fontSize: 14, fontWeight: 500, color: isActive(item.path) ? '#00ff88' : 'rgba(255,255,255,0.38)',
                             borderRadius: 1.5, textTransform: 'none', px: 1.75, py: 0.75,
                             '&:hover': { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.8)' },
                         }}>{item.label}</Button>

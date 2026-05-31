@@ -91,7 +91,7 @@ const ProfileStats = ({ data }) => {
         height:36}}>
             <Typography sx={{ fontSize: 16, m: 1, ...factionStyle }}>{data.profile.faction.name["en_US"]}</Typography>
             <Typography sx={{ fontSize: 16, m: 1, ...classStyle }}>{data.profile.character_class.name["en_US"]}</Typography>
-            <Typography sx={{ color: '#4b5563', fontSize: 16, m: 1 }}>{data.profile.active_spec.name["en_US"]}</Typography>
+            <Typography sx={{ color: '#f5f5f5', fontSize: 16, m: 1 }}>{data.profile.active_spec.name["en_US"]}</Typography>
         </Box>
     );
 }
@@ -158,7 +158,8 @@ export function CharacterProfile({ player }) {
         <Box sx={{
             minHeight: 300,
             fontFamily: 'monospace',
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.07) 100%)'
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.07) 100%)',
+            cursor:'pointer'
         }}>
             <Box sx={{
                 alignItems: 'center',
@@ -181,7 +182,7 @@ export function CharacterProfile({ player }) {
                     <Typography sx={{
                         fontSize: '16px',
                         fontWeight: 700,
-                        color: '#ffffff',
+                        color: '#F5F5F5',
                         letterSpacing: '0.04em',
                         textShadow: '0 0 12px rgba(255,255,255,0.15)'}}>{player.name}</Typography>
                     <Typography sx={{
