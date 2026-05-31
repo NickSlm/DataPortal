@@ -9,7 +9,7 @@ A full-stack leaderboard application for World of Warcraft competitive content. 
 <img width="1887" height="978" alt="image" src="https://github.com/user-attachments/assets/0564f5aa-1fa6-4c0b-aaae-c922e654de92" />
 
 ### Arena Leaderboards
-<img width="1890" height="978" alt="image" src="https://github.com/user-attachments/assets/9b76a28c-893a-4a57-9162-dc11798ed241" />
+<img width="1885" height="982" alt="image" src="https://github.com/user-attachments/assets/61152cc1-1080-4d48-b89f-8676b2bf0383" />
 
 ### Game Modes Overview
 <img width="1908" height="980" alt="image" src="https://github.com/user-attachments/assets/3e96d7c1-6bb8-4821-9d91-c6f8544b32d2" />
