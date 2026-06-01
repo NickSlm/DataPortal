@@ -159,7 +159,7 @@ export function CharacterProfile({ player }) {
             minHeight: 300,
             fontFamily: 'monospace',
             background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.07) 100%)',
-            cursor:'pointer'
+            
         }}>
             <Box sx={{
                 alignItems: 'center',

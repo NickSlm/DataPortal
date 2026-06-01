@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Moq;
-using BlizzardWebApp.Server.Services;
 using BlizzardWebApp.Server.Interfaces;
+using BlizzardWebApp.Server.Services;
 
 namespace DataPortal.Tests
 {

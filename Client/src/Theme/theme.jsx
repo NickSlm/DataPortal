@@ -4,13 +4,13 @@ export const warcraftChronicleTheme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#d4a520',      // gold — buttons, active nav, highlights
-            dark: '#b8860b',      // darker gold — hover states
-            light: '#e8c547',     // lighter gold — focus rings
+            main: '#d4a520',      // gold ï¿½ buttons, active nav, highlights
+            dark: '#b8860b',      // darker gold ï¿½ hover states
+            light: '#e8c547',     // lighter gold ï¿½ focus rings
             contrastText: '#0f0d06',
         },
         secondary: {
-            main: '#c87941',      // amber-orange — secondary accents
+            main: '#c87941',      // amber-orange ï¿½ secondary accents
             dark: '#9b5e2e',
             contrastText: '#0f0d06',
         },
@@ -19,7 +19,7 @@ export const warcraftChronicleTheme = createTheme({
             paper: '#1a1408',     // card surface
         },
         text: {
-            primary: '#e8dcc8',   // warm off-white — readable, not stark
+            primary: '#e8dcc8',   // warm off-white ï¿½ readable, not stark
             secondary: '#8a7550', // muted gold-brown
             disabled: '#4a3d28',
         },
@@ -48,7 +48,7 @@ export const warcraftChronicleTheme = createTheme({
         overline: { color: '#8a7550', letterSpacing: '0.12em' },
     },
     shape: {
-        borderRadius: 6, // sharper corners — medieval feel
+        borderRadius: 6, // sharper corners ï¿½ medieval feel
     },
     components: {
         MuiAppBar: {

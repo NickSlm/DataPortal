@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SeasonsSelect from '../Elements/SeasonsSelect';
 import SeasonLbDataGrid from '../Elements/SeasonLbDataGrid';
 import { CharacterProfile } from '../Elements/CharacterProfile';
@@ -32,6 +32,8 @@ export default function PvPRoute() {
     const HandleSelectCharacter = (value, event) => {
         setCharacter(value.row);
     }
+
+    
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>

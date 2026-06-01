@@ -113,7 +113,6 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
                 }
 
                 const result = await response.json();
-                console.log(result);
 
                 const rows = result.entries.map(e => ({
                     id: e.character.id,
@@ -158,7 +157,7 @@ export default function SeasonLbDataGrid({season, bracket, onSelectRow}) {
     if (data.length === 0) return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Box sx={{ color: '#ffa500', fontSize: '1.1rem' }}>
-                Looking for data...
+                Loading Data...
             </Box>
         </Box>
 

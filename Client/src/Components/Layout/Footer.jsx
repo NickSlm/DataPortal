@@ -22,7 +22,7 @@ export default function Footer() {
                     spacing={2}
                 >
                     <Typography variant="body2" color="text.secondary">
-                        © 2024 Mr.App. All rights reserved.
+                        ï¿½ 2024 Mr.App. All rights reserved.
                     </Typography>
 
                     <Stack direction="row" spacing={3}>
@@ -40,6 +40,4 @@ export default function Footer() {
             </Container>
         </Box>
     );
-
-
 }

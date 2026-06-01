@@ -6,5 +6,9 @@ export default defineConfig({
     server: {
         allowedHosts: ['persevere-dynasty-eternal.ngrok-free.dev']
     },
+    proxy: {
+  '/data': { target: 'http://localhost:5173', changeOrigin: true },
+  '/pvp': { target: 'http://localhost:5173', changeOrigin: true },
+    },
     plugins: [react()],
 })
